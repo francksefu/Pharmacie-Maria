@@ -1,0 +1,44 @@
+img {
+    width: 100%;
+    height: 200px;
+}
+
+.photo {
+    width: 100px;
+    height: 80px;
+}
+
+#taille {
+    width: auto;
+    padding: 0;
+    margin: 0;
+}
+
+#taille img {
+    width: 100px;
+}
+
+#taille > div {
+    display: inline;
+    width: auto;
+}
+
+th {
+    text-align: center;
+}
+
+td {
+    text-align: center;
+}
+
+/*input, span, select, label {
+    z-index: -1;
+}
+
+.moinClaire {
+    z-index: -3;
+}*/
+header {
+    z-index: 3;
+}
+
