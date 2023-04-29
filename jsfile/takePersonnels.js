@@ -2,13 +2,13 @@
 const identifiantM = document.querySelector('#identifiantM');
 const nomPersonnel = document.querySelector('#nomPersonnel');
 const telephone = document.querySelector('#telephone');
-const poste = document.querySelector('#poste');
+
 
 const btn = document.querySelector('#envoie');
 
 const nomVide = document.querySelector('#nomVide');
 const telephoneVide = document.querySelector('#telephoneVide');
-const posteVide = document.querySelector('#posteVide');
+
 
 let feedback = '';
 const compareFeedback = `<div class='alert alert-success' role='alert'>
@@ -19,9 +19,8 @@ let idPersonnel;
 if (type.value === 'update') {
     identifiantM.addEventListener('change', () => {
       const tabValeur = identifiantM.value.split('::');
-      nomPersonnel.value = tabValeur[5];
-      telephone.value = tabValeur[7];
-      poste.value = tabValeur[3];
+      nomPersonnel.value = tabValeur[3];
+      telephone.value = tabValeur[5];
       idPersonnel = tabValeur[1];
     })
     
@@ -66,24 +65,19 @@ btn.addEventListener('click', () => {
     enleveMessage(nomVide);
   }
 
-  if(poste.value == ''){
-    messageComplete(posteVide);
-    return;
-  } else {
-    enleveMessage(posteVide);
-  }
+  
 
   let prend;
   if (type.value == 'update') {
-    prend = poste.value+"::"+nomPersonnel.value+"::"+telephone.value+"::"+idPersonnel+"::update";
+    prend = nomPersonnel.value+"::"+telephone.value+"::"+idPersonnel+"::update";
   } else {
-    prend = poste.value+"::"+nomPersonnel.value+"::"+telephone.value+"::add";
+    prend =nomPersonnel.value+"::"+telephone.value+"::add";
   }
 
   showHint(prend);
   
     nomPersonnel.value =""; 
     telephone.value = "";
-    poste.value = ""
+   identifiantM.value = "";
     
 });

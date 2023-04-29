@@ -57,10 +57,11 @@ function render($reqSql) {
             <th>Prix de vente</th>
             <th>Prix de vente min</th>
             <th>Quantite stock</th>
+            <th>Quantite stock min</th>
             <th>Action</th>
         </tr>
         </thead>';
- 
+
         while($row= mysqli_fetch_assoc($result)){
               echo'
         <tr>
@@ -77,9 +78,10 @@ function render($reqSql) {
         <td>'.$row["PrixVente"].'</td>
         <td>'.$row["PrixVmin"].'</td>
         <td>'.$row["QuantiteStock"].'</td>
+        <td>'.$row["QuantiteStockMin"].'</td>
         <td >
             <div class="d-flex flex-row justify-content-center">
-                
+               
                 <div class="p-2 m-2 bg-danger text-white rounded-3" id="del">
                     <a href="#" class="text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -89,7 +91,7 @@ function render($reqSql) {
                     </a>
                 </div>
                 <div class="p-2 bg-primary m-2 text-white rounded-3 montre">
-                    <a href="updateBesoin.php" class="text-white">
+                    <a href="updateProduct.php" class="text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
                             <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
                         </svg>

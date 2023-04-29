@@ -62,7 +62,7 @@
                          
             }else{echo "Une erreur s est produite";}
  
-            $value = $quantiteA + $quantiteGagneA - $quantitePerduA;
+            $value = $quantiteA - $quantiteGagneA + $quantitePerduA;
 
             $upd= ("UPDATE `Produit` SET `QuantiteStock` = $value WHERE idProduit =$idProduitA");
             if(mysqli_query($db,$upd)){echo"";}else{
@@ -126,13 +126,29 @@
                 $this->message = mysqli_error($db);
                 return;
             }
-            $updC4= ("UPDATE `BonusPerte` SET Motif = $this->motif WHERE idBonusPerte =$this->idBonusPerte");
+            $updC4= ("UPDATE `BonusPerte` SET Motif = '".$this->motif."' WHERE idBonusPerte =$this->idBonusPerte");
             if(mysqli_query($db,$updC4)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
             }
-            $updC5= ("UPDATE `BonusPerte` SET DatesD = $this->date WHERE idBonusPerte =$this->idBonusPerte");
+            $updC5= ("UPDATE `BonusPerte` SET DatesD = '".$this->date."' WHERE idBonusPerte =$this->idBonusPerte");
             if(mysqli_query($db,$updC5)){echo"";}else{
+                $this->message = mysqli_error($db);
+                return;
+            }
+
+            $sqlP = ("SELECT * FROM Produit WHERE idProduit = $this->idProduit");
+             $resultP = mysqli_query($db, $sqlP);
+                     
+             if(mysqli_num_rows($resultP)>0){
+                                 
+                 while($rowP= mysqli_fetch_assoc($resultP)){
+                     $quantite = $rowP["QuantiteStock"];
+                 }
+                         
+            }else{echo "Une erreur s est produite";}
+            $upd= ("UPDATE `Produit` SET `QuantiteStock` = $quantite + $this->quantiteGagne - $this->quantitePerdu WHERE idProduit =$this->idProduit");
+            if(mysqli_query($db,$upd)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
             }
@@ -174,7 +190,7 @@
         
     }
     if(end($tabC) == 'update') {
-        $id = $tabC[4];
+        $id = $tabC[5];
         if ($q !== "") {
             $hint = $q;
             $produit = new BonusPerte($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4]);

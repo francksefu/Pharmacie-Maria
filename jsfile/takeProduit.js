@@ -1,3 +1,4 @@
+const identifiantM = document.querySelector('#identifiantM');
 const nom = document.querySelector('#nom');
 const pa = document.querySelector('#pa');
 const pv = document.querySelector('#pv');
@@ -13,6 +14,22 @@ const quantiteVide = document.querySelector('#quantiteVide');
 const quantiteMinVide = document.querySelector('#quantiteminVide');
 const typeForm = document.querySelector('#typeFormulaire');
 const btn = document.querySelector('#envoi');
+
+let idProduit = 0;
+if (typeForm.value === 'update') {
+  identifiantM.addEventListener('change', () => {
+    const tabValeur = identifiantM.value.split('::');
+    nom.value = tabValeur[3];
+    pa.value = tabValeur[5];
+    pv.value = tabValeur[7];
+    pvmin.value = tabValeur[9];
+    quantite.value = tabValeur[11];
+    quantiteMin.value = tabValeur[13];
+    description.value = tabValeur[15];
+    idProduit = tabValeur[1];
+  });
+  
+}
 
 const messageVide = 'Veuillez remplir ce champs svp'
 const messageComplete = valeur => {
@@ -86,7 +103,7 @@ const messageComplete = valeur => {
     let take;
 
     if (typeForm.value == 'update') {
-        take = nom.value+"::"+pa.value+"::"+pv.value+"::"+pvmin.value+"::"+quantite.value+"::"+quantiteMin.value+"::"+description.value+"::update";
+        take = nom.value+"::"+pa.value+"::"+pv.value+"::"+pvmin.value+"::"+quantite.value+"::"+quantiteMin.value+"::"+description.value+"::"+idProduit+"::update";
     } else {
         take = nom.value+"::"+pa.value+"::"+pv.value+"::"+pvmin.value+"::"+quantite.value+"::"+quantiteMin.value+"::"+description.value+"::add";
     }
@@ -100,6 +117,5 @@ const messageComplete = valeur => {
     quantite.value = "";
     quantiteMin.value = "";
     description.value = "";
-    
-    
+    identifiantM.value = "";
   })

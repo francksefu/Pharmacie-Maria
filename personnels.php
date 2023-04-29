@@ -21,7 +21,7 @@
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.js"></script>
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
     <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
-    <script defer src="./jsfile/navbar.js"></script>
+    <script defer src="./navbar.js"></script>
     <script defer src="./jsfile/jquery-3.6.1.min.js"></script>
     <script defer src="./jsfile/produit.js"></script>
     <script defer src="./jsfile/supprime.js"></script>
@@ -30,13 +30,13 @@
 <?php
   function dataPersonnel(){
     include 'connexion.php';
-    $sql = ("SELECT * FROM Personnel order by idPersonnel desc");
+    $sql = ("SELECT * FROM Client order by idClient desc");
     $result = mysqli_query($db, $sql);
             
     if(mysqli_num_rows($result)>0){
                         
         while($row= mysqli_fetch_assoc($result)){
-            echo"<option value='ID ::".$row["idPersonnel"].":: poste ::".$row["Poste"].":: Nom  ::".$row["Nom"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]." Poste : ".$row["Poste"]."</option>"; 
+            echo"<option value='ID ::".$row["idClient"].":: Nom  ::".$row["NomClient"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]."</option>"; 
         }
                 
    }else{echo "Une erreur s est produite ";}  
@@ -49,16 +49,16 @@
         <div class="container bg-transparent pt-5" >
             <div class="row bg-transparent pt-5">
                 <div class="col-md-6 bg-transparent m-2">
-                    <h2>Liste du personnels</h2>
+                    <h2>Liste des clients</h2>
                     <p class=" text-secondary pt-3">
-                        Un tableau de bord personnels vous permet de collecter et de visualiser
-                        facilement les données sur votre personnels assurant un bon fonctionnement de votre busness
+                        Un tableau de bord des clients vous permet de collecter et de visualiser
+                        facilement les données sur vos clients, vous ainsi assurant un bon fonctionnement de votre busness
                     </p>
                 </div>
                 
                 <div class="col-md-3 bg-transparent pt-5">
                     <p class="text-center">
-                        <a href="addPersonnels.php" class="btn btn-primary p-2">&plus; Add personnel</a>
+                        <a href="addPersonnels.php" class="btn btn-primary p-2">&plus; Add clients</a>
                     </p>
                 </div>
     
@@ -97,25 +97,25 @@
         <?php
                 include 'connexion.php';
                         
-                $reqSql= ("SELECT * FROM Personnel order by Nom asc");
+                $reqSql= ("SELECT * FROM Client order by NomClient asc");
                 $result= mysqli_query($db, $reqSql);
                 if(mysqli_num_rows($result)>0){
                     echo '<table class="table border border-1">
                     <thead class="bg-secondary text-white">
                     <tr>
+                        <th>ID</th>
                         <th>Nom</th>
                         <th>phone number</th>
-                        <th>poste</th>
                         <th>Action</th>
                     </tr>
                     </thead>';
-                   
+                  
                     while($row= mysqli_fetch_assoc($result)){
                             echo'
                             <tr>
-                    <td>'.$row["Nom"].'</td>
+                    <td>'.$row["idClient"].'</td>
+                    <td>'.$row["NomClient"].'</td>
                     <td>'.$row["Telephone"].'</td>
-                    <td>'.$row["Poste"].'</td>
                     <td >
                         <div class="d-flex flex-row justify-content-center">
                             

@@ -1,3 +1,4 @@
+const identifiantM = document.querySelector('#identifiantM');
 const dateP = document.querySelector('#date');
 const produit = document.querySelector('#produit');
 const produitVide = document.querySelector('#produitVide')
@@ -9,6 +10,19 @@ const motif = document.querySelector('#motif');
 
 const typeForm = document.querySelector('#typeFormulaire');
 const btn = document.querySelector('#envoi');
+
+if (typeForm.value === 'update') {
+  identifiantM.addEventListener('change', () => {
+    const tabValeur = identifiantM.value.split('::');
+    dateP.value = tabValeur[3];
+    produit.value = `ID ::${tabValeur[13]}:: Nom ::${tabValeur[15]}:: PA ::${tabValeur[17]}:: PV = ::${tabValeur[19]}:: PVmin =::${tabValeur[21]}:: Qstock = ::${tabValeur[23]}`;
+    idBonusPerte = tabValeur[1];
+    quantiteGagne.value = tabValeur[7];
+    quantitePerdu.value = tabValeur[9];
+    motif.value = tabValeur[11];
+  })
+  
+}
 
 const messageVide = 'Veuillez remplir ce champs svp'
 const messageComplete = valeur => {
@@ -63,7 +77,7 @@ const messageComplete = valeur => {
     let take;
 
     if (typeForm.value == 'update') {
-        take = idProduit+"::"+quantiteGagne.value+"::"+quantitePerdu.value+"::"+motif.value+"::"+dateP.value+"::update";
+        take = idProduit+"::"+quantiteGagne.value+"::"+quantitePerdu.value+"::"+motif.value+"::"+dateP.value+"::"+idBonusPerte+"::update";
     } else {
         take = idProduit+"::"+quantiteGagne.value+"::"+quantitePerdu.value+"::"+motif.value+"::"+dateP.value+"::add";
     }

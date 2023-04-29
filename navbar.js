@@ -51,7 +51,7 @@ function navbar() {
         </a>
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="personnels.php">Clients</a></li>
-            <li><a class="dropdown-item" href="addPersonnels.html">Ajoutez clients</a></li>
+            <li><a class="dropdown-item" href="addPersonnels.php">Ajoutez clients</a></li>
           </ul>
       </li>
 

@@ -21,7 +21,7 @@
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.js"></script>
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
     <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
-    <script defer src="./jsfile/navbar.js"></script>
+    <script defer src="./navbar.js"></script>
     <script defer src="./jsfile/jquery-3.6.1.min.js"></script>
     <script defer src="./jsfile/produit.js"></script>
     <script defer src="./jsfile/supprime.js"></script>
@@ -30,13 +30,13 @@
 <?php
   function dataCaisseOut(){
     include 'connexion.php';
-    $sql = ("SELECT * FROM CaisseOut order by idCaisseOut desc");
+    $sql = ("SELECT * FROM Sortie order by idSortie desc");
     $result = mysqli_query($db, $sql);
             
     if(mysqli_num_rows($result)>0){
                         
         while($row= mysqli_fetch_assoc($result)){
-            echo"<option value='ID ::".$row["idCaisseOut"].":: Montant entrer ::".$row["MontantOut"].":: Motif  ::".$row["Commentaire"].":: Type ::".$row["Type"].":: Dates ::".$row["DatesOut"]."'>montant = ".$row["MontantOut"]." commentaire : ".$row["Commentaire"]."</option>"; 
+            echo"<option value='ID ::".$row["idSortie"].":: Montant ::".$row["Montant"].":: Motif  ::".$row["il_pris_quoi"].":: Type ::".$row["TypeD"].":: Dates ::".$row["DatesD"]."'>montant = ".$row["Montant"]." commentaire : ".$row["il_pris_quoi"]."</option>"; 
         }
                 
    }else{echo "Une erreur s est produite ";}  
@@ -65,16 +65,7 @@
             </div>
             <div class="row">
                 <div class="col-md-5">
-                    <div class="input-group mb-3 w-75">
-                        <label class="input-group-text" for="inputGroupSelect01">montrer </label>
-                        <select class="form-select" id="inputGroupSelect01">
-                          <option value="0" selected>10</option>
-                          <option value="1">100</option>
-                          <option value="2">250</option>
-                          <option value="3">tous</option>
-                        </select>
-                        <label class="input-group-text" for="inputGroupSelect01">sorties</label>
-                      </div>
+                    
                 </div>
                 <div class="input-group w-50 col-md-5">
                     <span class="input-group-text">Search: </span>
@@ -106,7 +97,7 @@
         <?php
                 include 'connexion.php';
                         
-                $reqSql= ("SELECT * FROM CaisseOut order by idCaisseOut desc ");
+                $reqSql= ("SELECT * FROM Sortie order by idSortie desc ");
                 $result= mysqli_query($db, $reqSql);
                 if(mysqli_num_rows($result)>0){
                     echo '<table class="table border border-1">
@@ -123,10 +114,10 @@
                     while($row= mysqli_fetch_assoc($result)){
                             echo'
                             <tr>
-                    <td>'.$row["MontantOut"].'</td>
-                    <td>'.$row["Commentaire"].'</td>
-                    <td>'.$row["Type"].'</td>
-                    <td>'.$row["DatesOut"].'</td>
+                    <td>'.$row["Montant"].'</td>
+                    <td>'.$row["il_pris_quoi"].'</td>
+                    <td>'.$row["TypeD"].'</td>
+                    <td>'.$row["DatesD"].'</td>
                     <td >
                         <div class="d-flex flex-row justify-content-center">
                             

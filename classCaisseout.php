@@ -1,7 +1,7 @@
 <?php
 
-    class CaisseOut {
-        public $idCaisseOut;
+    class Sortie {
+        public $idSortie;
         private $montant;
         private $motif;
         private $type;
@@ -18,9 +18,9 @@
         }
 
        
-        function insererCaisseOut() {
+        function insererSortie() {
             include 'connexion.php';
-            $sql = ("INSERT INTO CaisseOut (MontantOut, Commentaire, `Type`, DatesOut) values ('".$this->montant."', '".$this->motif."', '".$this->type."', '".$this->datesout."')");
+            $sql = ("INSERT INTO Sortie (Montant, il_pris_quoi, `TypeD`, DatesD) values ('".$this->montant."', '".$this->motif."', '".$this->type."', '".$this->datesout."')");
             if(mysqli_query($db, $sql)){
                 
             }else{
@@ -28,25 +28,25 @@
             }
         }
 
-        function updateCaisseOut() {
+        function updateSortie() {
             include 'connexion.php';
-            $updC= ("UPDATE `CaisseOut` SET `MontantOut` = $this->montant WHERE idCaisseOut =$this->idCaisseOut");
+            $updC= ("UPDATE `Sortie` SET `Montant` = $this->montant WHERE idSortie =$this->idSortie");
             if(mysqli_query($db,$updC)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
             }
 
-            $updC1= ("UPDATE `CaisseOut` SET `Commentaire` = '".$this->motif."' WHERE idCaisseOut =$this->idCaisseOut");
+            $updC1= ("UPDATE `Sortie` SET `il_pris_quoi` = '".$this->motif."' WHERE idSortie =$this->idSortie");
             if(mysqli_query($db,$updC1)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
             }
-            $updC2= ("UPDATE `CaisseOut` SET `Type` = '".$this->type."' WHERE idCaisseOut =$this->idCaisseOut");
+            $updC2= ("UPDATE `Sortie` SET `TypeD` = '".$this->type."' WHERE idSortie =$this->idSortie");
             if(mysqli_query($db,$updC2)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
             }
-            $updC3= ("UPDATE `CaisseOut` SET `DatesOut` = '".$this->datesout."' WHERE idCaisseOut =$this->idCaisseOut");
+            $updC3= ("UPDATE `Sortie` SET `DatesD` = '".$this->datesout."' WHERE idSortie =$this->idSortie");
             if(mysqli_query($db,$updC3)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
@@ -54,7 +54,7 @@
         }
         function deleteCaisse() {
             include 'connexion.php';
-            $delete = ("DELETE FROM CaisseOut WHERE idCaisseOut =$this->idCaisseOut");
+            $delete = ("DELETE FROM Sortie WHERE idSortie =$this->idSortie");
             if (mysqli_query($db, $delete)){echo"";} else {
                 $this->message = mysqli_error($db);
                 return;
@@ -68,8 +68,8 @@
     if (end($tabC) == 'add') {
         if ($q !== "") {
             $hint = $q;
-            $salaire = new CaisseOut($tabC[0], $tabC[1], $tabC[2], $tabC[3]);
-            $salaire->insererCaisseOut();
+            $salaire = new Sortie($tabC[0], $tabC[1], $tabC[2], $tabC[3]);
+            $salaire->insererSortie();
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;
@@ -91,9 +91,9 @@
         $idCaisse = $tabC[4];
         if ($q !== "") {
             $hint = $q;
-            $salaire = new CaisseOut($tabC[0], $tabC[1], $tabC[2], $tabC[3]);
-            $salaire->idCaisseOut = $idCaisse;
-            $salaire->updateCaisseIn();
+            $salaire = new Sortie($tabC[0], $tabC[1], $tabC[2], $tabC[3]);
+            $salaire->idSortie = $idCaisse;
+            $salaire->updateSortie();
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;
@@ -114,8 +114,8 @@
         $idCaisse = $tabC[4];
         if ($q !== "") {
             $hint = $q;
-            $salaire = new CaisseOut(1, 2, 3, 4);
-            $salaire->idCaisseOut = $tabC[0];
+            $salaire = new Sortie(1, 2, 3, 4);
+            $salaire->idSortie = $tabC[0];
             $salaire->deleteCaisse();
             $autre = $salaire->message;
             if( $salaire->message) {

@@ -36,7 +36,7 @@
 
         function updateProduct() {
             include 'connexion.php';
-            $updC= ("UPDATE `Produit` SET `Nom` = $this->nom WHERE idProduit =$this->idProduit");
+            $updC= ("UPDATE `Produit` SET `Nom` = '".$this->nom."' WHERE idProduit =$this->idProduit");
             if(mysqli_query($db,$updC)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
@@ -110,11 +110,11 @@
         
     }
     if(end($tabC) == 'update') {
-        $idCaisse = $tabC[4];
+        $id= $tabC[7];
         if ($q !== "") {
             $hint = $q;
             $produit = new Produit($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4], $tabC[5], $tabC[6]);
-            $produit->idProduit = $idCaisse;
+            $produit->idProduit = $id;
             $produit->updateProduct();
             $autre = $produit->message;
             if( $produit->message) {
