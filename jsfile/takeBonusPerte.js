@@ -73,5 +73,5 @@ const messageComplete = valeur => {
     produit.value =""; 
     quantiteGagne.value = "0";
     quantitePerdu.value = "0";
-    motif.value = idProduit;
+    motif.value = "";
   });

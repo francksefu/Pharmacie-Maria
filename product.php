@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.css">
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.css">
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.min.css">
-   
+  
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.js"></script>
@@ -37,7 +37,7 @@ function dataProduct(){
     if(mysqli_num_rows($result)>0){
                         
         while($row= mysqli_fetch_assoc($result)){
-            echo"<option value='ID ::".$row["idProduit"].":: Nom ::".$row["Nom"].":: PA  ::".$row["PrixAchat"]."$:: PV ::".$row["PrixVente"]." $:: PVmin ::".$row["PrixVmin"]."$:: QStock ::".$row["QuantiteStock"]."</option>"; 
+            echo"<option value='ID ::".$row["idProduit"].":: Nom ::".$row["Nom"].":: PA ::".$row["PrixAchat"].":: PV = ::".$row["PrixVente"].":: PVmin =::".$row["PrixVmin"].":: Qstock = ::".$row["QuantiteStock"]."'>nom: ".$row["Nom"]." :Qstock ".$row["QuantiteStock"]."</option>"; 
         }
                 
    }else{echo "Une erreur s est produite ";}  
@@ -68,7 +68,7 @@ function render($reqSql) {
           <div class="d-flex flex-row" id="taille">
             <img src ="banane.png" class="img-fluid photo m-0" alt="produit">
             <div class="ps-2 m-0">
-              <h4>'.$row["Nom"].'</h4>
+              <h4 class="text-end">'.$row["Nom"].'</h4>
               <small class="text-secondary">'.$row["DescriptionP"].'</small>
             </div>
           </div>
@@ -123,7 +123,7 @@ function render($reqSql) {
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="inputGroupSelect01">Choisir stock</label>
                         <select class="form-select" id="select-stock">
-                          <option selected value="1">Stock 1</option>
+                          <option value="1">Stock 1</option>
                           <option value="2">Stock 2</option>
                         </select>
                       </div>
@@ -164,12 +164,12 @@ function render($reqSql) {
                 <input type="hidden" value="besoin" id="type" >
             </div>
         </div>
-    
-        <div class="container-fluid pt-5 bg-transparent">
-        <?php
+   
+        <div class="container-fluid pt-5 bg-transparent" id="render">
+       <?php
           $reqSql0= ("SELECT * FROM Produit order by Nom asc");
           render($reqSql0);
-        ?> 
+        ?>
         </div>
         
     </main>

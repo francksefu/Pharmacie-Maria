@@ -40,7 +40,7 @@
                 
                 <div class="col-md-3 bg-transparent pt-5">
                     <p class="text-center">
-                        <a href="addApprovisionnement.html" class="btn btn-primary p-2">&plus; Add approvisionnement</a>
+                        <a href="addApprovisionnement.php" class="btn btn-primary p-2">&plus; Add approvisionnement</a>
                     </p>
                 </div>
     

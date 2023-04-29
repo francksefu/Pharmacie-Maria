@@ -22,7 +22,7 @@
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
     <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
     <script defer src="navbar.js"></script>
-   
+    <script defer src="./jsfile/takeProduit.js"></script>
     <link rel="stylesheet" href="index.css">
 </head>
 <body class="bg-light">
@@ -38,48 +38,56 @@
                         <label class="input-group-text" for="inputGroupSelect01">Choisir stock</label>
                         <select class="form-select" id="inputGroupSelect01">
                           <option selected value="1">Stock 1</option>
-                          <option value="2">Stock 2</option>
                         </select>
                       </div>
                       <div class="row">
                         <div class="input-group mb-3 col-md-6">
                             <span class="input-group-text" id="basic-addon1">Nom*</span>
-                            <input required type="text" class="form-control" placeholder="Nom du produit" aria-label="Username" aria-describedby="basic-addon1">
+                            <input id="nom" required type="text" class="form-control" placeholder="Nom du produit" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
-                        <div class="input-group mb-3 col-md-6">
-                            <span class="input-group-text" id="basic-addon1">Image</span>
-                            <input required type="text" class="form-control" placeholder="nom de l image du produit" aria-label="Username" aria-describedby="basic-addon1">
-                        </div>
+                        <small id="nomVide"></small>
+                        <div class="input-group mb-3 col-md-6"></div>
                       </div>
                       <div class="row">
                         <div class="input-group mb-3 col-md-6">
                             <span class="input-group-text">Prix d achat*</span>
-                            <input required type="float" pattern="[0-9]" class="form-control" placeholder="entrer prix d achat" aria-label="Amount (to the nearest dollar)">
+                            <input id="pa" required type="float" class="form-control" placeholder="entrer prix d achat" aria-label="Amount (to the nearest dollar)">
                             <span class="input-group-text">$</span>
                         </div>
+                        <small id="paVide"></small>
                         <div class="input-group mb-3 col-md-6">
                             <span class="input-group-text">Prix de vente*</span>
-                            <input required type="float" pattern="[0-9]" class="form-control" placeholder="entrer prix de vente" aria-label="Amount (to the nearest dollar)">
+                            <input id="pv" required type="float" class="form-control" placeholder="entrer prix de vente" aria-label="Amount (to the nearest dollar)">
                             <span class="input-group-text">$</span>
                         </div>
+                        <small id="pvVide"></small>
                       </div>
                       <div class="row">
                         <div class="input-group mb-3 col-md-6">
                             <span class="input-group-text">Prix de vente minimum*</span>
-                            <input required type="float" pattern="[0-9]" class="form-control" placeholder="entrer prix de vente a ne pas depasser" aria-label="Amount (to the nearest dollar)">
+                            <input id="pvmin" required type="float" class="form-control" placeholder="entrer prix de vente a ne pas depasser" aria-label="Amount (to the nearest dollar)">
                             <span class="input-group-text">$</span>
                         </div>
+                        <small id="pvminVide"></small>
                         <div class="input-group mb-3 col-md-6">
                             <span class="input-group-text" id="basic-addon1">Quantite*</span>
-                            <input required type="float" pattern="[0-9]" class="form-control" placeholder="Entrer quantite" aria-label="Username" aria-describedby="basic-addon1">
+                            <input id="quantite" required type="float"  class="form-control" placeholder="Entrer quantite" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
+                        <small id="quantiteVide"></small>
+                        <div class="input-group mb-3 col-md-6">
+                            <span class="input-group-text" id="basic-addon1">Quantite min*</span>
+                            <input id="quantitemin" required type="float"  class="form-control" placeholder="Entrer quantite" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                        <small id="quantiteminVide"></small>
                       </div>
                       <div class="input-group">
                         <span class="input-group-text">Description du produit</span>
-                        <textarea class="form-control" aria-label="With textarea" placeholder="Entrer description"></textarea>
+                        <textarea id="description" class="form-control" aria-label="With textarea" placeholder="Entrer description"></textarea>
                       </div>
-    
-                      <button type="submit" class="btn btn-primary p-2 mt-4">Ajouter produit</button>
+                      <p id="txtHint"></p>
+                      <input type="hidden" id="identifiantM" value="">
+                      <input type="hidden" value="add" id="typeFormulaire">
+                      <button id="envoi" type="button" class="btn btn-primary p-2 mt-4">Ajouter produit</button>
                     
                 </form>
             </div>

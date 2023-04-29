@@ -80,8 +80,6 @@ function navbar() {
                 <li><a class="dropdown-item" href="addApprovisionnement.php">Ajoutez les approvisionnements</a></li>
                 <li><a class="dropdown-item" href="bonusOuPerte.php">Listez les bonus ou les pertes</a></li>
                 <li><a class="dropdown-item" href="addBonusOuPerte.php">Ajoutez les bonus ou les pertes</a></li>
-                <li><a class="dropdown-item" href="detteEntreprise.php">Listez les dettes de l entreprises</a></li>
-                <li><a class="dropdown-item" href="addDetteEntreprise.php">Ajoutez les dettes de l entreprises</a></li>
             </ul>
         </li>
 
