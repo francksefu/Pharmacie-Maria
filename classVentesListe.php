@@ -1,0 +1,56 @@
+<?php
+function dataVente($operation){
+    include 'connexion.php';
+    $sql= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and (Operation = $operation)");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+      $valeur .= '<table class="table border border-1">
+      <thead class="bg-transparent text-secondary">
+      <tr>
+                <th>Nom du produit</th>
+                <th>Quantite vendu</th>
+                <th>Prix de vente unitaire</th>
+                <th>Prix de vente total</th>
+              </tr>
+            </thead>
+            <tbody>';
+            $total = 0;
+        while($row= mysqli_fetch_assoc($result)){
+            $nomClient = $row["NomClient"];
+            $date = $row["DatesVente"];
+            $total += $row["PT"];
+            $valeur .= '
+                <tr>
+                    <td>
+                        '.$row["Nom"].'
+                    </td>
+                    <td>'.$row["QuantiteVendu"].'</td>
+                    <td>'.$row["PU"].'</td>
+                    <td>'.$row["PT"].'</td>
+                </tr>';
+        }
+        $valeur .= '</tbody>
+        <h5 class=" mb-3 mt-3 ms-3"> date : '.$date.'</h5>
+        <h3 class="text-center mb-3 mt-3"> client : '.$nomClient.'</h3>
+        </table>
+        <h3 class="text-center mb-3 mt-3"> total : '.$total.' $</h3>';
+        return $valeur;
+
+   }else{return "Une erreur s est produite ";}  
+
+}
+
+$q = $_REQUEST["q"];
+
+$autre = '';
+
+    if ($q !== "") {
+        $hint = dataVente($q);
+    } else {
+        $hint = 'erreur';
+    }
+    echo ''.$hint;
+    
+
+?>

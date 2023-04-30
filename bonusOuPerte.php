@@ -159,7 +159,7 @@ function render($reqSql) {
                     </span>
                 </div>
                 <small id="txtHint"></small>
-                <input type="hidden" value="besoin" id="type" >
+                <input type="hidden" value="bonusperte" id="type" >
             </div>
         </div>
     

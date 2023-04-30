@@ -103,6 +103,7 @@
                     echo '<table class="table border border-1">
                     <thead class="bg-secondary text-white">
                     <tr>
+                        <th>ID</th>
                         <th>Montant sorti</th>
                         <th>Commentaire</th>
                         <th>Type</th>
@@ -110,10 +111,11 @@
                         <th>Action</th>
                     </tr>
                     </thead>';
-                 
+                
                     while($row= mysqli_fetch_assoc($result)){
                             echo'
                             <tr>
+                    <td>'.$row["idSortie"].'</td>
                     <td>'.$row["Montant"].'</td>
                     <td>'.$row["il_pris_quoi"].'</td>
                     <td>'.$row["TypeD"].'</td>

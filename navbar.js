@@ -65,6 +65,7 @@ function navbar() {
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="caisseOut.php">Listez les sorties</a></li>
             <li><a class="dropdown-item" href="addCaisseOut.php">Ajoutez sortie</a></li>
+            <li><a class="dropdown-item" href="updateTaux.php">Modifier taux d echange</a></li>
           </ul>
       </li>
 

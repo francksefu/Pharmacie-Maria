@@ -25,8 +25,8 @@
     <script defer src="./jsfile/jquery-3.6.1.min.js"></script>
     <script defer src="./jsfile/produit.js"></script>
     <script defer src="./jsfile/supprime.js"></script>
-    <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="modifier.css">
+    <link rel="stylesheet" href="index.css">
 </head>
 <?php
 function dataProduct(){
@@ -163,7 +163,7 @@ function render($reqSql) {
                     </span>
                 </div>
                 <small id="txtHint"></small>
-                <input type="hidden" value="besoin" id="type" >
+                <input type="hidden" value="product" id="type" >
             </div>
         </div>
    

@@ -38,12 +38,12 @@ function showHint(str, entre) {
 const search = document.querySelector('.search');
 const small = document.querySelector('#txtHint');
 btn.addEventListener('click', () => {
-    if (fichier.value === "besoin") {
-      showHint(input.value.split('::')[1]+"::delete", "classBesoin.php?q=")
+    if (fichier.value === "product") {
+      showHint(input.value.split('::')[1]+"::delete", "classProduct.php?q=")
     }
 
-    if(fichier.value === 'caissein') {
-      showHint(input.value.split('::')[1]+"::delete", "classCaissein.php?q=")
+    if(fichier.value === 'bonusperte') {
+      showHint(input.value.split('::')[1]+"::delete", "classBonusPete.php?q=")
     }
 
     if(fichier.value === 'caisseout') {
@@ -73,5 +73,10 @@ btn.addEventListener('click', () => {
     if(fichier.value === 'ventes') {
       showHint(input.value.split('::')[1]+"::delete", "classVentes.php?q=")
     }
-    supprime.value = "";
+    input.value = "";
+    document.querySelector('.montre-moi').style.display = "none";
 });
+
+window.addEventListener('load', () => {
+  document.querySelector('.montre-moi').style.display = "none";
+})

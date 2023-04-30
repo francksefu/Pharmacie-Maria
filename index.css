@@ -35,6 +35,10 @@ header {
     z-index: 3;
 }
 
+.montre-moi {
+  display: none;
+}
+
 .hidden {
   display: none;
 }
