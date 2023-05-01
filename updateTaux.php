@@ -20,24 +20,23 @@
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
     <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
     <script defer src="./navbar.js"></script>
-    <script defer src="./jsfile/takePersonnels.js"></script>
+    <script defer src="./jsfile/taux.js"></script>
     <link rel="stylesheet" href="index.css">
 </head>
 <?php
-  function dataBonusPerte(){
+  function data(){
     include 'connexion.php';
-    $sql= ("SELECT Chilling, CDF, Rwandais FROM Change order by idChange desc");
+    $sql = ("SELECT * FROM `Change` order by idChange desc limit 1");
     $result = mysqli_query($db, $sql);
             
     if(mysqli_num_rows($result)>0){
                         
         while($row= mysqli_fetch_assoc($result)){
-            echo"<option value='ID ::".$row["idChange"].":: 1$ = ::".$row["Chilling"].":: chilling =  ::".$row["Rwandais"].":: RWD = ::".$row["CDF"].":: fc =::'>QG: ".$row["CDF"]." :fc </option>"; 
-        }
-                
-   }else{echo "Une erreur s est produite ";}  
-
+            echo"<option value='ID ::".$row["idChange"].":: 1$ = ::".$row["Chilling"].":: chilling =  ::".$row["Rwandais"].":: rwandais= ::".$row["CDF"].":: Fc'>montant = ".$row["CDF"]." Fc = ".$row["Dollar"]."$</option>"; 
+        }       
+   }  
 }
+
 ?>
 <body class="back">
 
@@ -53,8 +52,7 @@
                         <input required type="text" list="dataBesoin" id="identifiantM" class="form-control w-50" placeholder="entrer identifiant" aria-label="Username" aria-describedby="nom" >
                             <datalist id="dataBesoin">
                                 <?php 
-                                  dataBonusPerte();
-
+                                  data();
                                 ?>
                             </datalist>
                     </div>
