@@ -21,8 +21,9 @@
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
     <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
     <script defer src="navbar.js"></script>
-    <script defer src="jsfile/takeVente.js"></script>
     <link rel="stylesheet" href="index.css">
+    <script defer src="jsfile/takeVente.js"></script>
+    
 </head>
 <?php
 function data(){
@@ -74,7 +75,7 @@ function dataPersonnel(){
             <hr class="w-auto">
             <form action="">
             <div class="row border border-1 mt-3 pt-3 w-75 d-block mx-auto">
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3" id="ancien-client">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">Nom*</span>
                             <input required type="text" list="dataPersonnel" id="nomClient" class="form-control" placeholder="Nom du client" aria-label="Username" aria-describedby="basic-addon1">
@@ -83,18 +84,24 @@ function dataPersonnel(){
                                 dataPersonnel();
                                ?>
                             </datalist>
+                            <span class="input-group-text bg-warning" id="affiche-ancien">cliquez ici si le client est nouveau*</span>
                         </div>
-                        <span class="input-group-text">Le client est-il nouveau? Nom</span>
-                        <input type="text" id="newClient" class="form-control" placeholder="Entrer nom du client" aria-label="Username">
-                        <span class="input-group-text">Numero tel</span>
-                        <input type="text" id="newPhone" class="form-control" placeholder="Numero de telephone" aria-label="Server">
+                        <div class="input-group mb-3" id="nouveau-client">
+                            <span class="input-group-text"> Nom</span>
+                            <input type="text" id="newClient" class="form-control" placeholder="Entrer nom du client" aria-label="Username">
+                            <span class="input-group-text">Numero tel</span>
+                            <input type="text" id="newPhone" class="form-control" placeholder="Numero de telephone" aria-label="Server">
+                            <span class="input-group-text bg-warning" id="affiche-nouveau">cliquez ici si le client existe deja</span>
+                        </div>
+                        
                     </div>
                    
                     
                 </div>
 
-                <div class="input-group mb-3 pt-5 pb-4">
-                    <a id="remove" href="" class="text-decoration-none"><span class="input-group-text bg-danger text-white">&cross;</span></a>
+                
+                <div class="input-group mb-3 pt-5 pb-4" id="ajoutons">
+                    <a id="remove" href="#" class="text-decoration-none"><span class="input-group-text bg-danger text-white">&cross;</span></a>
                     <span class="input-group-text border border-primary">Nom</span>
                     <input id="produit" type="text" list="dataProduct" class="form-control border border-primary w-25" placeholder="Entrer nom du produit" aria-label="Username">
                       <datalist id="dataProduct">
@@ -108,6 +115,7 @@ function dataPersonnel(){
                     <input id="pvu" type="float" class="form-control" placeholder="prix de vente" aria-label="Server">
                     <span class="input-group-text">$</span>
                     <a id="add" href="#" class="text-decoration-none"><span class="input-group-text bg-success text-white">&plus;</span></a>
+                    <a id="M-add" href="#" class="text-decoration-none"><span class="input-group-text bg-primary text-white">&check;</span></a>
                 </div>
                 <small id="produitVide"></small>
                 <small id="quantiteVide"></small>
@@ -195,7 +203,7 @@ function dataPersonnel(){
                 </div>
                 <input type="hidden" id="change" value='<?php echo data(); ?>'>
             <!-- just using to make difference between add, remove, and update -->
-                <input type="hidden" id="state">
+                <input type="hidden" id="state" >
     </form>
         </div>
     </main>

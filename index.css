@@ -46,3 +46,6 @@ header {
 .back {
     background-color: beige;
 }
+ #affiche-ancien {
+  cursor: pointer;
+ }
