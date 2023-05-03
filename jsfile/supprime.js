@@ -7,7 +7,6 @@ const cross = document.querySelector('#cross');
 const del = document.querySelector('#del');
 
 function showHint(str, entre) {
-  
     if (str.length == 0) {
       document.getElementById("txtHint").innerHTML = "";
       return;
@@ -16,6 +15,25 @@ function showHint(str, entre) {
       xmlhttp.onload = function() {
         feedback = this.responseText;
         document.getElementById("txtHint").innerHTML = this.responseText;
+        //console.log (this.responseText);
+      }
+      let nouveau = entre+"" +str
+      
+    xmlhttp.open("GET", nouveau);
+    xmlhttp.send();
+    }
+  }
+
+  function showvente(str, entre) {
+    if (str.length == 0) {
+      document.getElementById("txtHint").innerHTML = "";
+      return;
+    } else {
+      const xmlhttp = new XMLHttpRequest();
+      xmlhttp.onload = function() {
+        feedback = this.responseText;
+        document.getElementById("txtHint").innerHTML = this.responseText;
+        //console.log (this.responseText);
       }
       let nouveau = entre+"" +str
       
@@ -66,15 +84,15 @@ btn.addEventListener('click', () => {
       showHint(input.value.split('::')[1]+"::delete", "classPersonnels.php?q=")
     }
 
-    if(fichier.value === 'salaire') {
-      showHint(input.value.split('::')[1]+"::delete", "classSalaire.php?q=")
+    if(document.querySelector("#type").value === 'vente1') {
+      showvente(input.value.split('::')[1]+"__:delete", "classTraitementVente.php?q=")
     }
 
-    if(fichier.value === 'vente') {
-      console.log(input.value.split('::')[1]+"::delete", "classTraitementVente.php?q=")
+    if(fichier.value === 'vent') {
+      showHint(input.value.split('::')[1]+"__:delete", "classTraitementVent.php?q=");
     }
     input.value = "";
-    document.querySelector('.montre-moi').style.display = "none";
+    //document.querySelector('.montre-moi').style.display = "none";
 });
 
 window.addEventListener('load', () => {

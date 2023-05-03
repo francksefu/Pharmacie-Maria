@@ -177,7 +177,7 @@ function render($reqSql) {
                     </span>
                 </div>
                 <small id="txtHint"></small>
-                <input type="hidden" value="vente" id="type" >
+                <input type="hidden" value="vente1" id="type" >
             </div>
         </div>
     

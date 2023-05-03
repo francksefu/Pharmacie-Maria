@@ -102,7 +102,7 @@
 
         function deleteVentes() {
             include 'connexion.php';
-           // $this->findIDProduit($this->operation);
+           $this->findIDProduit($this->operation);
             $delete = ("DELETE FROM Ventes WHERE Operation =$this->operation");
             if (mysqli_query($db, $delete)){echo"";} else {
                 $this->message = 'delete'.mysqli_error($db);
@@ -114,7 +114,6 @@
 
     $q = $_REQUEST["q"];
     $tabObj = explode("__:", $q);
-    $tab = explode("::", $q);
     $autre = '';
     $hint = '';
     if (end($tabObj) == "add") {
@@ -213,31 +212,33 @@
         echo $hint == $autre ? $error : $sucess;
     }
     
-    
-
-    if (end($tab) == 'delete') {
+    if (end($tabObj) == "delete") {
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Ventes(0, 1,2,3,4,$tab[0],6,7,8);
-            //$tracteur->operation = $tab[0];
+            
+            $tracteur = new Ventes(0, 1, 2, 3, 4, 5, 6,7, 8);
+            $tracteur->operation = $tabObj[0];
             $tracteur->deleteVentes();
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
+                echo '<div class="alert alert-danger" role="alert">
+                Erreur '.$hint.'
+              </div>';
+                return;
             }
             
         }
-    
-        $sucess = '<div class="alert alert-success" role="alert">
-        Suppression fait avec success
-      </div>';
-    
-      $error = '<div class="alert alert-danger" role="alert">
-      Erreur '.$autre.'
-    </div>';
+        
+        
+            $sucess = '<div class="alert alert-success" role="alert">
+            Suppression fait avec success
+          </div>';
+        
+          $error = '<div class="alert alert-danger" role="alert">
+          Erreur '.$autre.'
+        </div>';
         echo $hint == $autre ? $error : $sucess;
-    }
-    
-   
+        } 
 
 ?>
