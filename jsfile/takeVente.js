@@ -63,7 +63,7 @@ const messageComplete = (valeur, champs) => {
          operationUpdate = tabElement[0];
         clientUpdate = "ID::"+tabElement[1]+"::"+tabElement[2];
         const obj = { 
-          produit: tabElement[3],
+          produit: tabElement[5],
           quantite: tabElement[14],
           pvu: tabElement[15],
           detail: detailUpdate

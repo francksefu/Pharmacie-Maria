@@ -38,7 +38,7 @@ function dataVente(){
             
     if(mysqli_num_rows($result)>0){
         while($row= mysqli_fetch_assoc($result)){
-            echo"<option value='ID ::".$row["idVentes"].":: date ::".$row["DatesVente"].":: client  ::".$row["NomClient"].":: Total facture ::".$row["TotalFacture"]."'>client = ".$row["NomClient"]." dette : ".$row["Dette"]."</option>"; 
+            echo"<option value='ID ::".$row["Operation"].":: date ::".$row["DatesVente"].":: client  ::".$row["NomClient"].":: Total facture ::".$row["TotalFacture"]."'>client = ".$row["NomClient"]." dette : ".$row["Dette"]."</option>"; 
         }
    }else{echo "Une erreur s est produite ";}  
 

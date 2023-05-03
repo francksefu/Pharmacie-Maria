@@ -33,13 +33,15 @@
             if(mysqli_num_rows($result)>0){
                                 
                 while($row= mysqli_fetch_assoc($result)){
-                    $idProduitV = $row["idProduitV"];
+                    $idProduitV = $row["idProduit"];
+                    $quantiteV = $row["QuantiteVendu"];
+                    $this->remettreProduit($idProduitV, $quantiteV);
                 }
-           }else{echo "Une erreur s est produite ";}
+           }else{$this->message = "Une erreur s est produite ";}
 
-          $this->remettreProduit($idProduitV);
+
         }
-        function remettreProduit($idProduitA) {
+        function remettreProduit($idProduitA, $quantiteA) {
             include 'connexion.php';
             $quantite_stock = 0;
             $sql = ("SELECT * FROM Produit WHERE (idProduit = $idProduitA)");
@@ -52,7 +54,7 @@
                 }
            }else{echo "Une erreur s est produite ";}
 
-           $updC1= ("UPDATE `Produit` SET `QuantiteStock` = $quantite_stock + $this->quantite WHERE idProduit =$idProduitA");
+           $updC1= ("UPDATE `Produit` SET `QuantiteStock` = $quantite_stock + $quantiteA WHERE idProduit =$idProduitA");
             if(mysqli_query($db,$updC1)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
@@ -96,23 +98,23 @@
                 $this->message = 'delete'.mysqli_error($db);
                 return;
             }
-            $this->insererVentes();
-            //$this->enleveProduit($this->idProduit);
         }
-/*
-        function deleteClient() {
+
+        function deleteVentes() {
             include 'connexion.php';
-            $delete = ("DELETE FROM Client WHERE idClient =$this->idClient");
+           // $this->findIDProduit($this->operation);
+            $delete = ("DELETE FROM Ventes WHERE Operation =$this->operation");
             if (mysqli_query($db, $delete)){echo"";} else {
-                $this->message = mysqli_error($db);
+                $this->message = 'delete'.mysqli_error($db);
                 return;
             }
-        }*/
+        }
 
     }
 
     $q = $_REQUEST["q"];
     $tabObj = explode("__:", $q);
+    $tab = explode("::", $q);
     $autre = '';
     $hint = '';
     if (end($tabObj) == "add") {
@@ -161,7 +163,7 @@
                 $hint = $q;
                 $tracteur = new Ventes($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7], $tabElement[8]);
                 if ($i == 0) {
-                    //$tracteur->findIDProduit($tabElement[5]);
+                    $tracteur->findIDProduit($tabElement[5]);
                 }
                 $tracteur->updateVentes();
                 $autre = $tracteur->message;
@@ -175,32 +177,32 @@
                
             }
         }
-        
-        
-        
-        $sucess = '<div class="alert alert-success" role="alert">
-        Modification fait avec success
-      </div>';
-    
-      $error = '<div class="alert alert-danger" role="alert">
-      Erreur '.$autre.'
-    </div>';
-        echo $hint == $autre ? $error : $sucess;
-        }
-    
-    /*if (end($tabC) == 'update') {
-        if ($q !== "") {
-            $hint = $q;
-            $tracteur = new Clients($tabC[0], $tabC[1]);
-            $tracteur->idClient = $tabC[2];
-            $tracteur->updateClient();
-            $autre = $tracteur->message;
-            if( $tracteur->message) {
-                $hint = $autre;
+       
+        for ($i = 0; $i < count($tabObj) - 1; $i += 1) {
+            $tabElement = explode("::", $tabObj[$i]);
+            $autre = '';
+        /**
+         * avant de update il faut dabord remettre le produit
+         * ensuite supprimer la vente
+         * et enfin inserer une nouvelle vente en se servant de l ancien numero d operation
+         */
+            if ($q !== "") {
+                $hint = $q;
+                $tracteur = new Ventes($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7], $tabElement[8]);
+                $tracteur->insererVentes();
+                $autre = $tracteur->message;
+                if( $tracteur->message) {
+                    $hint = $autre;
+                    echo '<div class="alert alert-danger" role="alert">
+                    Erreur fran '.$hint.'
+                  </div>';
+                    return;
+                }
+               
             }
-            
         }
-    
+        
+        
         $sucess = '<div class="alert alert-success" role="alert">
         Modification fait avec success
       </div>';
@@ -210,13 +212,15 @@
     </div>';
         echo $hint == $autre ? $error : $sucess;
     }
+    
+    
 
-    if (end($tabC) == 'delete') {
+    if (end($tab) == 'delete') {
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Clients(0, 1);
-            $tracteur->idClient = $tabC[0];
-            $tracteur->deleteClient();
+            $tracteur = new Ventes(0, 1,2,3,4,$tab[0],6,7,8);
+            //$tracteur->operation = $tab[0];
+            $tracteur->deleteVentes();
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
@@ -232,7 +236,7 @@
       Erreur '.$autre.'
     </div>';
         echo $hint == $autre ? $error : $sucess;
-    }*/
+    }
     
    
 

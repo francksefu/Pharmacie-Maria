@@ -70,8 +70,8 @@ btn.addEventListener('click', () => {
       showHint(input.value.split('::')[1]+"::delete", "classSalaire.php?q=")
     }
 
-    if(fichier.value === 'ventes') {
-      showHint(input.value.split('::')[1]+"::delete", "classVentes.php?q=")
+    if(fichier.value === 'vente') {
+      console.log(input.value.split('::')[1]+"::delete", "classTraitementVente.php?q=")
     }
     input.value = "";
     document.querySelector('.montre-moi').style.display = "none";
