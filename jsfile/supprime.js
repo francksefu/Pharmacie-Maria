@@ -76,7 +76,7 @@ btn.addEventListener('click', () => {
       showHint(input.value.split('::')[1]+"::delete", "classDepot.php?q=")
     }
 
-    if(fichier.value === 'paiement') {
+    if(fichier.value === 'paiements') {
       showHint(input.value.split('::')[1]+"::delete", "classPaiements.php?q=")
     }
 
@@ -88,9 +88,6 @@ btn.addEventListener('click', () => {
       showvente(input.value.split('::')[1]+"__:delete", "classTraitementVente.php?q=")
     }
 
-    if(fichier.value === 'vent') {
-      showHint(input.value.split('::')[1]+"__:delete", "classTraitementVent.php?q=");
-    }
     input.value = "";
     //document.querySelector('.montre-moi').style.display = "none";
 });

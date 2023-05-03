@@ -31,14 +31,14 @@
 </head>
 <?php
 
-function dataVente(){
+function dataPaiements(){
     include 'connexion.php';
-    $sql= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) GROUP BY Operation order by Operation desc");
+    $sql= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) order by idPaiements desc");
     $result = mysqli_query($db, $sql);
-            
+           
     if(mysqli_num_rows($result)>0){
         while($row= mysqli_fetch_assoc($result)){
-            echo"<option value='ID ::".$row["Operation"].":: date ::".$row["DatesVente"].":: client  ::".$row["NomClient"].":: Total facture ::".$row["TotalFacture"]."'>client = ".$row["NomClient"]." dette : ".$row["Dette"]."</option>"; 
+            echo"<option value='ID ::".$row["idPaiements"].":: operation ::".$row["Operation"].":: client  ::".$row["NomClient"].":: Total facture ::".$row["TotalFacture"]."'>client = ".$row["NomClient"]." dette : ".$row["Dette"]."</option>"; 
         }
    }else{echo "Une erreur s est produite ";}  
 
@@ -51,6 +51,9 @@ function render($reqSql) {
         echo '<table class="table border border-1">
         <thead class="bg-secondary text-white">
         <tr>
+            <th>ID</th>
+            <th>Montant payé</th>
+            <th>date de paiement</th>
             <th>Operation</th>
             <th>Date</th>
             <th>Client</th>
@@ -78,6 +81,9 @@ function render($reqSql) {
             }
             echo'
         <tr>
+        <td>'.$row["idPaiements"].'</td>
+        <td>'.$row["Montant"].'</td>
+        <td>'.$row["DatesPaie"].'</td>
         <td>'.$row["Operation"].'</td>
         <td>'.$row["DatesVente"].'</td>
         <td>'.$row["NomClient"].'</td>
@@ -104,7 +110,7 @@ function render($reqSql) {
                     </a>
                 </div>
                 <div class="p-2 bg-primary m-2 text-white rounded-3 montre">
-                    <a href="updateVentes.php" class="text-white">
+                    <a href="updatePaiements.php" class="text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
                             <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
                         </svg>
@@ -128,16 +134,16 @@ function render($reqSql) {
         <div class="container bg-transparent pt-5" >
             <div class="row bg-transparent pt-5">
                 <div class="col-md-6 bg-transparent m-2">
-                    <h2>Liste des ventes</h2>
+                    <h2>Liste des paiements</h2>
                     <p class=" text-secondary pt-3">
-                        Les ventes vous permettent de controler efficacement les KPI de vente et de surveiller
-                        dans un lieu centrale tout en aidant les equipes a atteindre leur objectif de vente 
+                        Les paiements vous permettent de controler efficacement les KPI de paiement? et de surveiller
+                        dans un lieu centrale tout en aidant les equipes a atteindre leur objectif de vente et de paiements 
                     </p>
                 </div>
                 
                 <div class="col-md-3 bg-transparent pt-5">
                     <p class="text-center">
-                        <a href="addVentes.php" class="btn btn-primary p-2">&plus; Add ventes</a>
+                        <a href="addPaiements.php" class="btn btn-primary p-2">&plus; Add paiement?</a>
                     </p>
                 </div>
     
@@ -164,7 +170,7 @@ function render($reqSql) {
                     <input type="text" id="supprimons" list="dataBesoin" class="form-control" placeholder="metez quelque chose dont vous vous rappeler pour le supprimer" >
                       <datalist id="dataBesoin">
                          <?php 
-                            dataVente();
+                            dataPaiements();
 
                         ?>
                       </datalist>
@@ -177,13 +183,13 @@ function render($reqSql) {
                     </span>
                 </div>
                 <small id="txtHint"></small>
-                <input type="hidden" value="vente1" id="type" >
+                <input type="hidden" value="paiements" id="type" >
             </div>
         </div>
     
         <div class="container-fluid pt-5 bg-transparent">
         <?php
-            $reqSql0= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) GROUP BY Operation order by Operation desc");
+            $reqSql0= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) GROUP BY idPaiements order by idPaiements desc");
             render($reqSql0);
           ?>  
         </div>
