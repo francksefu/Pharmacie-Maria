@@ -26,6 +26,4 @@ $autre = '';
         $hint = 'erreur';
     }
     echo ''.$hint;
-    
-
 ?>
