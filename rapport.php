@@ -110,24 +110,29 @@ function dataVente(){
             <!--Form between-->
             <div class="col-md-7 m-2">
                 <div class="border border-1">
-                  <form>
+                  <form action="think.php" method="POST">
                     <p class="border border-1 text-center ft-3 text-secondary" id="paragraphe"></p>
                       <div class="input-group mb-3 col-md-5" id="cont-date1">
                           <span class="input-group-text" id="basic-addon1">Date1*</span>
-                          <input required type="date"  name="dates" id="date1" class="form-control w-50" placeholder="mettre la date" aria-label="Username" aria-describedby="nom" >
+                          <input required type="date"  name="Date1" id="date1" class="form-control w-50" placeholder="mettre la date" aria-label="Username" aria-describedby="nom" >
                       </div>
                       <div class="input-group mb-3 col-md-5" id="cont-date2">
                             <span class="input-group-text" id="basic-addon1">Date2*</span>
-                            <input required type="date"  name="dates" id="date2" class="form-control w-50" placeholder="mettre la date" aria-label="Username" aria-describedby="nom" >
+                            <input required type="date"  name="Date2" id="date2" class="form-control w-50" placeholder="mettre la date" aria-label="Username" aria-describedby="nom" >
                         </div>
-                        <div class="input-group  mt-3 mb-3" id="cont-input">
+                        <div class="input-group  mt-3 mb-3" id="cont-input1">
                           <span class="input-group-text">choisir : </span>
-                          <input type="text" id="input" class="form-control" placeholder="entrer le nom du produit ou une information sur le produit, ensuite choisissez" >
+                          <input type="text" name="Personnel" id="input-1" list="dataPersonnel" class="form-control" placeholder="entrer le nom du produit ou une information sur le produit, ensuite choisissez" >
                             <datalist id="dataPersonnel">
                               <?php 
                                 dataPersonnel();
                               ?>
                             </datalist>
+                          <span class="input-group-text pointe" id="cross">&cross;</span>
+                      </div>
+                      <div class="input-group  mt-3 mb-3" id="cont-input2">
+                          <span class="input-group-text">choisir : </span>
+                          <input type="text" name="Facture" id="input-2" list="dataFacture" class="form-control" placeholder="entrer le nom du produit ou une information sur le produit, ensuite choisissez" >
                             <datalist id="dataFacture">
                               <?php 
                                  dataVente();
@@ -135,7 +140,7 @@ function dataVente(){
                             </datalist>
                           <span class="input-group-text pointe" id="cross">&cross;</span>
                       </div>
-                     <input type="hidden" id="type">
+                     <input type="hidden" id="type" name="Cache">
                      <button type="submit" class="btn btn-primary" id="envoi">Soumettre</button> 
                   </form>
                 </div>
@@ -175,6 +180,16 @@ function dataVente(){
                       <li id="toutes-facture"><a class="dropdown-item" href="#">Toutes les factures du client</a></li>
                       <li id="facture-2-dates"><a class="dropdown-item" href="#">factures du clients entre 2 dates</a></li>
                       <li id="facture-dette"><a class="dropdown-item" href="#">factures non reglé du client</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown mt-3">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                      Paiements
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li id="paiements2"><a class="dropdown-item" href="#">Tous les paiements</a></li>
+                      <li id="paiements-client2"><a class="dropdown-item" href="#">Paiements par clients</a></li>
+                      <li id="paiements-facture2"><a class="dropdown-item" href="#">Paiements par factures</a></li>
                     </ul>
                 </div>
                 <button class="btn btn-secondary mt-3" id="resume">resumé</button>
