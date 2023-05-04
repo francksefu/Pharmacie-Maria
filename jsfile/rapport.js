@@ -136,6 +136,15 @@ paye_cache.addEventListener('click', () => {
   uneDate('toutes les vente payé sur une date', 'paye_cache');
 });
 
+btn.addEventListener('click', () => {
+  if(type.value == 'approvisionnements' || type.value == 'approvisionnements') {
+    document.forms[0].action = 'thinkApprov.php';
+  } else {
+    document.forms[0].action = 'think.php';
+  }
+  document.forms[0].submit();
+})
+
 paye_cache2.addEventListener('click', () => {
     deuxDate('toutes les vente payé entre 2 date', 'paye_cache2');
   });
@@ -218,16 +227,12 @@ paiements_facture.addEventListener('click', () => {
     factureInput('tous les paiements sur une facture', 'paiements_facture');
 });
 
-paiements_facture2.addEventListener('click', () => {
-    InputEtDeuxDateFacture('tous les paiements sur une facture entre 2 dates', 'paiements_facture2');
-});
-
 paiements_client.addEventListener('click', () => {
-    personnelInput('tous les paiements d un client', 'paiements_client2');
+    personnelInput('tous les paiements d un client', 'paiements_client');
 });
 
 paiements_client2.addEventListener('click', () => {
-    InputEtDeuxDate('tous les paiements d un client entre 2', 'paiements_client');
+    InputEtDeuxDate('tous les paiements d un client entre 2', 'paiements_client2');
 });
 
 clients_facture.addEventListener('click', () => {
@@ -235,7 +240,7 @@ clients_facture.addEventListener('click', () => {
 });
 
 clients_facture_dette.addEventListener('click', () => {
-    InputEtDeuxDate('voir toutes les factures d un client non payé', 'clients_facture_dette');
+    personnelInput('voir toutes les factures d un client non payé', 'clients_facture_dette');
 });
 
 clients_facture_2dates.addEventListener('click', () => {

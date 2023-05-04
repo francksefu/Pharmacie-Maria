@@ -48,6 +48,7 @@
                               <option selected value="Aucun">Aucun</option>
                               <option value="Charge">Charge</option>
                               <option value="Depense">Depense</option>
+                              <option value="Dette">Dette</option>
                               <option value="Autres">Autres</option>
                             </select>
                         </div>
