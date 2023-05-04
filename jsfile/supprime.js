@@ -24,6 +24,21 @@ function showHint(str, entre) {
     }
   }
 
+  function showPaie(str) {
+    if (str.length == 0) {
+      document.getElementById("txtHint").innerHTML = "";
+      return;
+    } else {
+      const xmlhttp = new XMLHttpRequest();
+      xmlhttp.onload = function() {
+        feedback = this.responseText;
+        document.getElementById("txtHint").innerHTML = this.responseText;
+      }
+    xmlhttp.open("GET", "classPaiements.php?q=" + str);
+    xmlhttp.send();
+    }
+  }
+
   function showvente(str, entre) {
     if (str.length == 0) {
       document.getElementById("txtHint").innerHTML = "";
@@ -60,6 +75,10 @@ btn.addEventListener('click', () => {
       showHint(input.value.split('::')[1]+"::delete", "classProduct.php?q=")
     }
 
+    if (fichier.value === "product2") {
+      showHint(input.value.split('::')[1]+"::delete", "classProduct.php?q=")
+    }
+
     if(fichier.value === 'bonusperte') {
       showHint(input.value.split('::')[1]+"::delete", "classBonusPete.php?q=")
     }
@@ -76,8 +95,8 @@ btn.addEventListener('click', () => {
       showHint(input.value.split('::')[1]+"::delete", "classDepot.php?q=")
     }
 
-    if(fichier.value === 'paiements') {
-      showHint(input.value.split('::')[1]+"::delete", "classPaiements.php?q=")
+    if(document.querySelector("#type").value == 'paiements') {
+      showPaie(input.value.split('::')[1]+"::delete");
     }
 
     if(fichier.value === 'personnel') {
@@ -88,8 +107,12 @@ btn.addEventListener('click', () => {
       showvente(input.value.split('::')[1]+"__:delete", "classTraitementVente.php?q=")
     }
 
+    if(document.querySelector("#type").value === 'approv1') {
+      showvente(input.value.split('::')[1]+"__:delete", "classApprov.php?q=")
+    }
+
     input.value = "";
-    //document.querySelector('.montre-moi').style.display = "none";
+    document.querySelector('.montre-moi').style.display = "none";
 });
 
 window.addEventListener('load', () => {

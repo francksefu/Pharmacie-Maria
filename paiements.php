@@ -189,7 +189,7 @@ function render($reqSql) {
     
         <div class="container-fluid pt-5 bg-transparent">
         <?php
-            $reqSql0= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) GROUP BY idPaiements order by idPaiements desc");
+            $reqSql0= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) GROUP BY idPaiements order by idPaiements desc limit 1000");
             render($reqSql0);
           ?>  
         </div>

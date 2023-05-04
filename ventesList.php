@@ -183,7 +183,7 @@ function render($reqSql) {
     
         <div class="container-fluid pt-5 bg-transparent">
         <?php
-            $reqSql0= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) GROUP BY Operation order by Operation desc");
+            $reqSql0= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) GROUP BY Operation order by Operation desc limit 1000");
             render($reqSql0);
           ?>  
         </div>

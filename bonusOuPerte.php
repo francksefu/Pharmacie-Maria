@@ -165,7 +165,7 @@ function render($reqSql) {
     
         <div class="container-fluid pt-5 bg-transparent">
           <?php
-            $reqSql0= ("SELECT * FROM BonusPerte, Produit WHERE (BonusPerte.idProduit = Produit.idProduit) order by idBonusPerte desc");
+            $reqSql0= ("SELECT * FROM BonusPerte, Produit WHERE (BonusPerte.idProduit = Produit.idProduit) order by idBonusPerte desc limit 1000");
             render($reqSql0);
           ?>
         </div>

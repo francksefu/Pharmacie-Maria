@@ -8,7 +8,7 @@ h1 {
 
 #superieur {
     width: 70%;
-    height: 70%;
+    min-width: 70%;
     position: absolute;
     top: 15%;
     right: 15%;
