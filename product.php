@@ -139,7 +139,7 @@ function render($reqSql) {
             </div>
             <div class="input-group w-50 col-md-5">
                 <span class="input-group-text">Search: </span>
-                <input type="text" class="form-control search" placeholder="Entrer un detail dont vous vous rappeler sur le personnel">
+                <input type="text" class="form-control search" placeholder="Entrer un detail dont vous vous rappeler">
             </div>
             <div class="row supprime mt-3">
                 <div class="col-md-2">

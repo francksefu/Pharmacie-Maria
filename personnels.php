@@ -68,9 +68,9 @@
                     
                 </div>
                 <div class="input-group w-50 col-md-5">
-                    <span class="input-group-text">Search: </span>
-                    <input type="text" class="form-control" placeholder="Entrer un detail dont vous vous rappeler sur le personnel">
-                </div>
+                <span class="input-group-text">Search: </span>
+                <input type="text" class="form-control search" placeholder="Entrer un detail dont vous vous rappeler">
+            </div>
             </div>
             <div class="input-group mt-3 col-md-10 montre-moi">
                     <span class="input-group-text">supprimer : </span>

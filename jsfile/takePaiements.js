@@ -73,7 +73,7 @@ btn.addEventListener('click', () => {
      const total_facture = facture.value.split('::')[7];
      const montant_deja_paye = facture.value.split('::')[9];
 
-     if((montant.value +montant_deja_paye ) > total_facture && typeForm.value == "add"){
+     if((((montant.value*1) + (montant_deja_paye*1)) > total_facture) && typeForm.value == "add"){
         messageError(montantVide, 'le montant superieur au total de la facture');
         return;
       } else {
