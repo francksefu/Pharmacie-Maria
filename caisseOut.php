@@ -97,7 +97,7 @@
         <?php
                 include 'connexion.php';
                         
-                $reqSql= ("SELECT * FROM Sortie order by idSortie desc limit 900");
+                $reqSql= ("SELECT * FROM Sortie order by idSortie desc limit 500");
                 $result= mysqli_query($db, $reqSql);
                 if(mysqli_num_rows($result)>0){
                     echo '<table class="table border border-1">

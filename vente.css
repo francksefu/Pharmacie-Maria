@@ -18,3 +18,7 @@ h1 {
     border: 1px solid beige;
   }
 
+  #render-alerte {
+    display: none;
+  }
+

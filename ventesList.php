@@ -71,7 +71,7 @@ function render($reqSql) {
             } else {
                 $paye = $row["TotalFacture"];
             }
-            if($row["Dette"] == 'Non') {
+            if($row["TotalFacture"] == $paye) {
                 $status = '<span class="bg-success p-2 rounded-3 text-white">Paid</span>';
             } else {
                 $status = '<span class="bg-danger p-2 rounded-3 text-white">Not paid</span>';
@@ -183,7 +183,7 @@ function render($reqSql) {
     
         <div class="container-fluid pt-5 bg-transparent">
         <?php
-            $reqSql0= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) GROUP BY Operation order by Operation desc limit 1000");
+            $reqSql0= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) GROUP BY Operation order by Operation desc limit 500");
             render($reqSql0);
           ?>  
         </div>

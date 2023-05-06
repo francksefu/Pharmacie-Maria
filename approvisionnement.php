@@ -167,7 +167,7 @@ function render($reqSql) {
     
         <div class="container-fluid pt-5 bg-transparent">
         <?php
-            $reqSql0= ("SELECT * FROM Approvisionnement, Produit WHERE (Approvisionnement.idProduit = Produit.idProduit) GROUP BY Operation order by Operation desc limit 1000");
+            $reqSql0= ("SELECT * FROM Approvisionnement, Produit WHERE (Approvisionnement.idProduit = Produit.idProduit) GROUP BY Operation order by Operation desc limit 500");
             render($reqSql0);
           ?>  
         </div>

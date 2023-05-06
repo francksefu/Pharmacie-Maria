@@ -74,7 +74,7 @@ function ventes($reqSql) {
             } else {
                 $paye = $row["TotalFacture"];
             }
-            if($row["Dette"] == 'Non') {
+            if($row["TotalFacture"] == $paye) {
                 $status = '<span class="bg-success p-2 rounded-3 text-white">Paid</span>';
             } else {
                 $status = '<span class="bg-danger p-2 rounded-3 text-white">Not paid</span>';
@@ -348,7 +348,7 @@ function paiements($reqSql) {
             } else {
                 $paye = $row["TotalFacture"];
             }
-            if($row["Dette"] == 'Non') {
+            if($row["TotalFacture"] == $paye) {
                 $status = '<span class="bg-success p-2 rounded-3 text-white">Paid</span>';
             } else {
                 $status = '<span class="bg-danger p-2 rounded-3 text-white">Not paid</span>';

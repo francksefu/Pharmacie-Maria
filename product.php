@@ -25,8 +25,10 @@
     <script defer src="./jsfile/jquery-3.6.1.min.js"></script>
     <script defer src="./jsfile/produit.js"></script>
     <script defer src="./jsfile/supprime.js"></script>
+    <script defer src="aletrt.js"></script>
     <link rel="stylesheet" href="modifier.css">
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="vente.css">
 </head>
 <?php
 function dataProduct(){
@@ -123,12 +125,10 @@ function render($reqSql) {
                 </div>
                 <div class="col-md-3 bg-transparent pt-5">
                     <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupSelect01">Choisir stock</label>
-                        <select class="form-select" id="select-stock">
-                          <option value="1">Stock 1</option>
-                          <option value="2">Stock 2</option>
-                        </select>
-                      </div>
+                        <button type="button" class="btn btn-primary" id="alerte">Alerte</button>
+                        <button type="button" class="btn btn-primary" id="normal">Normal</button>
+                        
+                    </div>
                 </div>
                 <div class="col-md-2 bg-transparent pt-5">
                     <p class="text-center">
@@ -173,7 +173,14 @@ function render($reqSql) {
           render($reqSql0);
         ?>
         </div>
-        
+
+        <div class="container-fluid pt-5 bg-transparent" id="render-alerte">
+       <?php
+          $reqSql0= ("SELECT * FROM Produit WHERE (QuantiteStock < QuantiteStockMin) order by Nom asc");
+          render($reqSql0);
+        ?>
+        </div>
+       
     </main>
     
 </body>

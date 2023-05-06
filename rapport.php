@@ -192,7 +192,7 @@ function dataVente(){
                       <li id="paiements-facture2"><a class="dropdown-item" href="#">Paiements par factures</a></li>
                     </ul>
                 </div>
-                <button class="btn btn-secondary mt-3" id="resume">resumé</button>
+                
             </div>
 
            </div>

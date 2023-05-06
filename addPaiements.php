@@ -28,7 +28,7 @@
 <?php
 function dataVentes(){
     include 'connexion.php';
-    $sql = ("SELECT * FROM Ventes, Client WHERE (Ventes.idClient = Client.idClient) GROUP BY Operation order by Operation desc");
+    $sql = ("SELECT * FROM Ventes, Client WHERE (Ventes.idClient = Client.idClient) and (Dette = 'Oui')GROUP BY Operation order by Operation desc");
     $result = mysqli_query($db, $sql);
             
     if(mysqli_num_rows($result)>0){
