@@ -18,7 +18,7 @@ function navbar() {
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
             </svg>
-            
+           
             Produit
         </a>
         <ul class="dropdown-menu">
@@ -51,7 +51,7 @@ function navbar() {
         </a>
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="personnels.php">Clients</a></li>
-            <li><a class="dropdown-item" href="addPersonnels.html">Ajoutez clients</a></li>
+            <li><a class="dropdown-item" href="addPersonnels.php">Ajoutez clients</a></li>
           </ul>
       </li>
 
@@ -65,6 +65,7 @@ function navbar() {
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="caisseOut.php">Listez les sorties</a></li>
             <li><a class="dropdown-item" href="addCaisseOut.php">Ajoutez sortie</a></li>
+            <li><a class="dropdown-item" href="updateTaux.php">Modifier taux d echange</a></li>
           </ul>
       </li>
 
@@ -80,13 +81,27 @@ function navbar() {
                 <li><a class="dropdown-item" href="addApprovisionnement.php">Ajoutez les approvisionnements</a></li>
                 <li><a class="dropdown-item" href="bonusOuPerte.php">Listez les bonus ou les pertes</a></li>
                 <li><a class="dropdown-item" href="addBonusOuPerte.php">Ajoutez les bonus ou les pertes</a></li>
-                <li><a class="dropdown-item" href="detteEntreprise.php">Listez les dettes de l entreprises</a></li>
-                <li><a class="dropdown-item" href="addDetteEntreprise.php">Ajoutez les dettes de l entreprises</a></li>
+                <li><a class="dropdown-item" href="paiements.php">Listez les paiements</a></li>
+                <li><a class="dropdown-item" href="addPaiements.php">Ajoutez un paiements</a></li>
+            </ul>
+        </li>
+
+        <li class="nav-item pe-3 dropdown" >
+        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-scooter" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M9 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-.39l1.4 7a2.5 2.5 0 1 1-.98.195l-.189-.938-2.43 3.527A.5.5 0 0 1 9.5 13H4.95a2.5 2.5 0 1 1 0-1h4.287l2.831-4.11L11.09 3H9.5a.5.5 0 0 1-.5-.5ZM3.915 12a1.5 1.5 0 1 0 0 1H2.5a.5.5 0 0 1 0-1h1.415Zm8.817-.789A1.499 1.499 0 0 0 13.5 14a1.5 1.5 0 0 0 .213-2.985l.277 1.387a.5.5 0 0 1-.98.196l-.278-1.387Z"/>
+        </svg>
+            Stock 2
+        </a>
+            <ul class="dropdown-menu">
+            
+                <li><a class="dropdown-item" href="product2.php">Lister stock 2</a></li>
+                <li><a class="dropdown-item" href="addProduct2.php">Ajouter dans stock 2</a></li>
             </ul>
         </li>
 
       <li class="nav-item pe-3">
-        <a class="nav-link" href="rapport.html">
+        <a class="nav-link" href="rapport.php">
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-text" viewBox="0 0 16 16">
                 <path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
                 <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>

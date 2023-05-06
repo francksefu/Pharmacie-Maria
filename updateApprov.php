@@ -27,6 +27,32 @@
 </head>
 <?php
 //find id for vente to make a nmber of operation
+function dataApprovisionnement(){
+    include 'connexion.php';
+    $sql= ("SELECT * FROM Approvisionnement, Produit WHERE (Produit.idProduit = Approvisionnement.idProduit) group by Operation order by Operation desc");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+      $valeur = '';
+        while($row= mysqli_fetch_assoc($result)){
+            //
+            $sql1= ("SELECT * FROM Approvisionnement, Produit WHERE (Operation = ".$row["Operation"].") and (Produit.idProduit = Approvisionnement.idProduit) order by Operation desc");
+            $result1 = mysqli_query($db, $sql1);
+                    
+            if(mysqli_num_rows($result1)>0){
+            $valeur = '';
+                while($row1= mysqli_fetch_assoc($result1)){
+                    $valeur .= $row1["Operation"]."::".$row1["Source"]."::".$row1["idProduit"].":: Nom ::".$row1["Nom"].":: PA ::".$row1["PrixAchat"].":: PV = ::".$row1["PrixVente"].":: PVmin =::".$row1["PrixVmin"].":: QstockMin = ::".$row1["QuantiteStockMin"]."::".$row1["QuantiteApprov"]."::".$row1["PrixA"]."::".$row1["DatesApprov"]."::".$row1["TotalFacture"]."::".$row1["Destination"]."::__:";
+                }
+
+        }else{echo "Une erreur s est produite ";}  
+        echo"<option value='".$valeur."'>operation : ".$row["Operation"]."client: ".$row["Source"]." :Totol :".$row["TotalFacture"]."</option>"; 
+        }
+
+   }else{echo "Une erreur s est produite ";}  
+
+}
+
 function findIDVente(){
     include 'connexion.php';
     $sql= ("SELECT idApprov FROM Approvisionnement order by idApprov desc limit 1");
@@ -70,16 +96,24 @@ function dataProduct(){
 
 }
 
-
 ?>
-<body class="bg-light">
+<body class="back">
     <main>
         <div class="container bg-transparent pt-5">
-            <h1 class="p-2">Ajouter Approvisionnement</h1>
+            <h1 class="p-2">Modifier Approvisionnement</h1>
             <hr class="w-auto">
             <form action="">
+            <div class="input-group mb-3  mx-auto d-block">
+                <span class="input-group-text " id="id">Identifiant*</span>
+                <input required type="text" list="dataBesoin" id="identifiantM" class="form-control w-50" placeholder="entrer identifiant" aria-label="Username" aria-describedby="nom" >
+                    <datalist id="dataBesoin">
+                        <?php 
+                            dataApprovisionnement();
+
+                        ?>
+                    </datalist>
+            </div>
             <div class="row border border-1 mt-3 pt-3 w-75 d-block mx-auto">
-                    <!-- -->
                     
                 </div>
                 <div class="input-group mb-3 pt-5 pb-4" id="ajoutons">
@@ -108,7 +142,7 @@ function dataProduct(){
                     <thead class="bg-transparent text-secondary">
                       <tr>
                         <th>Nom du produit</th>
-                        <th>Quantite approvisionné</th>
+                        <th>Quantite vendu</th>
                         <th>Prix d achat unitaire</th>
                         <th>Prix d achat total</th>
                         <th>Action</th>
@@ -137,8 +171,8 @@ function dataProduct(){
                         </div>
                         <small>1 commande en cours ...</small>
                     </div>
-  
-                        <div class="border border-1 m-2 col-md-4">
+   
+                    <div class="border border-1 m-2 col-md-4">
                             <h4>Source</h4>
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="status">source</label>
@@ -157,7 +191,6 @@ function dataProduct(){
                                 </select>
                                 
                             </div>
-                            
                         </div>
                         <div class="border border-1 col-md-3 m-2 bg-warning moinClaire">
                             <h4 class="text-secondary">Calcul du total</h4>
@@ -180,14 +213,13 @@ function dataProduct(){
    
                         </div>
                         
-                  
+                   
                 </div>
                 <input type="hidden" id="change" value='<?php echo data(); ?>'>
             <!-- just using to make difference between add, remove, and update -->
                 <input type="hidden" id="state" >
-                <input type="hidden" id="identifiantM" value="">
                 <input type="hidden" id="operation" value="<?php echo findIDVente(); ?>" />
-                <input type="hidden" id="typeForm" value="add" />
+                <input type="hidden" id="typeForm" value="update" />
     </form>
         </div>
     </main>

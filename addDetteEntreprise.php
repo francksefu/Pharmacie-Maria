@@ -38,14 +38,13 @@
                       <div class="row">
                         <div class="input-group mb-3 col-md-6">
                             <span class="input-group-text" id="anne">Date*</span>
-                            <input required type="date" class="form-control"  aria-label="Username" aria-describedby="anne">
+                            <input required type="date"  name="dates" id="date" class="form-control w-50" placeholder="mettre la date" aria-label="Username" aria-describedby="nom" value="<?php $d = strtotime("today"); echo date('Y-m-d',$d); ?>">
                         </div>
                         <div class="input-group mb-3 col-md-6">
                             <label class="input-group-text" for="inputGroupSelect01">type</label>
-                            <select class="form-select" id="inputGroupSelect01">
-                              <option selected>choisir ...</option>
+                            <select class="form-select" id="choisir">
                               <option value="argent">argent</option>
-                              <option selected value="materiel">materiel</option>
+                              <option value="materiel">materiel</option>
                             </select>
                         </div>
                       </div>
@@ -53,30 +52,30 @@
                         <div class="col-md-6">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Motif :*</span>
-                                <textarea class="form-control" aria-label="With textarea" placeholder="Entrer motif"></textarea>
-                            </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">Paiment+date :*</span>
-                                <textarea class="form-control" aria-label="With textarea" placeholder="Entrer motif"></textarea>
+                                <textarea id="motif" class="form-control" aria-label="With textarea" placeholder="Entrer motif"></textarea>
                             </div>
                         </div>
                        
                         <div class="col-md-5">
                             <div class="input-group m-2">
                                 <span class="input-group-text">Valeur de la dette*</span>
-                                <input required type="float" pattern="[0-9]" class="form-control" placeholder="entrer valeur de la dette" aria-label="Amount (to the nearest dollar)">
+                                <input id="valeur" required type="float" class="form-control" placeholder="entrer valeur de la dette" aria-label="Amount (to the nearest dollar)">
                                 <span class="input-group-text">$</span>
                             </div>
+                            <small id="valeurVide"></small>
                             <div class="input-group m-2"> 
                                 <span class="input-group-text">Montant*</span>
-                                <input required type="float" pattern="[0-9]" class="form-control" placeholder="entrer montant deja payé" aria-label="Amount (to the nearest dollar)">
+                                <input id="montant" required type="float" class="form-control" placeholder="entrer montant deja payé" aria-label="Amount (to the nearest dollar)">
                                 <span class="input-group-text">$</span>
                             </div>
+                            <small id="montantVide"></small>
                         </div>
                       </div>
-                      
-                     
-                      <button type="submit" class="btn btn-primary p-2 mt-4">Ajoutez dette de l entreprise</button>
+
+                      <p id="txtHint"></p>
+                      <input type="hidden" id="identifiantM" value="">
+                      <input type="hidden" value="add" id="typeFormulaire">
+                      <button id="envoi" type="button" class="btn btn-primary p-2 mt-4">Ajouter bonus et perte</button>
                     
                 </form>
             </div>

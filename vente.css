@@ -1,0 +1,24 @@
+h1 {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    width: 30px;
+  }
+
+#superieur {
+    width: 70%;
+    min-width: 70%;
+    position: absolute;
+    top: 15%;
+    right: 15%;
+    bottom: 15%;
+    left: 15%;
+    z-index: 3;
+    border: 1px solid beige;
+  }
+
+  #render-alerte {
+    display: none;
+  }
+

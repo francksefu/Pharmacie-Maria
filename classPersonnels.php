@@ -1,25 +1,23 @@
 <?php
 
-    class Personnels {
-        public $idPersonnel;
-        private $poste;
+    class Clients {
+        public $idClient;
         private $nom;
         private $telephone;
         
         
         public $message;
 
-        function __construct( $poste, $nom, $telephone) {
+        function __construct($nom, $telephone) {
             
-            $this->poste = $poste;
             $this->nom = $nom;
             $this->telephone = $telephone;
         }
 
         
-        function insererPersonnel() {
+        function insererClient() {
             include 'connexion.php';
-            $sql = ("INSERT INTO Personnel (Poste, Nom, Telephone) values ('".$this->poste."', '".$this->nom."', '".$this->telephone."')");
+            $sql = ("INSERT INTO Client ( NomClient, Telephone) values ('".$this->nom."', '".$this->telephone."')");
             if(mysqli_query($db, $sql)){
                 //echo"<small style='color: green'>insertion fait</small>";
                 }else{
@@ -28,29 +26,24 @@
                 $this->message = mysqli_error($db);
             }
         }
-        function updatePersonnel() {
+        function updateClient() {
             include 'connexion.php';
-            $updC= ("UPDATE `Personnel` SET `Poste` = '".$this->poste."' WHERE idPersonnel =$this->idPersonnel");
-            if(mysqli_query($db,$updC)){echo"";}else{
-                $this->message = mysqli_error($db);
-                return;
-            }
 
-            $updC1= ("UPDATE `Personnel` SET `Nom` ='".$this->nom."' WHERE idPersonnel =$this->idPersonnel");
+            $updC1= ("UPDATE `Client` SET `NomClient` ='".$this->nom."' WHERE idClient =$this->idClient");
             if(mysqli_query($db,$updC1)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
             }
-            $updC2= ("UPDATE `Personnel` SET `Telephone` = '".$this->telephone."' WHERE idPersonnel =$this->idPersonnel");
+            $updC2= ("UPDATE `Client` SET `Telephone` = '".$this->telephone."' WHERE idClient =$this->idClient");
             if(mysqli_query($db,$updC2)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
             }
         }
 
-        function deletePersonnel() {
+        function deleteClient() {
             include 'connexion.php';
-            $delete = ("DELETE FROM Personnel WHERE idPersonnel =$this->idPersonnel");
+            $delete = ("DELETE FROM Client WHERE idClient =$this->idClient");
             if (mysqli_query($db, $delete)){echo"";} else {
                 $this->message = mysqli_error($db);
                 return;
@@ -66,8 +59,8 @@
     if (end($tabC) == 'add') {
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Personnels($tabC[0], $tabC[1], $tabC[2]);
-            $tracteur->insererPersonnel();
+            $tracteur = new Clients($tabC[0], $tabC[1]);
+            $tracteur->insererClient();
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
@@ -87,9 +80,9 @@
     if (end($tabC) == 'update') {
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Personnels($tabC[0], $tabC[1], $tabC[2]);
-            $tracteur->idPersonnel = $tabC[3];
-            $tracteur->updatePersonnel();
+            $tracteur = new Clients($tabC[0], $tabC[1]);
+            $tracteur->idClient = $tabC[2];
+            $tracteur->updateClient();
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
@@ -110,9 +103,9 @@
     if (end($tabC) == 'delete') {
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Personnels(0, 1, 2);
-            $tracteur->idPersonnel = $tabC[0];
-            $tracteur->deletePersonnel();
+            $tracteur = new Clients(0, 1);
+            $tracteur->idClient = $tabC[0];
+            $tracteur->deleteClient();
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;

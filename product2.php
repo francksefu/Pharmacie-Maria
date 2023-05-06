@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ventes</title>
+    <title>Gestion</title>
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.css">
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.css">
@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.css">
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.css">
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.min.css">
-  
+ 
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.js"></script>
@@ -25,24 +25,27 @@
     <script defer src="./jsfile/jquery-3.6.1.min.js"></script>
     <script defer src="./jsfile/produit.js"></script>
     <script defer src="./jsfile/supprime.js"></script>
-    <link rel="stylesheet" href="index.css">
+    <script defer src="aletrt.js"></script>
     <link rel="stylesheet" href="modifier.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="vente.css">
 </head>
 <?php
-function dataDette(){
+function dataProduct(){
     include 'connexion.php';
-    $sql = ("SELECT * FROM DetteEntreprise order by idDette desc");
+    $sql = ("SELECT * FROM Produit2 order by Nom asc");
     $result = mysqli_query($db, $sql);
             
     if(mysqli_num_rows($result)>0){
                         
         while($row= mysqli_fetch_assoc($result)){
-            echo"<option value='ID ::".$row["idDette"].":: Type ::".$row["TypeD"].":: motif ::".$row["il_pris_quoi"].":: valeur = ::".$row["ValeurDette"].":: Reste a payer =::".$row["Reste"].":: Date = ::".$row["DatesD"]."'>date: ".$row["DatesD"]." :montant deja paye : ".$row["MontantPaye"]."</option>"; 
+            echo"<option value='ID ::".$row["idProduit"].":: Nom ::".$row["Nom"].":: PA ::".$row["PrixAchat"].":: PV = ::".$row["PrixVente"].":: PVmin =::".$row["PrixVmin"].":: Qstock = ::".$row["QuantiteStock"]."'>nom: ".$row["Nom"]." :Qstock ".$row["QuantiteStock"]."</option>"; 
         }
                 
    }else{echo "Une erreur s est produite ";}  
 
 }
+
 function render($reqSql) {
     include 'connexion.php';
     //$reqSql= ("SELECT * FROM Produit order by idProduit asc");
@@ -51,30 +54,36 @@ function render($reqSql) {
         echo '<table class="table border border-1">
         <thead class="bg-secondary text-white">
         <tr>
-            <th>ID</th>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Valeur de la dette</th>
-            <th>Montant deja payé</th>
-            <th>Motif</th>
-            <th>Reste</th>
+            <th>Produit</th>
+            <th>Prix d achat</th>
+            <th>Prix de vente</th>
+            <th>Prix de vente min</th>
+            <th>Quantite stock</th>
+            <th>Quantite stock min</th>
             <th>Action</th>
         </tr>
         </thead>';
 
         while($row= mysqli_fetch_assoc($result)){
-            echo'
+              echo'
         <tr>
-        <td>'.$row["idDette"].'</td>
-        <td>'.$row["DatesD"].'</td>
-        <td>'.$row["TypeD"].'</td>
-        <td>'.$row["ValeurDette"].'</td>
-        <td>'.$row["MontantPaye"].'</td>
-        <td>'.$row["il_pris_quoi"].'</td>
-        <td>'.$row["Reste"].'</td>
+        <td>
+          <div class="d-flex flex-row" id="taille">
+            <img src ="banane.png" class="img-fluid photo m-0" alt="produit">
+            <div class="ps-2 m-0">
+              <h4 class="text-end">'.$row["Nom"].'</h4>
+              <small class="text-secondary">'.$row["DescriptionP"].'</small>
+            </div>
+          </div>
+        </td>
+        <td>'.$row["PrixAchat"].'</td>
+        <td>'.$row["PrixVente"].'</td>
+        <td>'.$row["PrixVmin"].'</td>
+        <td>'.$row["QuantiteStock"].'</td>
+        <td>'.$row["QuantiteStockMin"].'</td>
         <td >
             <div class="d-flex flex-row justify-content-center">
-                
+               
                 <div class="p-2 m-2 bg-danger text-white rounded-3" id="del">
                     <a href="#" class="text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -84,7 +93,7 @@ function render($reqSql) {
                     </a>
                 </div>
                 <div class="p-2 bg-primary m-2 text-white rounded-3 montre">
-                    <a href="updateBesoin.php" class="text-white">
+                    <a href="updateProduct2.php" class="text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
                             <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
                         </svg>
@@ -108,29 +117,29 @@ function render($reqSql) {
         <div class="container bg-transparent pt-5" >
             <div class="row bg-transparent pt-5">
                 <div class="col-md-6 bg-transparent m-2">
-                    <h2>Liste des dettes de l entreprise</h2>
+                    <h2>Liste des produit</h2>
                     <p class=" text-secondary pt-3">
-                        Cette section des dettes de l entreprise vous renseigne sur les dettes que votre entreprise a prise
-                        afin de satisfaire un certain besoin qui peut ou ne pas etre urgent, cette section a donc était créée afin 
-                        vous rappeler a payer tous ce que vous devez aux gens
+                        La liste de produits dicte efficacement la presentation du produit et fornit de l espace
+                        pour reportoriervos produits et votre offre de la manierela plus attrayante
                     </p>
                 </div>
-                
                 <div class="col-md-3 bg-transparent pt-5">
+                    <div class="input-group mb-3">
+                        <button type="button" class="btn btn-primary" id="alerte">Alerte</button>
+                        <button type="button" class="btn btn-primary" id="normal">Normal</button>
+                        
+                    </div>
+                </div>
+                <div class="col-md-2 bg-transparent pt-5">
                     <p class="text-center">
-                        <a href="addDetteEntreprise.php" class="btn btn-primary p-2">&plus; Ajoutez une dette de l entreprise</a>
+                        <a href="addProduct2.php" class="btn btn-primary p-2">&plus; Add product</a>
                     </p>
                 </div>
     
             </div>
-            <div class="row">
-                <div class="col-md-5">
-                    
-                </div>
-                <div class="input-group w-50 col-md-5">
-                  <span class="input-group-text">Search: </span>
-                  <input type="text" class="form-control search" placeholder="Entrer un detail dont vous vous rappeler les dettes">
-                </div>
+            <div class="input-group w-50 col-md-5">
+                <span class="input-group-text">Search: </span>
+                <input type="text" class="form-control search" placeholder="Entrer un detail dont vous vous rappeler sur le personnel">
             </div>
             <div class="row supprime mt-3">
                 <div class="col-md-2">
@@ -141,7 +150,7 @@ function render($reqSql) {
                     <input type="text" id="supprimons" list="dataBesoin" class="form-control" placeholder="metez quelque chose dont vous vous rappeler pour le supprimer" >
                       <datalist id="dataBesoin">
                          <?php 
-                            dataDette();
+                            dataProduct();
 
                         ?>
                       </datalist>
@@ -154,15 +163,22 @@ function render($reqSql) {
                     </span>
                 </div>
                 <small id="txtHint"></small>
-                <input type="hidden" value="besoin" id="type" >
+                <input type="hidden" value="product2" id="type" >
             </div>
         </div>
-    
-        <div class="container-fluid pt-5 bg-transparent">
-          <?php
-            $reqSql0= ("SELECT * FROM DetteEntreprise  order by idDette desc");
-            render($reqSql0);
-          ?>
+   
+        <div class="container-fluid pt-5 bg-transparent" id="render">
+       <?php
+          $reqSql0= ("SELECT * FROM Produit2 order by Nom asc");
+          render($reqSql0);
+        ?>
+        </div>
+
+        <div class="container-fluid pt-5 bg-transparent" id="render-alerte">
+       <?php
+          $reqSql0= ("SELECT * FROM Produit2 WHERE (QuantiteStock < QuantiteStockMin) order by Nom asc");
+          render($reqSql0);
+        ?>
         </div>
         
     </main>

@@ -22,7 +22,7 @@
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
     <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
     <script defer src="navbar.js"></script>
-    <script defer src="./jsfile/takeProduit.js"></script>
+    <script defer src="./jsfile/takeProduit2.js"></script>
     <link rel="stylesheet" href="index.css">
 </head>
 <body class="bg-light">
@@ -37,7 +37,7 @@
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="inputGroupSelect01">Choisir stock</label>
                         <select class="form-select" id="inputGroupSelect01">
-                          <option selected value="1">Stock 1</option>
+                          <option selected value="1">Stock 2</option>
                         </select>
                       </div>
                       <div class="row">

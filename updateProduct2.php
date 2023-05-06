@@ -22,16 +22,32 @@
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
     <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
     <script defer src="navbar.js"></script>
-    <script defer src="./jsfile/takeProduit.js"></script>
+    <script defer src="./jsfile/takeProduit2.js"></script>
     <link rel="stylesheet" href="index.css">
 </head>
-<body class="bg-light">
+<?php
+function dataProduct(){
+    include 'connexion.php';
+    $sql = ("SELECT * FROM Produit2 order by Nom asc");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+                        
+        while($row= mysqli_fetch_assoc($result)){
+            echo"<option value='ID ::".$row["idProduit"].":: Nom ::".$row["Nom"].":: PA ::".$row["PrixAchat"].":: PV = ::".$row["PrixVente"].":: PVmin =::".$row["PrixVmin"].":: Qstock = ::".$row["QuantiteStock"]."::QstockMin = ::".$row["QuantiteStockMin"].":: Description = ::".$row["DescriptionP"]."'>nom: ".$row["Nom"]." :Qstock ".$row["QuantiteStock"]."</option>"; 
+        }
+                
+   }else{echo "Une erreur s est produite ";}  
+
+}
+?>
+<body class="back">
 
     <main>
         <div class="container bg-transparent pt-5">
         
             <div class=" p-3 mb-5 border border-1 rounded mt-5" id="sa">
-                <h2 class="p-2">Add product</h2>
+                <h2 class="p-2">Modifier produit</h2>
                 <hr class="w-auto">
                 <form class="ps-1 pe-1 pt-3 pb-3">
                     <div class="input-group mb-3">
@@ -39,6 +55,16 @@
                         <select class="form-select" id="inputGroupSelect01">
                           <option selected value="1">Stock 1</option>
                         </select>
+                      </div>
+                      <div class="input-group mb-3  mx-auto d-block">
+                        <span class="input-group-text " id="id">Identifiant*</span>
+                        <input required type="text" list="dataBesoin" id="identifiantM" class="form-control w-50" placeholder="entrer identifiant" aria-label="Username" aria-describedby="nom" >
+                            <datalist id="dataBesoin">
+                                <?php 
+                                    dataProduct();
+
+                                ?>
+                            </datalist>
                       </div>
                       <div class="row">
                         <div class="input-group mb-3 col-md-6">
@@ -98,8 +124,8 @@
                         <textarea id="description" class="form-control" aria-label="With textarea" placeholder="Entrer description"></textarea>
                       </div>
                       <p id="txtHint"></p>
-                      <input type="hidden" value="add" id="typeFormulaire">
-                      <button id="envoi" type="button" class="btn btn-primary p-2 mt-4">Ajouter produit</button>
+                      <input type="hidden" value="update" id="typeFormulaire">
+                      <button id="envoi" type="button" class="btn btn-primary p-2 mt-4">Modifier produit</button>
                     
                 </form>
             </div>
