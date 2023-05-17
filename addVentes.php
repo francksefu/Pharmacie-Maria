@@ -212,7 +212,7 @@ function dataPersonnel(){
             <!-- just using to make difference between add, remove, and update -->
                 <input type="hidden" id="state" >
                 <input type="hidden" id="identifiantM" value="">
-                <input type="hidden" id="operation" value="<?php echo findIDVente(); ?>" />
+                <input type="hidden" id="operation"/>
                 <input type="hidden" id="typeForm" value="add" />
     </form>
         </div>
