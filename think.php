@@ -27,8 +27,7 @@
     <script defer src="./jsfile/supprime.js"></script>
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="vente.css">
-   
-    <script defer src="./jsfile/ventesList.js"></script>
+   <script defer src="./jsfile/ventesList.js"></script>
 </head>
 <?php
 $date1 = $_POST["Date1"];
@@ -466,6 +465,7 @@ function approvisionnement($reqSql) {
     }else{echo "Pas des donnees dans la base ";}
 }
 
+
 function paiements($reqSql) {
     include 'connexion.php';
 
@@ -670,6 +670,8 @@ function paiements($reqSql) {
         approvisionnement($reqSql0);
       }
 
+      
+
       if($cache == 'paiements') {
         $reqSql0= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (DatesPaie = '".$date1."') GROUP BY idPaiements order by idPaiements desc");
         paiements($reqSql0);
@@ -710,10 +712,18 @@ function paiements($reqSql) {
         ventes($reqSq);
       }
     ?>
+    <input type="hidden" id="valeur" value="<?php echo $cache ?>">
 </main>
 <div class="bg-light" id="superieur">
     <h1 id="croix">&cross;</h1>
         <div id="container"></div>
     </div>
+
+    <div class="bg-light" id="superieur1">
+    <h1 id="croix1">&cross;</h1>
+        <div id="container1">
+        </div>
+    </div>
 </body>
+
 </html>

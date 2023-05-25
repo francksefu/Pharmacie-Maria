@@ -111,6 +111,10 @@ btn.addEventListener('click', () => {
       showvente(input.value.split('::')[1]+"__:delete", "classApprov.php?q=")
     }
 
+    if(document.querySelector("#type").value === 'dgda') {
+      showHint(input.value.split('::')[1]+"::delete", "classDgda.php?q=")
+    }
+
     input.value = "";
     document.querySelector('.montre-moi').style.display = "none";
 });

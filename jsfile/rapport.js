@@ -9,6 +9,7 @@ const trie_depenses = document.querySelector('#trie-depenses');
 const trie_inutile = document.querySelector('#trie-inutile');
 const bonus_perte = document.querySelector('#bonusOuPerte');
 const approvisionnement = document.querySelector('#approv');
+const papier = document.querySelector('#papier');
 const paiements = document.querySelector('#paiements');
 const paiements_client = document.querySelector('#paiements-client');
 const paiements_facture = document.querySelector('#paiements-facture');
@@ -24,6 +25,7 @@ const trie_depenses2 = document.querySelector('#trie-depenses2');
 const trie_inutile2 = document.querySelector('#trie-inutile2');
 const bonus_perte2 = document.querySelector('#bonusOuPerte2');
 const approvisionnement2 = document.querySelector('#approvisionnement2');
+const papier2 = document.querySelector('#papier2');
 const paiements2 = document.querySelector('#paiements2');
 const paiements_client2 = document.querySelector('#paiements-client2');
 const paiements_facture2 = document.querySelector('#paiements-facture2');
@@ -141,6 +143,8 @@ paye_cache.addEventListener('click', () => {
 btn.addEventListener('click', () => {
   if(type.value == 'approvisionnements' || type.value == 'approvisionnements') {
     document.forms[0].action = 'thinkApprov.php';
+  }else if(type.value == 'papier' || type.value == 'papier2'){
+    document.forms[0].action = 'thinkPapier.php';
   } else {
     document.forms[0].action = 'think.php';
   }
@@ -223,6 +227,13 @@ approvisionnement2.addEventListener('click', () => {
     deuxDate('tous les approvisionnements entre 2 date ', 'approvisionnements2');
 });
 
+papier.addEventListener('click', () => {
+  uneDate('tous les papiers(dgda, impots, ...) sur une date ', 'papier');
+});
+
+papier2.addEventListener('click', () => {
+  deuxDate('tous les les papiers(dgda, impots, ...) entre 2 date ', 'papier2');
+});
 
 paiements.addEventListener('click', () => {
     uneDate('tous les paiements sur une date', 'paiements');

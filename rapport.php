@@ -96,6 +96,7 @@ function dataVente(){
                 </div>
                 <button id="bonusOuPerte" class="btn btn-secondary  mt-3">Bonus ou perte</button>
                 <button id="approv" class="btn btn-secondary  mt-3">Approvisionnement</button>
+                <button id="papier" class="btn btn-secondary  mt-3">Papiers dgda ,...</button>
                 <div class="dropdown mt-3">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                       Paiements
@@ -172,8 +173,9 @@ function dataVente(){
                     </ul>
                 </div>
                 <button id="bonusOuPerte2" class="btn btn-secondary  mt-3">Bonus ou perte</button>
-               
+              
                 <button id="approvisionnement2" class="btn btn-secondary  mt-3">Approvisionnement</button>
+                <button id="papier2" class="btn btn-secondary  mt-3">Papiers dgda ,...</button>
                 <div class="dropdown mt-3">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                       Clients

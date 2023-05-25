@@ -83,6 +83,7 @@ function navbar() {
                 <li><a class="dropdown-item" href="addBonusOuPerte.php">Ajoutez les bonus ou les pertes</a></li>
                 <li><a class="dropdown-item" href="paiements.php">Listez les paiements</a></li>
                 <li><a class="dropdown-item" href="addPaiements.php">Ajoutez un paiements</a></li>
+                <li><a class="dropdown-item" href="dgda.php">Liste des papiers dgda et autre</a></li>
             </ul>
         </li>
 
