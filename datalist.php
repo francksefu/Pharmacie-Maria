@@ -57,11 +57,28 @@ function dataPersonnel(){
     if(mysqli_num_rows($result)>0){
                         
         while($row= mysqli_fetch_assoc($result)){
-            $take .= "<option value='ID ::".$row["idClient"].":: Nom  ::".$row["NomClient"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]."</option>"; 
+            $take .= "<option value='ID ::".$row["idClient"].":: Nom  ::".$row["NomClient"].":: Telephone ::".$row["Telephone"]."'> = ".$row["NomClient"]."</option>"; 
         }
                 
    }else{$take = "Une erreur s est produite ";} 
    return $take;
+
+}
+
+function dataDataPersonnel(){
+  include 'connexion.php';
+  $take = '';
+  $sql = ("SELECT * FROM DataPersonnel order by idDataPersonnel desc");
+  $result = mysqli_query($db, $sql);
+          
+  if(mysqli_num_rows($result)>0){
+                      
+      while($row= mysqli_fetch_assoc($result)){
+          $take .= "<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["Nom"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]."</option>"; 
+      }
+              
+ }else{$take = "Une erreur s est produite ";} 
+ return $take;
 
 }
 
@@ -97,6 +114,8 @@ $autre = '';
           case 'updatePersonnel':
             $hint = dataPersonnel();
           break;
+          case 'updateDataPersonnel' :
+            $hint = dataDataPersonnel();
         }
   } else {
         $hint = 'erreur';

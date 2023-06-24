@@ -103,6 +103,10 @@ btn.addEventListener('click', () => {
       showHint(input.value.split('::')[1]+"::delete", "classPersonnels.php?q=")
     }
 
+    if(document.querySelector('#type').value == 'datapersonnel') {
+      showHint(input.value.split('::')[1]+"::delete", "classDataPersonnel.php?q=")
+    }
+
     if(document.querySelector("#type").value === 'vente1') {
       showvente(input.value.split('::')[1]+"__:delete", "classTraitementVente.php?q=")
     }

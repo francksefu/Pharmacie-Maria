@@ -2,7 +2,7 @@
 const identifiantM = document.querySelector('#identifiantM');
 const nomPersonnel = document.querySelector('#nomPersonnel');
 const telephone = document.querySelector('#telephone');
-
+const titre = document.querySelector('#titre');
 
 const btn = document.querySelector('#envoie');
 
@@ -52,7 +52,11 @@ function showHint(str) {
         feedback = this.responseText;
         document.getElementById("txtHint").innerHTML = this.responseText;
       }
-    xmlhttp.open("GET", "classPersonnels.php?q=" + str);
+      if (titre.value === 'data-personnel') {
+        xmlhttp.open("GET", "classDataPersonnel.php?q=" + str);
+      } else {
+        xmlhttp.open("GET", "classPersonnels.php?q=" + str);
+      }
     xmlhttp.send();
     }
   }
