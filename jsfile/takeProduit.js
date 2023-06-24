@@ -35,7 +35,7 @@ const messageVide = 'Veuillez remplir ce champs svp'
 const messageComplete = valeur => {
     valeur.textContent = messageVide;
     valeur.style.color = 'red';
-  }
+}
 
   const enleveMessage = valeur => {
     valeur.textContent = '';

@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.css">
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.css">
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.min.css">
-    
+   
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.js"></script>
@@ -24,6 +24,7 @@
     <script defer src="navbar.js"></script>
     <script defer src="./jsfile/takeProduit.js"></script>
     <link rel="stylesheet" href="index.css">
+    <script defer src="./jsfile/datalist.js"></script>
 </head>
 <?php
 function dataProduct(){
@@ -59,12 +60,7 @@ function dataProduct(){
                       <div class="input-group mb-3  mx-auto d-block">
                         <span class="input-group-text " id="id">Identifiant*</span>
                         <input required type="text" list="dataBesoin" id="identifiantM" class="form-control w-50" placeholder="entrer identifiant" aria-label="Username" aria-describedby="nom" >
-                            <datalist id="dataBesoin">
-                                <?php 
-                                    dataProduct();
-
-                                ?>
-                            </datalist>
+                            <datalist id="dataBesoin"></datalist>
                       </div>
                       <div class="row">
                         <div class="input-group mb-3 col-md-6">
@@ -126,12 +122,12 @@ function dataProduct(){
                       <p id="txtHint"></p>
                       <input type="hidden" value="update" id="typeFormulaire">
                       <button id="envoi" type="button" class="btn btn-primary p-2 mt-4">Modifier produit</button>
-                    
+                      <input type="hidden" id="check-datalist" value="updateProduct">
                 </form>
             </div>
             
         </div>
-    
+
     </main>
 
     <footer>

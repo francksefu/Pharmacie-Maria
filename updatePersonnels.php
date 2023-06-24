@@ -22,22 +22,10 @@
     <script defer src="./navbar.js"></script>
     <script defer src="./jsfile/takePersonnels.js"></script>
     <link rel="stylesheet" href="index.css">
+    <script defer src="./jsfile/datalist.js"></script>
 </head>
 <?php
-  function dataPersonnel(){
-    include 'connexion.php';
-    $sql = ("SELECT * FROM Client order by idClient desc");
-    $result = mysqli_query($db, $sql);
-            
-    if(mysqli_num_rows($result)>0){
-                        
-        while($row= mysqli_fetch_assoc($result)){
-            echo"<option value='ID ::".$row["idClient"].":: Nom  ::".$row["NomClient"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]."</option>"; 
-        }
-                
-   }else{echo "Une erreur s est produite ";}  
-
-}
+  
 ?>
 <body class="back">
 
@@ -51,12 +39,7 @@
                 <div class="input-group mb-3  mx-auto d-block">
                         <span class="input-group-text " id="id">Identifiant*</span>
                         <input required type="text" list="dataBesoin" id="identifiantM" class="form-control w-50" placeholder="entrer identifiant" aria-label="Username" aria-describedby="nom" >
-                            <datalist id="dataBesoin">
-                                <?php 
-                                    dataPersonnel();
-
-                                ?>
-                            </datalist>
+                            <datalist id="dataBesoin"></datalist>
                     </div>
                     <div class="row">
                         <div class="col-md-7 mb-3">
@@ -83,7 +66,7 @@
                     <p id="txtHint"></p>
                     <input type="hidden" value="update" id="typeFormulaire">
                     <button id='envoie' class="btn btn-primary p-3 fs-4 mt-4 w-25">Modifier</button>
-                     
+                    <input type="hidden" id="check-datalist" value="updatePersonnel">
                 </div>    
                 
             </div>
