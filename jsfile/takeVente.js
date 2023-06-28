@@ -51,6 +51,22 @@ const messageComplete = (valeur, champs) => {
     valeur.style.color = 'red';
   }
 
+  function chercheDernierIdVentes(str) {
+    if (str.length == 0) {
+      document.getElementById("operation").value = "";
+      return;
+    } else {
+      const xmlhttp = new XMLHttpRequest();
+      xmlhttp.onload = function() {
+        feedback = this.responseText;
+        document.getElementById("operation").value = this.responseText;
+      }
+    xmlhttp.open("GET", "classFindIdVente.php?q=" +str);
+    xmlhttp.send();
+    }
+  }
+
+
   let operation = 0;
   let operationUpdate = '';
   if (typeForm.value == 'update') {
@@ -108,6 +124,7 @@ enleve.addEventListener('click', () => {
 });
 
 function rendertable() {
+  chercheDernierIdVentes('find');
     let somme = 0;
   if (produit.value == "") {
     messageComplete(produitVide, 'produit');
@@ -331,6 +348,7 @@ ajoutons.addEventListener('keydown', (event) => {
           } else {
             enleveMessage(quantiteVide);
           }
+          chercheDernierIdVentes('find');
 
         let j = state.value;
         container[j].detail = document.querySelector('#produit').value;
@@ -453,6 +471,7 @@ btn.addEventListener('click', () => {
   let etatFormulaire = '';
   if (identifiant.value == '') {
     etatFormulaire = 'add';
+    chercheDernierIdVentes('find');
     operation = document.querySelector('#operation').value * 1 + 100000;
   } else {
     etatFormulaire = 'update';

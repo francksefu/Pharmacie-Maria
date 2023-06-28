@@ -79,6 +79,7 @@ function dataVente(){
                       <li id="toute-vente"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
                       <li id="paye-cache"><a class="dropdown-item" href="#">ventes payé cache</a></li>
                       <li id="vente-dette"><a class="dropdown-item" href="#">ventes accordé en dette</a></li>
+                      <li id="vente-sortie"><a class="dropdown-item" href="#">ventes et sortie</a></li>
                     </ul>
                 </div>
                 <div class="dropdown mt-3">
@@ -155,6 +156,7 @@ function dataVente(){
                       <li id="toute-vente2"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
                       <li id="paye-cache2"><a class="dropdown-item" href="#">ventes payé cache</a></li>
                       <li id="vente-dette2"><a class="dropdown-item" href="#">ventes accordé en dette</a></li>
+                      <li id="vente-sortie2"><a class="dropdown-item" href="#">ventes et sortie</a></li>
                     </ul>
                 </div>
                 <div class="dropdown mt-3">

@@ -87,6 +87,10 @@ btn.addEventListener('click', () => {
       showHint(input.value.split('::')[1]+"::delete", "classCaisseout.php?q=")
     }
 
+    if(document.querySelector("#type").value == 'persoPaie') {
+      showHint(input.value.split('::')[1]+"::delete", "classPersoPaie.php?q=")
+    }
+
     if(fichier.value === 'champs') {
       showHint(input.value.split('::')[1]+"::delete", "classChamps.php?q=")
     }
@@ -101,6 +105,10 @@ btn.addEventListener('click', () => {
 
     if(fichier.value === 'personnel') {
       showHint(input.value.split('::')[1]+"::delete", "classPersonnels.php?q=")
+    }
+
+    if(document.querySelector('#type').value == 'datapersonnel') {
+      showHint(input.value.split('::')[1]+"::delete", "classDataPersonnel.php?q=")
     }
 
     if(document.querySelector("#type").value === 'vente1') {

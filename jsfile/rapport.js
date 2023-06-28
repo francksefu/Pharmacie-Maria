@@ -1,6 +1,7 @@
 const toute_vente = document.querySelector('#toute-vente');
 const paye_cache = document.querySelector('#paye-cache');
 const vente_dette = document.querySelector('#vente-dette');
+const vente_sortie = document.querySelector('#vente-sortie');
 const toutes_sortie = document.querySelector('#toutes-sortie');
 const trie_dette = document.querySelector('#trie-dette');
 const trie_charge = document.querySelector('#trie-charge');
@@ -15,6 +16,7 @@ const paiements_facture = document.querySelector('#paiements-facture');
 const toute_vente2 = document.querySelector('#toute-vente2');
 const paye_cache2 = document.querySelector('#paye-cache2');
 const vente_dette2 = document.querySelector('#vente-dette2');
+const vente_sortie2 = document.querySelector('#vente-sortie2');
 const toutes_sortie2 = document.querySelector('#toutes-sortie2');
 const trie_charge2 = document.querySelector('#trie-charge2');
 const trie_dette2 = document.querySelector('#trie-dette2');
@@ -155,6 +157,14 @@ vente_dette.addEventListener('click', () => {
 
 vente_dette2.addEventListener('click', () => {
     deuxDate('toutes les vente en dette entre 2 date', 'vente_dette2');
+  });
+
+  vente_sortie.addEventListener('click', () => {
+    uneDate('toutes les vente et les sortie sur une date', 'vente_sortie');
+  });
+
+  vente_sortie2.addEventListener('click', () => {
+    deuxDate('toutes les vente et les sortie entre 2 date', 'vente_sortie2');
   });
 
 toutes_sortie.addEventListener('click', () => {
