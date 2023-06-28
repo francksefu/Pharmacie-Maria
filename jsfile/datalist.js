@@ -27,7 +27,8 @@ window.addEventListener('load', () => {
 identifiant.addEventListener('change', () => {
     showHint1(formName);
 })
-
-identifiant.addEventListener('focus', () => {
+if (identifiant.value === "") {
+  identifiant.addEventListener('focus', () => {
     showHint1(formName);
 })
+}

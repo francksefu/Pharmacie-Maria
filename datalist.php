@@ -98,6 +98,23 @@ function dataCaisseOut(){
 
 }
 
+function dataPersoPaie(){
+  include 'connexion.php';
+  $take = '';
+  $sql = ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) order by idPersonnelPaie desc");
+  $result = mysqli_query($db, $sql);
+          
+  if(mysqli_num_rows($result)>0){
+                      
+      while($row= mysqli_fetch_assoc($result)){
+          $take .= "<option value='ID ::".$row["idPersonnelPaie"].":: dates  ::".$row["Date"].":: Nom ::".$row["Nom"].":: Montant ::".$row["Montant"].":: Mois ::".$row["Mois"].":: iDPerso ::".$row["idDataPersonnel"].":: Observation ::".$row["Observation"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"].":".$row["Montant"]." $ mois:".$row["Mois"]."</option>"; 
+      }
+              
+ }else{$take = "Une erreur s est produite ";} 
+ return $take;
+
+}
+
 $q = $_REQUEST["q"];
 
 $autre = '';
@@ -116,6 +133,8 @@ $autre = '';
           break;
           case 'updateDataPersonnel' :
             $hint = dataDataPersonnel();
+          case 'updatePersoPaie' :
+            $hint = dataPersoPaie();
         }
   } else {
         $hint = 'erreur';

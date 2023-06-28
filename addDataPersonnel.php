@@ -62,7 +62,7 @@
                     <p id="txtHint"></p>
                     <input type="hidden" value="add" id="typeFormulaire">
                     <button id='envoie' class="btn btn-primary p-3 fs-4 mt-4 w-25">Ajoutez</button>
-                     <input type="hidden" id="titre" value="data-personnel">
+                    <input type="hidden" id="titre" value="data-personnel">
                 </div>    
                 
             </div>
