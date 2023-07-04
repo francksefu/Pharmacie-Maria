@@ -130,7 +130,7 @@
             
         }
         $sucess = '<div class="alert alert-success" role="alert">
-    Modification fait avec success
+    Suppression fait avec success fait avec success
   </div>';
 
   $error = '<div class="alert alert-danger" role="alert">

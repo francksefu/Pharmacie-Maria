@@ -66,20 +66,38 @@ function dataVente(){
                 </div>
             </div>
         </div>
-    
+ 
         <div class="container-fluid pt-5 bg-transparent">
            <div class="row">
             <!--Button left-->
             <div class="col-md-2">
                 <div class="dropdown mt-3">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      ventes
+                      ventes affichage synthetique
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                       <li id="toute-vente"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
                       <li id="paye-cache"><a class="dropdown-item" href="#">ventes payé cache</a></li>
                       <li id="vente-dette"><a class="dropdown-item" href="#">ventes accordé en dette</a></li>
                       <li id="vente-sortie"><a class="dropdown-item" href="#">ventes et sortie</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown mt-3">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1F" data-bs-toggle="dropdown" aria-expanded="false">
+                      ventes affichage factures
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li id="toute-vente-facture"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
+                      <li id="paye-cache-facture"><a class="dropdown-item" href="#">ventes payé cache</a></li>
+                      <li id="vente-dette-facture"><a class="dropdown-item" href="#">ventes accordé en dette</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown mt-3">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                      ventes affichage tableaux
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li id="toute-vente-tableau"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
                     </ul>
                 </div>
                 <div class="dropdown mt-3">
@@ -109,7 +127,7 @@ function dataVente(){
             </div>
 
             <!--Form between-->
-            <div class="col-md-7 m-2">
+            <div class="col-md-7 m-2 ps-3">
                 <div class="border border-1">
                   <form action="think.php" method="POST">
                     <p class="border border-1 text-center ft-3 text-secondary" id="paragraphe"></p>
@@ -150,13 +168,31 @@ function dataVente(){
             <div class="col-md-2">
                 <div class="dropdown mt-3">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      ventes
+                      ventes affichage synthetique
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                       <li id="toute-vente2"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
                       <li id="paye-cache2"><a class="dropdown-item" href="#">ventes payé cache</a></li>
                       <li id="vente-dette2"><a class="dropdown-item" href="#">ventes accordé en dette</a></li>
                       <li id="vente-sortie2"><a class="dropdown-item" href="#">ventes et sortie</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown mt-3">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                      ventes affichage factures
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li id="toute-vente2-facture"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
+                      <li id="paye-cache2-facture"><a class="dropdown-item" href="#">ventes payé cache</a></li>
+                      <li id="vente-dette2-facture"><a class="dropdown-item" href="#">ventes accordé en dette</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown mt-3">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                      ventes affichage tableaux
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li id="toute-vente2-tableau"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
                     </ul>
                 </div>
                 <div class="dropdown mt-3">

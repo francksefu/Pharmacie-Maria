@@ -2,6 +2,13 @@ const toute_vente = document.querySelector('#toute-vente');
 const paye_cache = document.querySelector('#paye-cache');
 const vente_dette = document.querySelector('#vente-dette');
 const vente_sortie = document.querySelector('#vente-sortie');
+
+const toute_vente_facture = document.querySelector('#toute-vente-facture');
+const paye_cache_facture = document.querySelector('#paye-cache-facture');
+const vente_dette_facture = document.querySelector('#vente-dette-facture');
+
+const toute_vente_tableau = document.querySelector('#toute-vente-tableau');
+
 const toutes_sortie = document.querySelector('#toutes-sortie');
 const trie_dette = document.querySelector('#trie-dette');
 const trie_charge = document.querySelector('#trie-charge');
@@ -17,6 +24,14 @@ const toute_vente2 = document.querySelector('#toute-vente2');
 const paye_cache2 = document.querySelector('#paye-cache2');
 const vente_dette2 = document.querySelector('#vente-dette2');
 const vente_sortie2 = document.querySelector('#vente-sortie2');
+
+
+const toute_vente2_facture = document.querySelector('#toute-vente2-facture');
+const paye_cache2_facture = document.querySelector('#paye-cache2-facture');
+const vente_dette2_facture = document.querySelector('#vente-dette2-facture');
+
+const toute_vente2_tableau = document.querySelector('#toute-vente2-tableau');
+
 const toutes_sortie2 = document.querySelector('#toutes-sortie2');
 const trie_charge2 = document.querySelector('#trie-charge2');
 const trie_dette2 = document.querySelector('#trie-dette2');
@@ -130,13 +145,34 @@ toute_vente.addEventListener('click', () => {
   uneDate('toutes les vente sur une date', 'toute_vente');
 });
 
+toute_vente_facture.addEventListener('click', () => {
+  uneDate('toutes les vente sur une date : affichage facture', 'toute_vente_facture');
+});
+
+toute_vente_tableau.addEventListener('click', () => {
+  uneDate('toutes les vente sur une date : affichage tableau', 'toute_vente_tableau');
+});
+
 toute_vente2.addEventListener('click', () => {
-    deuxDate('toutes les vente entre 2 date', 'toute_vente2');
-  });
+  deuxDate('toutes les vente entre 2 date', 'toute_vente2');
+});
+
+toute_vente2_facture.addEventListener('click', () => {
+  deuxDate('toutes les vente entre 2 date : afichage facture', 'toute_vente2_facture');
+});
+
+toute_vente2_tableau.addEventListener('click', () => {
+  deuxDate('toutes les vente entre 2 date : afichage facture', 'toute_vente2_tableau');
+});
 
 paye_cache.addEventListener('click', () => {
   uneDate('toutes les vente payé sur une date', 'paye_cache');
 });
+
+paye_cache_facture.addEventListener('click', () => {
+  uneDate('toutes les vente payé sur une date: affichage facture', 'paye_cache_facture');
+});
+
 
 btn.addEventListener('click', () => {
   if(type.value == 'approvisionnements' || type.value == 'approvisionnements') {
@@ -148,24 +184,39 @@ btn.addEventListener('click', () => {
 })
 
 paye_cache2.addEventListener('click', () => {
-    deuxDate('toutes les vente payé entre 2 date', 'paye_cache2');
-  });
+  deuxDate('toutes les vente payé entre 2 date', 'paye_cache2');
+});
+
+paye_cache2_facture.addEventListener('click', () => {
+  deuxDate('toutes les vente payé entre 2 date : affichage facture', 'paye_cache2_facture');
+});
+
 
 vente_dette.addEventListener('click', () => {
   uneDate('toutes les vente en dette sur une date', 'vente_dette');
 });
 
+vente_dette_facture.addEventListener('click', () => {
+  uneDate('toutes les vente en dette sur une date : affichage facture', 'vente_dette_facture');
+});
+
+
 vente_dette2.addEventListener('click', () => {
-    deuxDate('toutes les vente en dette entre 2 date', 'vente_dette2');
-  });
+  deuxDate('toutes les vente en dette entre 2 date', 'vente_dette2');
+});
 
-  vente_sortie.addEventListener('click', () => {
-    uneDate('toutes les vente et les sortie sur une date', 'vente_sortie');
-  });
+vente_dette2_facture.addEventListener('click', () => {
+  deuxDate('toutes les vente en dette entre 2 date : affichage facture', 'vente_dette2_facture');
+});
 
-  vente_sortie2.addEventListener('click', () => {
-    deuxDate('toutes les vente et les sortie entre 2 date', 'vente_sortie2');
-  });
+
+vente_sortie.addEventListener('click', () => {
+  uneDate('toutes les vente et les sortie sur une date', 'vente_sortie');
+});
+
+vente_sortie2.addEventListener('click', () => {
+  deuxDate('toutes les vente et les sortie entre 2 date', 'vente_sortie2');
+});
 
 toutes_sortie.addEventListener('click', () => {
   uneDate('toutes les sortie sur une date', 'toutes_sortie');

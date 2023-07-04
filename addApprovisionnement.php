@@ -93,8 +93,8 @@ function dataProduct(){
                       </datalist>
                     <span class="input-group-text border border-success">Quantite</span>
                     <input id="quantite" type="float" class="form-control border border-success" placeholder="Quantite" aria-label="Server">
-                    <span class="input-group-text">PV Unitaire</span>
-                    <input id="pvu" type="float" class="form-control" placeholder="prix de vente" aria-label="Server">
+                    <span class="input-group-text">PA Unitaire</span>
+                    <input id="pvu" type="float" class="form-control" placeholder="prix d achat" aria-label="Server">
                     <span class="input-group-text">$</span>
                     <a id="add" href="#" class="text-decoration-none"><span class="input-group-text bg-success text-white">&plus;</span></a>
                     <a id="M-add" href="#" class="text-decoration-none"><span class="input-group-text bg-primary text-white">&check;</span></a>

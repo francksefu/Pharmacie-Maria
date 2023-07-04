@@ -126,12 +126,226 @@ function ventes($reqSql) {
       $pa += $row["PrixAchat"];
         }
         echo'<h3 class="mt-4 mb-2 text-center">Total de toutes les factures : '.$total_toute_facture.' $</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">Total montant deja payé : '.$total_paye.' $</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">difference : '.$total_toute_facture - $total_paye.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center text-success">Total montant deja payé : '.$total_paye.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center text-danger">difference : '.$total_toute_facture - $total_paye.' $</h3>';
         echo'<h3 class="mt-2 mb-2 text-center">total prix d achat : '.$pa.' $</h3>';
         echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total factures : '.$total_toute_facture - $pa.' $</h3>';
         echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total des montant payé : '.$total_paye - $pa.' $</h3>';
         echo"</table>";
+    }else{echo "Pas des donnees dans la base ";}
+}
+
+function dataVente($operation){
+    include 'connexion.php';
+    $sql= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and (Operation = $operation)");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+      $valeur .= '<div class="border border-secondary redimentionne mt-3 mb-3">
+      <h2 class="text-center">Facture</h2>
+      <table class="table border border-1">
+      <thead class="bg-secondary text-white">
+      <tr>
+            <th>Quantite vendu</th>
+            <th>Nom du produit</th>
+            <th>Prix de vente unitaire</th>
+            <th>Prix de vente total</th>
+        </tr>
+      </thead>
+    <tbody>';
+    $total = 0;
+        while($row= mysqli_fetch_assoc($result)){
+            $status = '';
+            $paye = 0;
+
+            if($row["Dette"] == 'Oui') {
+                $paye = $row["MontantPaye"];
+            } else {
+                $paye = $row["TotalFacture"];
+            }
+            if($row["TotalFacture"] == $paye) {
+                $status = '<span class="bg-success p-2 rounded-3 text-white">Paid</span>';
+            } else {
+                $status = '<span class="bg-danger p-2 rounded-3 text-white">Not paid : '.$row["TotalFacture"] - $paye.' $ </span>';
+            }
+
+            $op = $row["Operation"];
+            $nomClient = $row["NomClient"];
+            $date = $row["DatesVente"];
+            $total += $row["PT"];
+            $valeur .= '
+                <tr>
+                    <td>'.$row["QuantiteVendu"].'</td>
+                    <td>
+                        '.$row["Nom"].'
+                    </td>
+                    <td>'.$row["PU"].'</td>
+                    <td>'.$row["PT"].'</td>
+                </tr>';
+        }
+       
+        $valeur .= '</tbody>
+        <h5 class=" mb-3 mt-3 ms-3"> numero : '.$op.'</h5>
+        <h5 class=" mb-3 mt-3 ms-3"> date : '.$date.'</h5>
+        <h3 class=" mb-3 mt-3 ms-3"> client : '.$nomClient.'</h3>
+        <br />
+        <div class="mb-2">'.$status.'<div>
+        <br />
+        </table>
+        <h3 class="text-center mb-3 mt-3"> total : '.$total.' $</h3></div>';
+        return $valeur;
+
+   }else{return "Une erreur s est produite ";}  
+
+}
+
+function dataVente_tableau_date($date_tableau){
+    include 'connexion.php';
+    $sql= ("SELECT * FROM Ventes, Produit WHERE ((Ventes.idProduit = Produit.idProduit) and DatesVente = '".$date_tableau."')");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+      $valeur .= '<div class="redimentionne mt-3 mb-3">
+      
+      <table class="table border border-1">
+      <thead class="bg-secondary text-white">
+      <tr>
+            <th>Articles</th>
+            <th>Quantite vendu</th>
+            <th>Prix de vente unitaire</th>
+            <th>Prix de vente total</th>
+        </tr>
+      </thead>
+    <tbody>
+    <tr class="text-success bg-warning"><td>'.$date_tableau.'</td></tr>';
+    $total = 0;
+        while($row= mysqli_fetch_assoc($result)){
+
+            $total += $row["PT"];
+            $valeur .= '
+                
+                <tr>
+                    <td>
+                        '.$row["Nom"].'
+                    </td>
+                    <td>'.$row["QuantiteVendu"].'</td>
+                    <td>'.$row["PU"].'</td>
+                    <td>'.$row["PT"].'</td>
+                </tr>';
+        }
+       
+        $valeur .= '</tbody>
+        
+        </table>
+        <h3 class="text-center mb-3 mt-3 w-75 border border-success"> total : '.$total.' $</h3></div>';
+        return $valeur;
+
+   }else{return "Pas des donnees ici";}  
+
+}
+
+function dataVente_tableau_produit($idProduit_tableau, $dateV,$dateV2 = 10){
+    include 'connexion.php';
+    if ($dateV2 === 10) {
+        $sql= ("SELECT * FROM Ventes, Produit WHERE (Ventes.idProduit = Produit.idProduit) and (Produit.idProduit = '".$idProduit_tableau."' and DatesVente = '".$dateV."') order by Produit.idProduit");
+    } else {
+        $sql= ("SELECT * FROM Ventes, Produit WHERE (Ventes.idProduit = Produit.idProduit) and (Produit.idProduit = '".$idProduit_tableau."' and DatesVente between '".$dateV."' and '".$dateV2."') order by Produit.idProduit");
+    }
+    
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+      $qtite_vendu_total = 0;
+        while($row= mysqli_fetch_assoc($result)){
+            $qtite_vendu_total += $row["QuantiteVendu"]; 
+        }
+        return $qtite_vendu_total;
+
+   }else{return "Une erreur s est produite ";}  
+
+}
+
+function ventes_affichage_facture($reqSql) {
+    include 'connexion.php';
+    $total_toute_facture = 0;
+    $total_paye = 0;
+    $pa = 0;
+    echo '<h2 class="mt-0 mb-2 text-center">Ventes</h2>';
+    echo '<h2 class="mt-3 mb-2 text-center">Ventes</h2>';
+   
+    //$reqSql= ("SELECT * FROM Produit order by idProduit asc");
+    $result= mysqli_query($db, $reqSql);
+    if(mysqli_num_rows($result)>0){
+        
+        while($row= mysqli_fetch_assoc($result)){
+          echo dataVente($row["Operation"]);
+          $paye = 0;
+
+            if($row["Dette"] == 'Oui') {
+                $paye = $row["MontantPaye"];
+            } else {
+                $paye = $row["TotalFacture"];
+            }
+      $total_toute_facture += $row["TotalFacture"];
+      $total_paye += $paye;
+      $pa += $row["PrixAchat"];
+        }
+        echo'<h3 class="mt-4 mb-2 text-center">Total de toutes les factures : '.$total_toute_facture.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center text-success">Total montant deja payé : '.$total_paye.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center text-danger">difference : '.$total_toute_facture - $total_paye.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">total prix d achat : '.$pa.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total factures : '.$total_toute_facture - $pa.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total des montant payé : '.$total_paye - $pa.' $</h3>';
+        echo"</table>";
+    }else{echo "Pas des donnees dans la base ";}
+}
+
+function ventes_affichage_tableau($reqSqlDate, $reqProduit, $dat1 = 10, $dat2 = 10) {
+    include 'connexion.php';
+    
+    echo '<h2 class="mt-0 mb-2 text-center">Ventes</h2>';
+    echo '<h2 class="mt-3 mb-2 text-center">Ventes</h2>';
+
+    $result= mysqli_query($db, $reqSqlDate);
+    if(mysqli_num_rows($result)>0){
+        
+        while($row= mysqli_fetch_assoc($result)){
+          echo dataVente_tableau_date($row["DatesVente"]);
+        }
+        
+    }else{echo "Pas des donnees dans la base ";}
+   
+    $resultProduit= mysqli_query($db, $reqProduit);
+    if(mysqli_num_rows($resultProduit)>0){
+       echo '<div class="redimentionne mt-3 mb-3">
+      
+        <table class="table border border-1">
+          <thead class="bg-secondary text-white">
+            <tr class="bg-success">
+             <th>Articles</th>
+             <th>Quantite vendu</th>
+             <th>Quantite en stock actuel</th>
+            </tr>
+          </thead>
+          <tbody>';
+        while($row= mysqli_fetch_assoc($resultProduit)){
+          $qtite = dataVente_tableau_produit($row["idProduit"], $dat1, $dat2);
+          echo '<tr>
+            <td>
+              '.$row["Nom"].'
+            </td>
+            <td>
+              '.$qtite.'
+            </td>
+            <td>
+              '.$row["QuantiteStock"].'
+            </td>
+          </tr>';
+        }
+        echo '</tbody>
+            </table>
+          </div>';
+        
     }else{echo "Pas des donnees dans la base ";}
 }
 
@@ -396,8 +610,8 @@ function venteEtsortie($reqSql, $req) {
       $pa += $row["PrixAchat"];
         }
         echo'<h3 class="mt-4 mb-2 text-center">Total de toutes les factures : '.$total_toute_facture.' $</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">Total montant deja payé : '.$total_paye.' $</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">difference : '.$total_toute_facture - $total_paye.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center text-succes">Total montant deja payé : '.$total_paye.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center text-danger">difference : '.$total_toute_facture - $total_paye.' $</h3>';
         echo'<h3 class="mt-2 mb-2 text-center">total prix d achat : '.$pa.' $</h3>';
         echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total factures : '.$total_toute_facture - $pa.' $</h3>';
         echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total des montant payé : '.$total_paye - $pa.' $</h3>';
@@ -563,9 +777,31 @@ function paiements($reqSql) {
         ventes($reqSq);
       }
 
+      if($cache == 'toute_vente_facture') {
+        $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') GROUP BY Operation order by Operation desc");
+        ventes_affichage_facture($reqSq);
+      }
+
+      if($cache == 'toute_vente_tableau') {
+        $reqSq= ("SELECT * FROM Ventes, Produit WHERE (Ventes.idProduit = Produit.idProduit) and(DatesVente = '".$date1."') GROUP BY DatesVente order by DatesVente desc");
+        $reqSqP= ("SELECT * FROM Ventes, Produit WHERE (Ventes.idProduit = Produit.idProduit) and(DatesVente = '".$date1."') GROUP BY Produit.idProduit order by DatesVente desc");
+        ventes_affichage_tableau($reqSq, $reqSqP);
+      }
+
       if($cache == 'toute_vente2') {
         $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
         ventes($reqSq);
+      }
+
+      if($cache == 'toute_vente2_facture') {
+        $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
+        ventes_affichage_facture($reqSq);
+      }
+
+      if($cache == 'toute_vente2_tableau') {
+        $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY DatesVente order by DatesVente desc");
+        $reqSqP= ("SELECT * FROM Ventes, Produit WHERE (Ventes.idProduit = Produit.idProduit) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Produit.idProduit order by DatesVente desc");
+        ventes_affichage_tableau($reqSq, $reqSqP, $date1, $date2);
       }
 
       if($cache == 'paye_cache') {
@@ -573,19 +809,40 @@ function paiements($reqSql) {
         ventes($reqSq);
       }
 
+      if($cache == 'paye_cache_facture') {
+        $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') and (Dette = 'Non') GROUP BY Operation order by Operation desc");
+        ventes_affichage_facture($reqSq);
+      }
+
       if($cache == 'paye_cache2') {
         $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') and (Dette = 'Non') GROUP BY Operation order by Operation desc");
         ventes($reqSq);
       }
+
+      if($cache == 'paye_cache2_facture') {
+        $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') and (Dette = 'Non') GROUP BY Operation order by Operation desc");
+        ventes_affichage_facture($reqSq);
+      }
+
 
       if($cache == 'vente_dette') {
         $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
         ventes($reqSq);
       }
 
+      if($cache == 'vente_dette_facture') {
+        $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
+        ventes_affichage_facture($reqSq);
+      }
+
       if($cache == 'vente_dette2') {
         $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
         ventes($reqSq);
+      }
+
+      if($cache == 'vente_dette2_facture') {
+        $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
+        ventes_affichage_facture($reqSq);
       }
 
       if($cache == 'vente_sortie') {
