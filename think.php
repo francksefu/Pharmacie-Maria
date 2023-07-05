@@ -362,8 +362,7 @@ function sortie($reqSql) {
     $total_paye = 0;
     echo '<h2 class="mt-0 mb-2 text-center">Sortie</h2>';
     echo '<h2 class="mt-3 mb-2 text-center">Sorties</h2>';
-                       
-    //$reqSql= ("SELECT * FROM Sortie order by idSortie desc");
+
     $result= mysqli_query($db, $reqSql);
     if(mysqli_num_rows($result)>0){
         echo '<table class="table border border-1">
@@ -422,7 +421,7 @@ function bonusPerte ($reqSql) {
     $quantiteP = 0;
     echo '<h2 class="mt-0 mb-2 text-center">Bonus et perte</h2>';
     echo '<h2 class="mt-3 mb-2 text-center">Bonus et pertes</h2>';
-    //$reqSql= ("SELECT * FROM Produit order by idProduit asc");
+    
     $result= mysqli_query($db, $reqSql);
     if(mysqli_num_rows($result)>0){
         echo '<table class="table border border-1">
