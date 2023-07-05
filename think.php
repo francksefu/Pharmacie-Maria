@@ -47,9 +47,9 @@ if($tabC[0] != ''){
 }
 
 if($tabPerso[0] != ''){
-  $id = $tabPerso[1];
+  $idi = $tabPerso[1];
 } else {
-  $id = '';
+  $idi = '';
 }
 
 if($tabFacture[0] != '') {
@@ -1150,8 +1150,8 @@ function paiement_personnel($reqSql) {
       }
 
       if($cache == 'paiements_client') {
-        $reqSql0= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (Client.idClient = $id) GROUP BY idPaiements order by idPaiements desc");
-        $reqSq= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (Client.idClient = $id) GROUP BY Paiements.Operation order by idPaiements desc");
+        $reqSql0= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (Ventes.idClient = $id) GROUP BY idPaiements order by idPaiements desc");
+        $reqSq= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (Ventes.idClient = $id) GROUP BY Paiements.Operation order by idPaiements desc");
         paiements($reqSql0, $reqSq);
       }
 
@@ -1172,7 +1172,7 @@ function paiement_personnel($reqSql) {
 
       //$reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) order by idPersonnelPaie desc");
       if($cache == 'paiements-par-personnel') {
-        $reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) and (DataPersonnel.idDataPersonnel = $id) order by idPersonnelPaie desc");
+        $reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) and (DataPersonnel.idDataPersonnel = $idi) order by idPersonnelPaie desc");
         paiement_personnel($reqSql);
       }
 
@@ -1185,7 +1185,7 @@ function paiement_personnel($reqSql) {
 </main>
 <div class="bg-light" id="superieur">
     <h1 id="croix">&cross;</h1>
-        <div id="container"></div>
-    </div>
+    <div id="container"></div>
+</div>
 </body>
 </html>
