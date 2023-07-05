@@ -41,7 +41,9 @@ const bonus_perte2 = document.querySelector('#bonusOuPerte2');
 const approvisionnement2 = document.querySelector('#approvisionnement2');
 const paiements2 = document.querySelector('#paiements2');
 const paiements_client2 = document.querySelector('#paiements-client2');
-const paiements_facture2 = document.querySelector('#paiements-facture2');
+const paiements_personnel = document.querySelector('#paiements-personnel');
+const paiements_par_personnel = document.querySelector('#paiements-par-personnel');
+
 const clients_facture = document.querySelector('#toutes-facture');
 const clients_facture_2dates = document.querySelector('#facture-2-dates');
 const clients_facture_dette = document.querySelector('#facture-dette');
@@ -51,11 +53,13 @@ const date1 = document.querySelector('#date1');
 const date2 = document.querySelector('#date2');
 const input1 = document.querySelector('#input-1');
 const input2 = document.querySelector('#input-2');
+const input3 = document.querySelector('#input-3');
 
 const contDate1 = document.querySelector('#cont-date1');
 const contDate2 = document.querySelector('#cont-date2');
 const contInput1 = document.querySelector('#cont-input1');
 const contInput2 = document.querySelector('#cont-input2');
+const contInput3 = document.querySelector('#cont-input3');
 
 const type = document.querySelector('#type');
 const paragrapheP = document.querySelector('#paragraphe');
@@ -74,6 +78,7 @@ window.addEventListener('load', () => {
   contDate2.style.display = 'none';
   contInput1.style.display = 'none';
   contInput2.style.display = 'none';
+  contInput3.style.display = 'none';
   btn.style.display = 'none'
 });
 
@@ -83,6 +88,7 @@ function uneDate(message, part) {
     contDate2.style.display = 'none';
     contInput1.style.display = 'none';
     contInput2.style.display = 'none';
+    contInput3.style.display = 'none';
     btn.style.display = 'block';
     paragraphe(paragrapheP, message);
     type.value = part;
@@ -92,18 +98,33 @@ function personnelInput(message, part) {
     enleveMessage(paragrapheP);
     contInput1.style.display = 'flex';
     contInput2.style.display = 'none';
+    contInput3.style.display = 'none';
     contDate1.style.display = 'none';
     contDate2.style.display = 'none';
     btn.style.display = 'block';
     paragraphe(paragrapheP, message);
     type.value = part;
 }
+
+function personnelpaie(message, part) {
+  enleveMessage(paragrapheP);
+  contInput1.style.display = 'none';
+  contInput2.style.display = 'none';
+  contInput3.style.display = 'flex';
+  contDate1.style.display = 'none';
+  contDate2.style.display = 'none';
+  btn.style.display = 'block';
+  paragraphe(paragrapheP, message);
+  type.value = part;
+}
+
 function factureInput(message, part) {
     enleveMessage(paragrapheP);
     contInput2.style.display = 'flex';
     contDate1.style.display = 'none';
     contDate2.style.display = 'none';
     contInput1.style.display = 'none';
+    contInput3.style.display = 'none';
     btn.style.display = 'block';
     paragraphe(paragrapheP, message);
     type.value = part;
@@ -115,6 +136,7 @@ function deuxDate(message, part) {
     contDate2.style.display = 'flex';
     contInput1.style.display = 'none';
     contInput2.style.display = 'none';
+    contInput3.style.display = 'none';
     btn.style.display = 'block';
     paragraphe(paragrapheP, message);
     type.value = part;
@@ -126,6 +148,7 @@ function InputEtDeuxDate(message, part) {
     contDate2.style.display = 'flex';
     contInput1.style.display = 'flex';
     contInput2.style.display = 'none';
+    contInput3.style.display = 'none';
     btn.style.display = 'block';
     paragraphe(paragrapheP, message);
     type.value = part;
@@ -136,6 +159,7 @@ function InputEtDeuxDateFacture(message, part) {
     contDate1.style.display = 'flex';
     contDate2.style.display = 'flex';
     contInput2.style.display = 'flex';
+    contInput3.style.display = 'none';
     btn.style.display = 'block';
     paragraphe(paragrapheP, message);
     type.value = part;
@@ -306,4 +330,12 @@ clients_facture_dette.addEventListener('click', () => {
 
 clients_facture_2dates.addEventListener('click', () => {
     InputEtDeuxDate('voir toutes les factures d un client entre 2 dates', 'clients_facture_2dates');
+});
+
+paiements_par_personnel.addEventListener('click', () => {
+  personnelpaie('voir tous les paiements d un personnel', 'paiements-par-personnel');
+});
+
+paiements_personnel.addEventListener('click', () => {
+  deuxDate('tous les paiements du personnels entre 2 date', 'paiements-personnel');
 });

@@ -142,18 +142,16 @@ function dataProduct(){
                             <h4>Source</h4>
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="status">source</label>
-                                <select class="form-select" id="source">
-                                  <option value="ailleur">ailleur</option>
-                                  <option value="stock2">stock2</option>
-                                </select>
+                                <input type="text" id="source" value="ailleurs" class="form-control" >
+                                
                                 <button id="envoi" type="button" class="btn btn-primary">Valider</button>
                             </div>
                             <h4>Destination</h4>
                             <div class="input-group mb-3">
-                                <label class="input-group-text" for="status">source</label>
+                                <label class="input-group-text" for="status">destination</label>
                                 <select class="form-select" id="destination">
-                                  <option value="stock1">stock1</option>
-                                  <option value="stock2">stock2</option>
+                                  <option value="stock1">stock</option>
+                                  <!--<option value="stock2">stock2</option>-->
                                 </select>
                                 
                             </div>
