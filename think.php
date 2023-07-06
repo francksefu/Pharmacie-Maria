@@ -863,6 +863,7 @@ function paiements($reqSql, $req) {
             } else {
                 $status = '<span class="bg-danger p-2 rounded-3 text-white">Not paid</span>';
             }
+            $somme_montant += $row["Montant"];
             echo'
         <tr>
         <td>'.$row["idPaiements"].'</td>
@@ -900,6 +901,7 @@ function paiements($reqSql, $req) {
       <tr>';
       
         }
+        echo'<h3 class="mt-2 mb-2 text-center text-success">Sommes du montant payé ce jour la : '.$somme_montant.' $</h3>';
         echo'<h3 class="mt-4 mb-2 text-center">Total des factures : '.$total_facture.' $</h3>';
         echo'<h3 class="mt-2 mb-2 text-center">Total des montants deja payé : '.$montant.' $</h3>';
         echo'<h3 class="mt-2 mb-2 text-center">difference : '.$total_facture - $montant.' $</h3>';

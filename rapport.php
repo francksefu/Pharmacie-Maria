@@ -140,12 +140,12 @@ function dataVente(){
                     </ul>
                 </div>
                 <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuB" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuBres" data-bs-toggle="dropdown" aria-expanded="false">
                       Resume
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li id="paiements"><a class="dropdown-item" href="#">Journaliere</a></li>
-                      <li id="paiements-client"><a class="dropdown-item" href="#">entre 2 dates</a></li>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonres1">
+                      <li id="resume-journaliere"><a class="dropdown-item" href="#">Journaliere</a></li>
+                      <li id="resume-periode"><a class="dropdown-item" href="#">entre 2 dates</a></li>
                     </ul>
                 </div>
             </div>

@@ -49,6 +49,9 @@ const clients_facture_2dates = document.querySelector('#facture-2-dates');
 const clients_facture_dette = document.querySelector('#facture-dette');
 const resume = document.querySelector('#resume');
 
+const resume_journaliere = document.querySelector('#resume-journaliere');
+const resume_periode = document.querySelector('#resume-periode');
+
 const date1 = document.querySelector('#date1');
 const date2 = document.querySelector('#date2');
 const input1 = document.querySelector('#input-1');
@@ -199,7 +202,7 @@ paye_cache_facture.addEventListener('click', () => {
 
 
 btn.addEventListener('click', () => {
-  if(type.value == 'approvisionnements' || type.value == 'approvisionnements') {
+  if(type.value == 'approvisionnements' || type.value == 'approvisionnements2' || type.value == 'resume-journaliere' || type.value == 'resume-periode') {
     document.forms[0].action = 'thinkApprov.php';
   } else {
     document.forms[0].action = 'think.php';
@@ -307,6 +310,13 @@ paiements2.addEventListener('click', () => {
     deuxDate('tous les paiements entre 2 date', 'paiements2');
 });
 
+resume_journaliere.addEventListener('click', () => {
+  uneDate('Resume journaliere', 'resume-journaliere');
+});
+
+resume_periode.addEventListener('click', () => {
+  deuxDate('Resume sur une periode : ', 'resume-periode');
+});
 
 paiements_facture.addEventListener('click', () => {
     factureInput('tous les paiements sur une facture', 'paiements_facture');
