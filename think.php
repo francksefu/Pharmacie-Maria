@@ -147,7 +147,7 @@ function dataVente($operation){
     include 'connexion.php';
     $sql= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and (Operation = $operation)");
     $result = mysqli_query($db, $sql);
-            
+    $valeur = '';  
     if(mysqli_num_rows($result)>0){
       $valeur .= '<div class="border border-secondary redimentionne mt-3 mb-3">
       <h2 class="text-center">Facture</h2>
@@ -211,7 +211,7 @@ function dataVente_tableau_date($date_tableau){
     include 'connexion.php';
     $sql= ("SELECT * FROM Ventes, Produit WHERE ((Ventes.idProduit = Produit.idProduit) and DatesVente = '".$date_tableau."')");
     $result = mysqli_query($db, $sql);
-            
+    $valeur = '';     
     if(mysqli_num_rows($result)>0){
       $valeur .= '<div class="redimentionne mt-3 mb-3">
       
