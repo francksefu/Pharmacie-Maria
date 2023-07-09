@@ -55,7 +55,7 @@ function navbar() {
             <li><a class="dropdown-item" href="dataPersonnel.php">Personnel</a></li>
             <li><a class="dropdown-item" href="addDataPersonnel.php">Ajoutez personnel</a></li>
             <li><a class="dropdown-item" href="paiePerso.php">Paiement du personnel</a></li>
-            <li><a class="dropdown-item" href="addPaiePerso.php">Ajoutez paiement du personnel</a></li>
+            <li><a class="dropdown-item" href="addPersoPaie.php">Ajoutez paiement du personnel</a></li>
           </ul>
       </li>
 
@@ -70,6 +70,8 @@ function navbar() {
             <li><a class="dropdown-item" href="caisseOut.php">Listez les sorties</a></li>
             <li><a class="dropdown-item" href="addCaisseOut.php">Ajoutez sortie</a></li>
             <li><a class="dropdown-item" href="updateTaux.php">Modifier taux d echange</a></li>
+            <li><a class="dropdown-item" href="perteOccaz.php">Listez pertes occasionnée</a></li>
+            <li><a class="dropdown-item" href="addPerteOccaz.php">Ajouter perte occasionnée</a></li>
           </ul>
       </li>
 

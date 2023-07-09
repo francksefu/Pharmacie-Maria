@@ -169,6 +169,22 @@ function sortie_resume($reqSql) {
     }else{ return 0;}
 }
 
+function perteOccaz($sql){
+    include 'connexion.php';
+    $total = 0;
+    //$sql = ("SELECT * FROM PerteOccaz order by idPerteOccaz desc");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+                        
+        while($row= mysqli_fetch_assoc($result)){
+            $total += $row["Montant"];
+        }
+                
+   }else{$total = 0;}  
+   return $total;
+}
+
 function paiement_personnel_resume($reqSql) {
     include 'connexion.php';
     $total = 0;
@@ -212,7 +228,7 @@ function paiements_resume($reqSql) {
         return $total;
     }else{return 0;}
 }
-function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements, $paie) {
+function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements, $paie, $perte) {
    $array_ventes = ventes_resume($vente);
    $total_vente = $array_ventes[0];
    $total_vente_cash = $array_ventes[1];
@@ -223,10 +239,10 @@ function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements,
    $total_depenses = $total_sortie + $total_paie_personnel;
 
    $reste_balances = $total_vente_cash - $total_depenses;
-
+    $perte_occaz = perteOccaz($perte);
    $pertes_occasionne = bonusPerte_resume($bonus_perte);
 
-   $restes_cash_disponible = $reste_balances - $pertes_occasionne;
+   $restes_cash_disponible = $reste_balances - $pertes_occasionne - $perte_occaz;
 
    /**
     * les ventes cash et les paiements (dette recouvertes), s ils sont
@@ -240,7 +256,7 @@ function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements,
     */
 
     $dette_recouverte = paiements_resume($paie);
-    $total_net_pur_versement = dataPaiementAffichageSynthetique($vente, $paiements) - $total_depenses - $pertes_occasionne;
+    $total_net_pur_versement = dataPaiementAffichageSynthetique($vente, $paiements) - $total_depenses - $pertes_occasionne - $perte_occaz;
 
     $valeur = '
       <h2 class="mt-1 mb-5">SYNTHESE ACTIVITES JOURNALIERE</h2>
@@ -286,9 +302,9 @@ function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements,
             </td>
         </tr>
         <tr>
-            <td>PERTES OCCASIONNEES</td>
+            <td>PERTES OCCASIONNEES (bons perte + perte occasionnees)</td>
             <td>
-                '.$pertes_occasionne.' $
+                '.$pertes_occasionne.' $ + '.$perte_occaz.' $ = '.$pertes_occasionne + $perte_occaz.' $
             </td>
         </tr>
         <tr>
@@ -334,7 +350,8 @@ function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements,
             $bonus_perte = ("SELECT * FROM BonusPerte, Produit WHERE (DatesD = '".$date1."') and (BonusPerte.idProduit = Produit.idProduit) order by idBonusPerte desc");
             $paiements = ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (DatesPaie = '".$date1."') GROUP BY idPaiements order by idPaiements desc");
             $paie = ("SELECT * FROM Paiements WHERE  (DatesPaie = '".$date1."') order by idPaiements desc");
-            echo resume($ventes, $sortie, $paiement_personnel, $bonus_perte, $paiements, $paie);
+            $perte = ("SELECT * FROM PerteOccaz WHERE  (Dates = '".$date1."') order by idPerteOccaz desc");
+            echo resume($ventes, $sortie, $paiement_personnel, $bonus_perte, $paiements, $paie, $perte);
           }
 
           if($cache == 'resume-periode') {
@@ -344,7 +361,8 @@ function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements,
             $bonus_perte = ("SELECT * FROM BonusPerte, Produit WHERE (DatesD BETWEEN '".$date1."' AND '".$date2."') and (BonusPerte.idProduit = Produit.idProduit) order by idBonusPerte desc");
             $paiements = ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (DatesPaie BETWEEN '".$date1."' AND '".$date2."') GROUP BY idPaiements order by idPaiements desc");
             $paie = ("SELECT * FROM Paiements WHERE  (DatesPaie BETWEEN '".$date1."' AND '".$date2."') order by idPaiements desc");
-            echo resume($ventes, $sortie, $paiement_personnel, $bonus_perte, $paiements, $paie);
+            $perte = ("SELECT * FROM PerteOccaz WHERE  (Dates BETWEEN '".$date1."' AND '".$date2."') order by idPerteOccaz desc");
+            echo resume($ventes, $sortie, $paiement_personnel, $bonus_perte, $paiements, $paie, $perte);
           }
         ?>
     </main>

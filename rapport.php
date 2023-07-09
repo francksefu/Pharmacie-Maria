@@ -107,14 +107,7 @@ function dataVente(){
                       <li id="vente-dette-facture"><a class="dropdown-item" href="#">ventes accordé en dette</a></li>
                     </ul>
                 </div>
-                <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      ventes affichage tableaux
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li id="toute-vente-tableau"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
-                    </ul>
-                </div>
+                
                 <div class="dropdown mt-3">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                       Sortie
@@ -140,6 +133,15 @@ function dataVente(){
                     </ul>
                 </div>
                 <div class="dropdown mt-3">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuBres1" data-bs-toggle="dropdown" aria-expanded="false">
+                      Perte Occasionnées
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonres1">
+                      <li id="perte-journaliere"><a class="dropdown-item" href="#">Journaliere</a></li>
+                      <li id="perte-periode"><a class="dropdown-item" href="#">entre 2 dates</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown mt-3">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuBres" data-bs-toggle="dropdown" aria-expanded="false">
                       Resume
                     </button>
@@ -148,6 +150,7 @@ function dataVente(){
                       <li id="resume-periode"><a class="dropdown-item" href="#">entre 2 dates</a></li>
                     </ul>
                 </div>
+                
             </div>
 
             <!--Form between-->

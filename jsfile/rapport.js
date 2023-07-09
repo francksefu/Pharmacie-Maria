@@ -7,8 +7,6 @@ const toute_vente_facture = document.querySelector('#toute-vente-facture');
 const paye_cache_facture = document.querySelector('#paye-cache-facture');
 const vente_dette_facture = document.querySelector('#vente-dette-facture');
 
-const toute_vente_tableau = document.querySelector('#toute-vente-tableau');
-
 const toutes_sortie = document.querySelector('#toutes-sortie');
 const trie_dette = document.querySelector('#trie-dette');
 const trie_charge = document.querySelector('#trie-charge');
@@ -48,6 +46,9 @@ const clients_facture = document.querySelector('#toutes-facture');
 const clients_facture_2dates = document.querySelector('#facture-2-dates');
 const clients_facture_dette = document.querySelector('#facture-dette');
 const resume = document.querySelector('#resume');
+
+const perte_journaliere = document.querySelector('#perte-journaliere');
+const perte_periode = document.querySelector('#perte-periode');
 
 const resume_journaliere = document.querySelector('#resume-journaliere');
 const resume_periode = document.querySelector('#resume-periode');
@@ -174,10 +175,6 @@ toute_vente.addEventListener('click', () => {
 
 toute_vente_facture.addEventListener('click', () => {
   uneDate('toutes les vente sur une date : affichage facture', 'toute_vente_facture');
-});
-
-toute_vente_tableau.addEventListener('click', () => {
-  uneDate('toutes les vente sur une date : affichage tableau', 'toute_vente_tableau');
 });
 
 toute_vente2.addEventListener('click', () => {
@@ -316,6 +313,14 @@ resume_journaliere.addEventListener('click', () => {
 
 resume_periode.addEventListener('click', () => {
   deuxDate('Resume sur une periode : ', 'resume-periode');
+});
+
+perte_journaliere.addEventListener('click', () => {
+  uneDate('Perte occasionnee journaliere', 'perte-journaliere');
+});
+
+perte_periode.addEventListener('click', () => {
+  deuxDate('Perte occasionnee sur une periode : ', 'perte-periode');
 });
 
 paiements_facture.addEventListener('click', () => {
