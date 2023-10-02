@@ -18,6 +18,10 @@ const paiements = document.querySelector('#paiements');
 const paiements_client = document.querySelector('#paiements-client');
 const paiements_facture = document.querySelector('#paiements-facture');
 
+//Prediction
+const prediction_journaliere = document.querySelector('#prediction-journaliere');
+const prediction_periode = document.querySelector('#prediction-periode')
+
 const toute_vente2 = document.querySelector('#toute-vente2');
 const paye_cache2 = document.querySelector('#paye-cache2');
 const vente_dette2 = document.querySelector('#vente-dette2');
@@ -354,3 +358,13 @@ paiements_par_personnel.addEventListener('click', () => {
 paiements_personnel.addEventListener('click', () => {
   deuxDate('tous les paiements du personnels entre 2 date', 'paiements-personnel');
 });
+
+prediction_periode.addEventListener('click', () => {
+  deuxDate('tous les approvisionnements entre 2 date ', 'approvisionnements2');
+  //contInput3.style.display = 'flex';
+})
+
+prediction_journaliere.addEventListener('click', () => {
+  deuxDate('tous les approvisionnements entre 2 date ', 'approvisionnements2');
+  //contInput3.style.display = 'flex';
+})

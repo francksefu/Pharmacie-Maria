@@ -40,7 +40,7 @@ function dataPersonnel(){
 
 }
 
-function dataPersoPaie(){
+/*function dataPersoPaie(){
   include 'connexion.php';
   $sql = ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) order by idPersonnelPaie desc");
   $result = mysqli_query($db, $sql);
@@ -52,6 +52,21 @@ function dataPersoPaie(){
       }
               
  }else{echo "Une erreur s est produite ";} 
+
+}*/
+
+function dataProduct(){
+  include 'connexion.php';
+  $sql = ("SELECT * FROM Produit order by Nom asc");
+  $result = mysqli_query($db, $sql);
+          
+  if(mysqli_num_rows($result)>0){
+                      
+      while($row= mysqli_fetch_assoc($result)){
+          echo"<option value='ID ::".$row["idProduit"].":: Nom ::".$row["Nom"].":: PA ::".$row["PrixAchat"].":: PV = ::".$row["PrixVente"].":: PVmin =::".$row["PrixVmin"].":: Qstock = ::".$row["QuantiteStock"]."'>nom: ".$row["Nom"]." :Qstock ".$row["QuantiteStock"]."</option>"; 
+      }
+              
+ }else{echo "Une erreur s est produite ";}  
 
 }
 
@@ -150,7 +165,16 @@ function dataVente(){
                       <li id="resume-periode"><a class="dropdown-item" href="#">entre 2 dates</a></li>
                     </ul>
                 </div>
-                
+               
+                <div class="dropdown mt-3">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuBresk" data-bs-toggle="dropdown" aria-expanded="false">
+                      Prediction
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonres1k">
+                      <li id="prediction-journaliere"><a class="dropdown-item" href="#">Journaliere</a></li>
+                      <li id="prediction-periode"><a class="dropdown-item" href="#">entre 2 dates</a></li>
+                    </ul>
+                </div>
             </div>
 
             <!--Form between-->
@@ -191,7 +215,7 @@ function dataVente(){
                           <input type="text" name="PaiePerso" id="input-3" list="dataPerso" class="form-control" placeholder="entrer le nom d un personnel" >
                             <datalist id="dataPerso">
                               <?php 
-                                 dataPersoPaie();
+                                 dataProduct();
                               ?>
                             </datalist>
                           <span class="input-group-text pointe" id="cross">&cross;</span>

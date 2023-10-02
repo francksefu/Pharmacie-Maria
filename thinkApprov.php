@@ -185,7 +185,7 @@ function perteOccaz($sql){
    return $total;
 }
 
-function paiement_personnel_resume($reqSql) {
+/*function paiement_personnel_resume($reqSql) {
     include 'connexion.php';
     $total = 0;
     //$reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) order by idPersonnelPaie desc");
@@ -197,7 +197,7 @@ function paiement_personnel_resume($reqSql) {
         }
         return $total;
     }else{ return 0;}
-}
+}*/
 
 function bonusPerte_resume ($reqSql) {
     include 'connexion.php';
@@ -235,7 +235,7 @@ function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements,
    $credit = $total_vente - $total_vente_cash;
 
    $total_sortie = sortie_resume($sortie);
-   $total_paie_personnel = paiement_personnel_resume($paiement_personnel);
+   $total_paie_personnel = $paiement_personnel;
    $total_depenses = $total_sortie + $total_paie_personnel;
 
    $reste_balances = $total_vente_cash - $total_depenses;
@@ -346,7 +346,7 @@ function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements,
           if($cache == 'resume-journaliere') {
             $ventes = ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') GROUP BY Operation order by Operation desc");
             $sortie = ("SELECT * FROM Sortie WHERE(DatesD = '".$date1."') order by idSortie desc");
-            $paiement_personnel = ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE ((PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) and (`Date` BETWEEN '".$date1."' AND '".$date1."')) order by idPersonnelPaie desc");
+            $paiement_personnel = 0;//("SELECT * FROM PersonnelPaie, DataPersonnel WHERE ((PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) and (`Date` BETWEEN '".$date1."' AND '".$date1."')) order by idPersonnelPaie desc");
             $bonus_perte = ("SELECT * FROM BonusPerte, Produit WHERE (DatesD = '".$date1."') and (BonusPerte.idProduit = Produit.idProduit) order by idBonusPerte desc");
             $paiements = ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (DatesPaie = '".$date1."') GROUP BY idPaiements order by idPaiements desc");
             $paie = ("SELECT * FROM Paiements WHERE  (DatesPaie = '".$date1."') order by idPaiements desc");
@@ -357,7 +357,7 @@ function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements,
           if($cache == 'resume-periode') {
             $ventes = ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
             $sortie = ("SELECT * FROM Sortie WHERE(DatesD BETWEEN '".$date1."' AND '".$date1."') order by idSortie desc");
-            $paiement_personnel = ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE ((PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) and (`Date` BETWEEN '".$date1."' AND '".$date2."')) order by idPersonnelPaie desc");
+            $paiement_personnel = 0;//("SELECT * FROM PersonnelPaie, DataPersonnel WHERE ((PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) and (`Date` BETWEEN '".$date1."' AND '".$date2."')) order by idPersonnelPaie desc");
             $bonus_perte = ("SELECT * FROM BonusPerte, Produit WHERE (DatesD BETWEEN '".$date1."' AND '".$date2."') and (BonusPerte.idProduit = Produit.idProduit) order by idBonusPerte desc");
             $paiements = ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (DatesPaie BETWEEN '".$date1."' AND '".$date2."') GROUP BY idPaiements order by idPaiements desc");
             $paie = ("SELECT * FROM Paiements WHERE  (DatesPaie BETWEEN '".$date1."' AND '".$date2."') order by idPaiements desc");
