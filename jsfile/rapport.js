@@ -203,7 +203,7 @@ paye_cache_facture.addEventListener('click', () => {
 
 
 btn.addEventListener('click', () => {
-  if(type.value == 'approvisionnements' || type.value == 'approvisionnements2' || type.value == 'resume-journaliere' || type.value == 'resume-periode') {
+  if(type.value == 'approvisionnements' || type.value == 'approvisionnements2' || type.value == 'resume-journaliere' || type.value == 'resume-periode' || type.value == 'prediction-journaliere' || type.value == 'prediction-periode') {
     document.forms[0].action = 'thinkApprov.php';
   } else {
     document.forms[0].action = 'think.php';
@@ -360,11 +360,11 @@ paiements_personnel.addEventListener('click', () => {
 });
 
 prediction_periode.addEventListener('click', () => {
-  deuxDate('tous les approvisionnements entre 2 date ', 'approvisionnements2');
-  //contInput3.style.display = 'flex';
+  deuxDate('entre une periode et le produit pour lequelle vous voulez faire une prediction ', 'prediction-periode');
+  contInput3.style.display = 'flex';
 })
 
 prediction_journaliere.addEventListener('click', () => {
-  deuxDate('tous les approvisionnements entre 2 date ', 'approvisionnements2');
-  //contInput3.style.display = 'flex';
+  uneDate('entre une date et le produit pour  lequelle vous voulez faire une prediction ', 'prediction-journaliere');
+  contInput3.style.display = 'flex';
 })

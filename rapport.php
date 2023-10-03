@@ -212,7 +212,7 @@ function dataVente(){
                       </div>
                       <div class="input-group  mt-3 mb-3" id="cont-input3">
                           <span class="input-group-text">choisir : </span>
-                          <input type="text" name="PaiePerso" id="input-3" list="dataPerso" class="form-control" placeholder="entrer le nom d un personnel" >
+                          <input type="text" name="Produit" id="input-3" list="dataPerso" class="form-control" placeholder="entrer le nom d un personnel" >
                             <datalist id="dataPerso">
                               <?php 
                                  dataProduct();

@@ -21,7 +21,9 @@
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.js"></script>
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
     <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
-    <script defer src="./navbar.js"></script>
+    <script src="//unpkg.com/brain.js"></script>
+    <script defer src="./jsfile/prediction.js"></script>
+    <!--<script defer src="./navbar.js"></script>-->
     <script defer src="./jsfile/jquery-3.6.1.min.js"></script>
     <script defer src="./jsfile/produit.js"></script>
     <script defer src="./jsfile/supprime.js"></script>
@@ -169,7 +171,7 @@ function sortie_resume($reqSql) {
     }else{ return 0;}
 }
 
-function perteOccaz($sql){
+/*function perteOccaz($sql){
     include 'connexion.php';
     $total = 0;
     //$sql = ("SELECT * FROM PerteOccaz order by idPerteOccaz desc");
@@ -183,7 +185,7 @@ function perteOccaz($sql){
                 
    }else{$total = 0;}  
    return $total;
-}
+}*/
 
 /*function paiement_personnel_resume($reqSql) {
     include 'connexion.php';
@@ -228,6 +230,27 @@ function paiements_resume($reqSql) {
         return $total;
     }else{return 0;}
 }
+
+// This function take all quantity and date , we want to use for prediction
+function prediction($sql) {
+    $data_input = '';
+    $data_out = '';
+    include 'connexion.php';
+    //$sql= ("SELECT * FROM Ventes, Produit WHERE (Ventes.idProduit = Produit.idProduit)");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+        while($row= mysqli_fetch_assoc($result)){
+            //echo"<option value='ID ::".$row["Operation"].":: date ::".$row["DatesVente"].":: client  ::".$row["NomClient"].":: Total facture ::".$row["TotalFacture"]."'>client = ".$row["NomClient"]." dette : ".$row["Dette"]."</option>"; 
+            $data_input .= $row["QuantiteVendu"].', ';
+            $data_out .= $row["DatesVente"].', ';
+        }
+        
+   }else{$valeur_in_out = "Pas de donnee ";}
+   $valeur_in_out = '<textarea class="form-control mt-3" name="commentaire" id="data_in"  aria-label="With textarea" placeholder="Entrer commentaire">'.$data_input.'</textarea> <br> <textarea class="form-control"  id="data_out"  aria-label="With textarea" placeholder="Entrer commentaire">'.$data_out.'</textarea>';
+   return $valeur_in_out;
+}
+
 function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements, $paie, $perte) {
    $array_ventes = ventes_resume($vente);
    $total_vente = $array_ventes[0];
@@ -239,7 +262,7 @@ function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements,
    $total_depenses = $total_sortie + $total_paie_personnel;
 
    $reste_balances = $total_vente_cash - $total_depenses;
-    $perte_occaz = perteOccaz($perte);
+    $perte_occaz = 0;//perteOccaz($perte);
    $pertes_occasionne = bonusPerte_resume($bonus_perte);
 
    $restes_cash_disponible = $reste_balances - $pertes_occasionne - $perte_occaz;
@@ -332,6 +355,8 @@ function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements,
 ?>
 <body>
     <main>
+        <input type="text" id="checker" value="<?php echo $cache ?>" />
+        <input type="text" id="result" />
         <?php
         if($cache == 'approvisionnements') {
             $reqSql0= ("SELECT * FROM Approvisionnement, Produit WHERE (Approvisionnement.idProduit = Produit.idProduit) and (DatesApprov = '".$date1."') GROUP BY Operation order by Operation desc limit 1000");
@@ -350,7 +375,7 @@ function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements,
             $bonus_perte = ("SELECT * FROM BonusPerte, Produit WHERE (DatesD = '".$date1."') and (BonusPerte.idProduit = Produit.idProduit) order by idBonusPerte desc");
             $paiements = ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (DatesPaie = '".$date1."') GROUP BY idPaiements order by idPaiements desc");
             $paie = ("SELECT * FROM Paiements WHERE  (DatesPaie = '".$date1."') order by idPaiements desc");
-            $perte = ("SELECT * FROM PerteOccaz WHERE  (Dates = '".$date1."') order by idPerteOccaz desc");
+            $perte = 0;//("SELECT * FROM PerteOccaz WHERE  (Dates = '".$date1."') order by idPerteOccaz desc");
             echo resume($ventes, $sortie, $paiement_personnel, $bonus_perte, $paiements, $paie, $perte);
           }
 
@@ -361,8 +386,15 @@ function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements,
             $bonus_perte = ("SELECT * FROM BonusPerte, Produit WHERE (DatesD BETWEEN '".$date1."' AND '".$date2."') and (BonusPerte.idProduit = Produit.idProduit) order by idBonusPerte desc");
             $paiements = ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (DatesPaie BETWEEN '".$date1."' AND '".$date2."') GROUP BY idPaiements order by idPaiements desc");
             $paie = ("SELECT * FROM Paiements WHERE  (DatesPaie BETWEEN '".$date1."' AND '".$date2."') order by idPaiements desc");
-            $perte = ("SELECT * FROM PerteOccaz WHERE  (Dates BETWEEN '".$date1."' AND '".$date2."') order by idPerteOccaz desc");
+            $perte = 0;//("SELECT * FROM PerteOccaz WHERE  (Dates BETWEEN '".$date1."' AND '".$date2."') order by idPerteOccaz desc");
             echo resume($ventes, $sortie, $paiement_personnel, $bonus_perte, $paiements, $paie, $perte);
+          }
+
+          if($cache == 'prediction-periode') {
+            $produit = $_POST["Produit"];
+            $id_produit = explode("::", $produit)[1];
+            $sql= ("SELECT * FROM Ventes, Produit WHERE (Ventes.idProduit = Produit.idProduit) and Ventes.idProduit = $id_produit");
+            echo prediction($sql);
           }
         ?>
     </main>
