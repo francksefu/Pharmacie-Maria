@@ -19,7 +19,7 @@ const paiements_client = document.querySelector('#paiements-client');
 const paiements_facture = document.querySelector('#paiements-facture');
 
 //Prediction
-const prediction_journaliere = document.querySelector('#prediction-journaliere');
+
 const prediction_periode = document.querySelector('#prediction-periode')
 
 const toute_vente2 = document.querySelector('#toute-vente2');
@@ -364,7 +364,4 @@ prediction_periode.addEventListener('click', () => {
   contInput3.style.display = 'flex';
 })
 
-prediction_journaliere.addEventListener('click', () => {
-  uneDate('entre une date et le produit pour  lequelle vous voulez faire une prediction ', 'prediction-journaliere');
-  contInput3.style.display = 'flex';
-})
+

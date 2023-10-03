@@ -21,8 +21,9 @@
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.js"></script>
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
     <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
-    <script src="//unpkg.com/brain.js"></script>
-    <!--<script defer src="./jsfile/prediction.js"></script>-->
+    <script src="./jsfile/reg.js"></script>
+    <script defer src="./jsfile/prediction.js"></script>
+    
     <!--<script defer src="./navbar.js"></script>-->
     <script defer src="./jsfile/jquery-3.6.1.min.js"></script>
     <script defer src="./jsfile/produit.js"></script>
@@ -390,7 +391,7 @@ function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements,
             echo resume($ventes, $sortie, $paiement_personnel, $bonus_perte, $paiements, $paie, $perte);
           }
 
-          if($cache == 'prediction-periode') {
+          if($cache == 'prediction-journaliere' || $cache == 'prediction-periode') {
             $produit = $_POST["Produit"];
             $id_produit = explode("::", $produit)[1];
             $sql= ("SELECT * FROM Ventes, Produit WHERE (Ventes.idProduit = Produit.idProduit) and Ventes.idProduit = $id_produit");

@@ -171,8 +171,8 @@ function dataVente(){
                       Prediction
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonres1k">
-                      <li id="prediction-journaliere"><a class="dropdown-item" href="#">Journaliere</a></li>
-                      <li id="prediction-periode"><a class="dropdown-item" href="#">entre 2 dates</a></li>
+                      
+                      <li id="prediction-periode"><a class="dropdown-item" href="#">Tendance des données</a></li>
                     </ul>
                 </div>
             </div>
