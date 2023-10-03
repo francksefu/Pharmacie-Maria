@@ -1,24 +1,50 @@
-//const checker = document.querySelector('#checker').value;
+const regression = require('regression');
 /*
-if(1/*checker == 'prediction-periode') {
-    const input_arr = ['2023-04-10', '2023-04-17', '2023-04-20', '2023-05-12', '2023-05-13', '2023-05-13', '2023-05-16', '2023-08-01']//document.querySelector('#data_in').value.split(',').pop();
-    const out_arr = [1, 2, 8, 2, 1, 3, 2, 1]//document.querySelector('#data_out').value.split(',').pop();
-    long_table = input_arr.length;
-    if(long_table > 5) {
-        length_training = Math.ceil(long_table * (9 / 10))
-        const training_data = [];
-        for(let i = 0; i < length_training; i++) {
-            training_data.push({
-                input: Number(new Date(out_arr[i])),
-                output: input_arr[i]
-            });
-        }
-    }
+const checker = document.querySelector('#checker').value;
 
-    const net = new brain.NeuralNetwork({ hiddenLayers: [3]});
-    console.log(net.train(training_data));
-    document.querySelector('#result').value = net.train(training_data)
+if(checker == 'prediction-periode') {
+    const input_arr = document.querySelector('#data_in').value.split(',').pop();
+    const out_arr = document.querySelector('#data_out').value.split(',').pop();
+    long_table = input_arr.length;
+    if(long_table > 10) {
+        length_training = Math.ceil(long_table * (7 / 10))
+        const trainingData = [];
+        for(let i = 0; i < length_training; i++) {
+            trainingData.push(
+                [Number(new Date(input_arr[i])), out_arr[i]]
+            );
+        }
+        const result = regression.linear(trainingData);
+
+        // Make predictions
+        const inputToPredict = Number(new Date('2023-08-1'));//1614800000; // Timestamp for a new date
+        const predictedQuantity = result.predict(inputToPredict);
+
+        console.log('Predicted quantity sold:', predictedQuantity);
+    }
     
 
-}*/
+}
+*/
+
+// Define your training data (period and quantitySold)
+const trainingData = [
+  [Number(new Date('2023-04-10')), 1], // Timestamp for 01/03/2021, quantitySold: 25
+  [Number(new Date('2023-04-17')), 2], // Timestamp for 02/03/2021, quantitySold: 30
+  [Number(new Date('2023-04-20')), 8], // Timestamp for 03/03/2021, quantitySold: 28
+  [Number(new Date('2023-05-12')), 2],
+  [Number(new Date('2023-05-13')), 1],
+  [Number(new Date('2023-05-13')), 3],
+  [Number(new Date('2023-04-16')), 2],
+  // Add more training data here...
+];
+
+// Perform linear regression
+const result = regression.linear(trainingData);
+
+        // Make predictions
+        const inputToPredict = Number(new Date('2023-08-1'));//1614800000; // Timestamp for a new date
+        const predictedQuantity = result.predict(inputToPredict);
+
+        console.log('Predicted quantity sold:', predictedQuantity);
 

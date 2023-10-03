@@ -22,7 +22,7 @@
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
     <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
     <script src="//unpkg.com/brain.js"></script>
-    <script defer src="./jsfile/prediction.js"></script>
+    <!--<script defer src="./jsfile/prediction.js"></script>-->
     <!--<script defer src="./navbar.js"></script>-->
     <script defer src="./jsfile/jquery-3.6.1.min.js"></script>
     <script defer src="./jsfile/produit.js"></script>
@@ -242,8 +242,8 @@ function prediction($sql) {
     if(mysqli_num_rows($result)>0){
         while($row= mysqli_fetch_assoc($result)){
             //echo"<option value='ID ::".$row["Operation"].":: date ::".$row["DatesVente"].":: client  ::".$row["NomClient"].":: Total facture ::".$row["TotalFacture"]."'>client = ".$row["NomClient"]." dette : ".$row["Dette"]."</option>"; 
-            $data_input .= $row["QuantiteVendu"].', ';
-            $data_out .= $row["DatesVente"].', ';
+            $data_out .= $row["QuantiteVendu"].', ';
+            $data_input .= $row["DatesVente"].', ';
         }
         
    }else{$valeur_in_out = "Pas de donnee ";}
