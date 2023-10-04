@@ -92,6 +92,243 @@ function approvisionnement($reqSql) {
         echo"</table>";
     }else{echo "Pas des donnees dans la base ";}
 }
+
+// Group by Operation just Ventes, not for Paiements
+function dataPaiementAffichageSynthetique($sql, $sqlP){
+    include 'connexion.php';
+    //$sql= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and (Operation = $operation)");
+    $result = mysqli_query($db, $sql);
+    $total_vente = 0;
+    $operation_array = array("findOp");
+    if(mysqli_num_rows($result)>0){
+    
+        while($row= mysqli_fetch_assoc($result)){
+            $paye = 0;
+            if($row["Dette"] == 'Oui') {
+                $paye = $row["MontantPaye"];
+            } else {
+                $paye = $row["TotalFacture"];
+            }
+            array_push($operation_array, $row["Operation"]);
+            $total_vente += $paye;
+        }
+       
+        
+   }else{$total_vente = 0;} 
+   //$sqlP= ("SELECT * FROM Paiements WHERE (Operation = $operation)");
+        $resultP = mysqli_query($db, $sqlP);
+        $total_paie = 0;
+        if(mysqli_num_rows($resultP)>0) {
+            
+          while($rowP= mysqli_fetch_assoc($resultP)) {
+            if (array_search($rowP["Operation"],$operation_array)) {
+                $total_paie += 0;
+            } else {
+                $total_paie += $rowP["Montant"];
+            } 
+          }
+        } else { $total_paie = 0;}
+        $vente_paiements = $total_paie + $total_vente;
+        return $vente_paiements;
+}
+
+function ventes_resume($reqSql) {
+    include 'connexion.php';
+    $total_toute_facture = 0;
+    $total_paye = 0;
+    $result= mysqli_query($db, $reqSql);
+    if(mysqli_num_rows($result)>0){
+        
+
+        while($row= mysqli_fetch_assoc($result)){
+            $paye = 0;
+            if($row["Dette"] == 'Oui') {
+                $paye = $row["MontantPaye"];
+            } else {
+                $paye = $row["TotalFacture"];
+            }
+            $total_toute_facture += $row["TotalFacture"];
+            $total_paye += ($paye);
+        }
+        return array($total_toute_facture, $total_paye);
+    }else{return array(0, 0);}
+}
+
+function sortie_resume($reqSql) {
+    include 'connexion.php';
+    $total_sortie = 0;
+    $result= mysqli_query($db, $reqSql);
+    if(mysqli_num_rows($result)>0){
+        
+        while($row= mysqli_fetch_assoc($result)){
+                
+        $total_sortie += $row["Montant"];
+        }
+        return $total_sortie;
+        
+    }else{ return 0;}
+}
+
+function perteOccaz($sql){
+    include 'connexion.php';
+    $total = 0;
+    //$sql = ("SELECT * FROM PerteOccaz order by idPerteOccaz desc");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+                        
+        while($row= mysqli_fetch_assoc($result)){
+            $total += $row["Montant"];
+        }
+                
+   }else{$total = 0;}  
+   return $total;
+}
+
+function paiement_personnel_resume($reqSql) {
+    include 'connexion.php';
+    $total = 0;
+    //$reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) order by idPersonnelPaie desc");
+    $result= mysqli_query($db, $reqSql);
+    if(mysqli_num_rows($result)>0){
+  
+        while($row= mysqli_fetch_assoc($result)){
+            $total += $row["Montant"];
+        }
+        return $total;
+    }else{ return 0;}
+}
+
+function bonusPerte_resume ($reqSql) {
+    include 'connexion.php';
+    $quantiteG = 0;
+    $quantiteP = 0;
+    
+    $result= mysqli_query($db, $reqSql);
+    if(mysqli_num_rows($result)>0){
+
+        while($row= mysqli_fetch_assoc($result)){
+        $quantiteG += $row["PrixVente"] * ($row["QuantiteGagne"]);
+        $quantiteP += $row["PrixVente"] * ($row["QuantitePerdu"]);
+        }
+        $total = $quantiteG - $quantiteP;
+        return $total;
+    }else{ return 0;}
+
+}
+
+function paiements_resume($reqSql) {
+    include 'connexion.php';
+    $result= mysqli_query($db, $reqSql);
+    if(mysqli_num_rows($result)>0){
+
+        while($row= mysqli_fetch_assoc($result)){
+            $total += $row["Montant"];
+        }
+        return $total;
+    }else{return 0;}
+}
+function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements, $paie, $perte) {
+   $array_ventes = ventes_resume($vente);
+   $total_vente = $array_ventes[0];
+   $total_vente_cash = $array_ventes[1];
+   $credit = $total_vente - $total_vente_cash;
+
+   $total_sortie = sortie_resume($sortie);
+   $total_paie_personnel = paiement_personnel_resume($paiement_personnel);
+   $total_depenses = $total_sortie + $total_paie_personnel;
+
+   $reste_balances = $total_vente_cash - $total_depenses;
+    $perte_occaz = perteOccaz($perte);
+   $pertes_occasionne = bonusPerte_resume($bonus_perte);
+
+   $restes_cash_disponible = $reste_balances - $pertes_occasionne - $perte_occaz;
+
+   /**
+    * les ventes cash et les paiements (dette recouvertes), s ils sont
+    *fait le memes jour il y a risque d incoherence car il y aura augmentation
+    *dans le paiements et dans le montants en cash au meme moment, alors 
+    *pour eviter cela, nous allons display les paiements normalement, mais au
+    *moment du calcul final, nous crerons une fonction qui devra prendre en compte
+    *cela eviter de display les donnees incoherente.
+    *De cela nous aurons donc le vrai montant en cash additionnee des paiments et ce apres cela 
+    *Que nous diminirons les differentes pertes.
+    */
+
+    $dette_recouverte = paiements_resume($paie);
+    $total_net_pur_versement = dataPaiementAffichageSynthetique($vente, $paiements) - $total_depenses - $pertes_occasionne - $perte_occaz;
+
+    $valeur = '
+      <h2 class="mt-1 mb-5">SYNTHESE ACTIVITES JOURNALIERE</h2>
+      <h2 class="mt-4 mb-3 text-center">SYNTHESE ACTIVITES JOURNALIERE</h2>
+      <div class="border border-secondary redimentionne mt-3 mb-3">
+      <table class="table border border-1">
+      <thead class="bg-success text-white">
+        <tr>
+          <th>Libelle du mouvement</th>
+          <th>Montant</th>
+        </tr>
+      </thead>
+      <tbody>';
+      $valeur .= '
+        <tr>
+            <td>TOTAL VENTE (cash + credit)</td>
+            <td>
+                '.$total_vente.' $
+            </td>
+        </tr>
+        <tr>
+            <td>VENTE CASH</td>
+            <td>
+                '.$total_vente_cash.' $
+            </td>
+        </tr>
+        <tr>
+            <td>VENTE CREDIT</td>
+            <td>
+               '.$credit.' $
+            </td>
+        </tr>
+        <tr>
+            <td>DEPENSES (les sorties depenses et les paiements du personnels)</td>
+            <td>
+                '.$total_sortie.'$ + '.$total_paie_personnel.' $ = '.$total_depenses.' $
+            </td>
+        </tr>
+        <tr>
+            <td>RESTE (Balances)</td>
+            <td>
+                '.$reste_balances.' $
+            </td>
+        </tr>
+        <tr>
+            <td>PERTES OCCASIONNEES (bons perte + perte occasionnees)</td>
+            <td>
+                '.$pertes_occasionne.' $ + '.$perte_occaz.' $ = '.$pertes_occasionne + $perte_occaz.' $
+            </td>
+        </tr>
+        <tr>
+            <td>RESTE / CASH DISPONIBLES</td>
+            <td>
+                '.$restes_cash_disponible.' $
+            </td>
+        </tr>
+        <tr>
+            <td>DETTE RECOUVREES</td>
+            <td>
+                '.$dette_recouverte.' $
+            </td>
+        </tr>
+        <tr>
+            <td>TOTAL NET PUR VERSEMENT (Cash encaisser)</td>
+            <td>
+                '.$total_net_pur_versement.' $
+            </td>
+        </tr></tbody></table></div>
+    ';
+
+    return $valeur;
+}
 ?>
 <body>
     <main>
@@ -100,10 +337,32 @@ function approvisionnement($reqSql) {
             $reqSql0= ("SELECT * FROM Approvisionnement, Produit WHERE (Approvisionnement.idProduit = Produit.idProduit) and (DatesApprov = '".$date1."') GROUP BY Operation order by Operation desc limit 1000");
             approvisionnement($reqSql0);
           }
-    
+ 
           if($cache == 'approvisionnements2') {
             $reqSql0= ("SELECT * FROM Approvisionnement, Produit WHERE (Approvisionnement.idProduit = Produit.idProduit) and (DatesApprov BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc limit 1000");
             approvisionnement($reqSql0);
+          }
+
+          if($cache == 'resume-journaliere') {
+            $ventes = ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') GROUP BY Operation order by Operation desc");
+            $sortie = ("SELECT * FROM Sortie WHERE(DatesD = '".$date1."') order by idSortie desc");
+            $paiement_personnel = ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE ((PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) and (`Date` BETWEEN '".$date1."' AND '".$date1."')) order by idPersonnelPaie desc");
+            $bonus_perte = ("SELECT * FROM BonusPerte, Produit WHERE (DatesD = '".$date1."') and (BonusPerte.idProduit = Produit.idProduit) order by idBonusPerte desc");
+            $paiements = ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (DatesPaie = '".$date1."') GROUP BY idPaiements order by idPaiements desc");
+            $paie = ("SELECT * FROM Paiements WHERE  (DatesPaie = '".$date1."') order by idPaiements desc");
+            $perte = ("SELECT * FROM PerteOccaz WHERE  (Dates = '".$date1."') order by idPerteOccaz desc");
+            echo resume($ventes, $sortie, $paiement_personnel, $bonus_perte, $paiements, $paie, $perte);
+          }
+
+          if($cache == 'resume-periode') {
+            $ventes = ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
+            $sortie = ("SELECT * FROM Sortie WHERE(DatesD BETWEEN '".$date1."' AND '".$date1."') order by idSortie desc");
+            $paiement_personnel = ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE ((PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) and (`Date` BETWEEN '".$date1."' AND '".$date2."')) order by idPersonnelPaie desc");
+            $bonus_perte = ("SELECT * FROM BonusPerte, Produit WHERE (DatesD BETWEEN '".$date1."' AND '".$date2."') and (BonusPerte.idProduit = Produit.idProduit) order by idBonusPerte desc");
+            $paiements = ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (DatesPaie BETWEEN '".$date1."' AND '".$date2."') GROUP BY idPaiements order by idPaiements desc");
+            $paie = ("SELECT * FROM Paiements WHERE  (DatesPaie BETWEEN '".$date1."' AND '".$date2."') order by idPaiements desc");
+            $perte = ("SELECT * FROM PerteOccaz WHERE  (Dates BETWEEN '".$date1."' AND '".$date2."') order by idPerteOccaz desc");
+            echo resume($ventes, $sortie, $paiement_personnel, $bonus_perte, $paiements, $paie, $perte);
           }
         ?>
     </main>

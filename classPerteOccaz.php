@@ -1,28 +1,24 @@
 <?php
 
-    class PersoPaie {
-        public $idPersoPaie;
+    class PerteOccaz {
+        public $idSortie;
         private $montant;
-        private $idDataPerso;
         private $motif;
-        private $mois;
         private $datesout;
         
         
         public $message;
 
-        function __construct($montant, $motif, $mois, $datesout, $idDataPerso) {
+        function __construct($montant, $motif, $datesout) {
             $this->montant = $montant;
-            $this->idDataPerso = $idDataPerso;
             $this->motif = $motif;
             $this->datesout = $datesout;
-            $this->mois = $mois;
         }
 
        
-        function insererPersonnelPaie() {
+        function insererSortie() {
             include 'connexion.php';
-            $sql = ("INSERT INTO PersonnelPaie (idDataPersonnel, `Date`, `Mois`, Montant, Observation) values ('".$this->idDataPerso."', '".$this->datesout."', '".$this->mois."', '".$this->montant."', '".$this->motif."')");
+            $sql = ("INSERT INTO PerteOccaz (Montant, Commentaire, Dates) values ('".$this->montant."', '".$this->motif."', '".$this->datesout."')");
             if(mysqli_query($db, $sql)){
                 
             }else{
@@ -30,38 +26,29 @@
             }
         }
 
-        function updatePersonnelPaie() {
+        function updateSortie() {
             include 'connexion.php';
-            $updC= ("UPDATE `PersonnelPaie` SET `Montant` = $this->montant WHERE idPersonnelPaie =$this->idPersoPaie");
+            $updC= ("UPDATE `PerteOccaz` SET `Montant` = $this->montant WHERE idPerteOccaz =$this->idSortie");
             if(mysqli_query($db,$updC)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
             }
 
-            $updC1= ("UPDATE `PersonnelPaie` SET Observation = '".$this->motif."' WHERE idPersonnelPaie =$this->idPersoPaie");
+            $updC1= ("UPDATE `PerteOccaz` SET `Commentaire` = '".$this->motif."' WHERE idPerteOccaz =$this->idSortie");
             if(mysqli_query($db,$updC1)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
             }
-            $updC2= ("UPDATE `PersonnelPaie` SET Mois = '".$this->mois."' WHERE idPersonnelPaie =$this->idPersoPaie");
-            if(mysqli_query($db,$updC2)){echo"";}else{
-                $this->message = mysqli_error($db);
-                return;
-            }
-            $updC3= ("UPDATE `PersonnelPaie` SET `Date` = '".$this->datesout."' WHERE idPersonnelPaie =$this->idPersoPaie");
+            
+            $updC3= ("UPDATE `PerteOccaz` SET `Dates` = '".$this->datesout."' WHERE idPerteOccaz =$this->idSortie");
             if(mysqli_query($db,$updC3)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
             }
-            $updC4= ("UPDATE `PersonnelPaie` SET idDataPersonnel = $this->idDataPerso WHERE idPersonnelPaie =$this->idPersoPaie");
-            if(mysqli_query($db,$updC4)){echo"";}else{
-                $this->message = mysqli_error($db);
-                return;
-            }
         }
-        function deletePersonnelPaie() {
+        function deleteCaisse() {
             include 'connexion.php';
-            $delete = ("DELETE FROM PersonnelPaie WHERE idPersonnelPaie =$this->idPersoPaie");
+            $delete = ("DELETE FROM PerteOccaz WHERE idPerteOccaz =$this->idSortie");
             if (mysqli_query($db, $delete)){echo"";} else {
                 $this->message = mysqli_error($db);
                 return;
@@ -75,8 +62,8 @@
     if (end($tabC) == 'add') {
         if ($q !== "") {
             $hint = $q;
-            $salaire = new PersoPaie($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4]);
-            $salaire->insererPersonnelPaie();
+            $salaire = new PerteOccaz($tabC[0], $tabC[1], $tabC[2]);
+            $salaire->insererSortie();
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;
@@ -95,12 +82,12 @@
         
     }
     if(end($tabC) == 'update') {
-        $idCaisse = $tabC[5];
+        $idCaisse = $tabC[3];
         if ($q !== "") {
             $hint = $q;
-            $salaire = new PersoPaie($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4]);
-            $salaire->idPersoPaie = $idCaisse;
-            $salaire->updatePersonnelPaie();
+            $salaire = new PerteOccaz($tabC[0], $tabC[1], $tabC[2]);
+            $salaire->idSortie = $idCaisse;
+            $salaire->updateSortie();
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;
@@ -118,11 +105,12 @@
     }
 
     if(end($tabC) == 'delete') {
+        $idCaisse = $tabC[4];
         if ($q !== "") {
             $hint = $q;
-            $salaire = new PersoPaie(1, 2, 3, 4, 5);
-            $salaire->idPersoPaie = $tabC[0];
-            $salaire->deletePersonnelPaie();
+            $salaire = new PerteOccaz(1, 2, 3);
+            $salaire->idSortie = $tabC[0];
+            $salaire->deleteCaisse();
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;
@@ -130,7 +118,7 @@
             
         }
         $sucess = '<div class="alert alert-success" role="alert">
-    Suppression fait avec success fait avec success
+    Modification fait avec success
   </div>';
 
   $error = '<div class="alert alert-danger" role="alert">

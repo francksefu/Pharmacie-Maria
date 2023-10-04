@@ -115,6 +115,22 @@ function dataPersoPaie(){
 
 }
 
+function dataPerteOccaz(){
+  include 'connexion.php';
+  $take = '';
+  $sql = ("SELECT * FROM PerteOccaz order by idPerteOccaz desc");
+  $result = mysqli_query($db, $sql);
+          
+  if(mysqli_num_rows($result)>0){
+                      
+      while($row= mysqli_fetch_assoc($result)){
+          $take .= "<option value='ID ::".$row["idPerteOccaz"].":: Montant ::".$row["Montant"].":: Motif  ::".$row["Commentaire"].":: Dates ::".$row["Dates"]."'>montant = ".$row["Montant"]." commentaire : ".$row["Commentaire"]."</option>"; 
+      }
+              
+ }else{$take .= "Une erreur s est produite ";}  
+  return $take;
+}
+
 $q = $_REQUEST["q"];
 
 $autre = '';
@@ -135,6 +151,8 @@ $autre = '';
             $hint = dataDataPersonnel();
           case 'updatePersoPaie' :
             $hint = dataPersoPaie();
+          case 'updatePerteOccaz' :
+            $hint = dataPerteOccaz();
         }
   } else {
         $hint = 'erreur';
