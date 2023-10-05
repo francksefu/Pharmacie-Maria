@@ -24,7 +24,7 @@
     <script src="./jsfile/reg.js"></script>
     <script defer src="./jsfile/prediction.js"></script>
     
-    <!--<script defer src="./navbar.js"></script>-->
+    <script defer src="./navbar.js"></script>
     <script defer src="./jsfile/jquery-3.6.1.min.js"></script>
     <script defer src="./jsfile/produit.js"></script>
     <script defer src="./jsfile/supprime.js"></script>
@@ -236,6 +236,7 @@ function paiements_resume($reqSql) {
 function prediction($sql) {
     $data_input = '';
     $data_out = '';
+    $nom = '';
     include 'connexion.php';
     //$sql= ("SELECT * FROM Ventes, Produit WHERE (Ventes.idProduit = Produit.idProduit)");
     $result = mysqli_query($db, $sql);
@@ -245,10 +246,11 @@ function prediction($sql) {
             //echo"<option value='ID ::".$row["Operation"].":: date ::".$row["DatesVente"].":: client  ::".$row["NomClient"].":: Total facture ::".$row["TotalFacture"]."'>client = ".$row["NomClient"]." dette : ".$row["Dette"]."</option>"; 
             $data_out .= $row["QuantiteVendu"].', ';
             $data_input .= $row["DatesVente"].', ';
+            $nom = $row["Nom"];
         }
         
    }else{$valeur_in_out = "Pas de donnee ";}
-   $valeur_in_out = '<textarea class="form-control mt-3" name="commentaire" id="data_in"  aria-label="With textarea" placeholder="Entrer commentaire">'.$data_input.'</textarea> <br> <textarea class="form-control"  id="data_out"  aria-label="With textarea" placeholder="Entrer commentaire">'.$data_out.'</textarea>';
+   $valeur_in_out = '<h2 class="mt-0 mb-2 text-center">Nom du produit : '.$nom.'</h2><p class=" mb-2 mt-2">les données ci dessous representent les dates auxquelles vous avez vendu votre produit : </p><br><textarea class="form-control mb-2 mt-0" name="commentaire" id="data_in"  aria-label="With textarea" placeholder="Entrer commentaire">'.$data_input.'</textarea> <br> <p class=" mb-2 mt-2">les données ci dessous representent les quantités vendus aux dates ci-haut</p><textarea class="form-control"  id="data_out"  aria-label="With textarea" placeholder="Entrer commentaire">'.$data_out.'</textarea>';
    return $valeur_in_out;
 }
 
@@ -356,8 +358,10 @@ function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements,
 ?>
 <body>
     <main>
-        <input type="text" id="checker" value="<?php echo $cache ?>" />
-        <input type="text" id="result" />
+        <br><br><br>
+        <input type="hidden" id="checker" value="<?php echo $cache ?>" />
+         <label>Pour ce produit la tendance de ventes dans une journée est de : </label>
+          <input type="text" id="result" />
         <?php
         if($cache == 'approvisionnements') {
             $reqSql0= ("SELECT * FROM Approvisionnement, Produit WHERE (Approvisionnement.idProduit = Produit.idProduit) and (DatesApprov = '".$date1."') GROUP BY Operation order by Operation desc limit 1000");

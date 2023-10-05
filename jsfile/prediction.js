@@ -19,9 +19,9 @@ if(checker == 'prediction-periode') {
         const result = regression.linear(trainingData);
 
         // Make predictions
-        const inputToPredict = [ Number(new Date('2023-09-27'))];//1614800000; // Timestamp for a new date
+        const inputToPredict = [ Number(new Date('2023-12-27'))];//1614800000; // Timestamp for a new date
         const predictedQuantity = result.predict(inputToPredict);
-        document.getElementById("result").value = ('Predicted quantity sold:', predictedQuantity);
+        document.getElementById("result").value = ('Predicted quantity sold:', predictedQuantity[1]);
 
     }
     
