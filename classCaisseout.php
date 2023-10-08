@@ -17,12 +17,20 @@
             $this->type = $type;
         }
 
-       
+        function write () {
+            $myfile = fopen("data.json", "w") or die("Unable to open file!");
+            $txt = json_encode(array("Peter"=>35, "Ben"=>37, "Joe"=>43));
+            fwrite($myfile, $txt);
+            
+            fclose($myfile);
+        }
+
+      
         function insererSortie() {
             include 'connexion.php';
             $sql = ("INSERT INTO Sortie (Montant, il_pris_quoi, `TypeD`, DatesD) values ('".$this->montant."', '".$this->motif."', '".$this->type."', '".$this->datesout."')");
             if(mysqli_query($db, $sql)){
-                
+                //write();
             }else{
                 $this->message = mysqli_error($db);
             }
