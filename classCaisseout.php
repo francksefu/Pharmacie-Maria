@@ -25,7 +25,7 @@
         }
 
         function write () {
-            $myfile = fopen("data.json", "w") or die("Unable to open file!");
+            $myfile = fopen("data_caisse_out.json", "w") or die("Unable to open file!");
             $txt = json_encode(array("insert_arr"=>$this->insert_arr, "update_arr"=>$this->update_arr, "delete_arr"=>$this->delete_arr));
             fwrite($myfile, $txt);
             
@@ -33,12 +33,19 @@
         }
 
         function read() {
-            $myfile = fopen("data.json", "r") or die("Unable to open file!");
-            $big_arrjs = fread($myfile,filesize("data.json"));
+            $myfile = fopen("data_caisse_out.json", "r") or die("Unable to open file!");
+            $big_arrjs = fread($myfile,filesize("data_caisse_out.json"));
             $big_arr = json_decode($big_arrjs, true);
-            $this->insert_arr = $big_arr['insert_arr'];
-            $this->update_arr =  $big_arr['update_arr'];
-            $this->delete_arr = $big_arr['delete_arr'];
+            if ($big_arrjs) {
+                $this->insert_arr = $big_arr['insert_arr'];
+                $this->update_arr =  $big_arr['update_arr'];
+                $this->delete_arr = $big_arr['delete_arr'];
+            } else {
+                $this->insert_arr = array();
+                $this->update_arr =  array();
+                $this->delete_arr = array();
+            }
+            
             fclose($myfile);
         }
 
@@ -87,7 +94,7 @@
                 $this->message = mysqli_error($db);
                 return;
             }
-            array_push($this->update_arr, (array("idSortie"=> $this->idSortie)));
+            array_push($this->delete_arr, (array("idSortie"=> $this->idSortie)));
             $this->write();
         }
     }
@@ -141,7 +148,7 @@
     }
 
     if(end($tabC) == 'delete') {
-        $idCaisse = $tabC[4];
+        
         if ($q !== "") {
             $hint = $q;
             $salaire = new Sortie(1, 2, 3, 4);
