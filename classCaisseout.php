@@ -6,6 +6,12 @@
         private $motif;
         private $type;
         private $datesout;
+
+        //table for contain json 
+
+        private $insert_arr = array();
+        private $update_arr = array();
+        private $delete_arr = array();
         
         
         public $message;
@@ -15,14 +21,41 @@
             $this->motif = $motif;
             $this->datesout = $datesout;
             $this->type = $type;
+            $this->read();
         }
 
-       
+        function write () {
+            $myfile = fopen("data_caisse_out.json", "w") or die("Unable to open file!");
+            $txt = json_encode(array("insert_arr"=>$this->insert_arr, "update_arr"=>$this->update_arr, "delete_arr"=>$this->delete_arr));
+            fwrite($myfile, $txt);
+            
+            fclose($myfile);
+        }
+
+        function read() {
+            $myfile = fopen("data_caisse_out.json", "r") or die("Unable to open file!");
+            $big_arrjs = fread($myfile,filesize("data_caisse_out.json"));
+            $big_arr = json_decode($big_arrjs, true);
+            if ($big_arrjs) {
+                $this->insert_arr = $big_arr['insert_arr'];
+                $this->update_arr =  $big_arr['update_arr'];
+                $this->delete_arr = $big_arr['delete_arr'];
+            } else {
+                $this->insert_arr = array();
+                $this->update_arr =  array();
+                $this->delete_arr = array();
+            }
+            
+            fclose($myfile);
+        }
+
+      
         function insererSortie() {
             include 'connexion.php';
             $sql = ("INSERT INTO Sortie (Montant, il_pris_quoi, `TypeD`, DatesD) values ('".$this->montant."', '".$this->motif."', '".$this->type."', '".$this->datesout."')");
             if(mysqli_query($db, $sql)){
-                
+                array_push($this->insert_arr, (array("montant"=>$this->montant, "motif"=>$this->motif, "type"=>$this->type, "datesout"=>$this->datesout)));
+                $this->write();
             }else{
                 $this->message = mysqli_error($db);
             }
@@ -51,6 +84,8 @@
                 $this->message = mysqli_error($db);
                 return;
             }
+            array_push($this->update_arr, (array("idSortie"=> $this->idSortie, "montant"=>$this->montant, "motif"=>$this->motif, "type"=>$this->type, "datesout"=>$this->datesout)));
+            $this->write();
         }
         function deleteCaisse() {
             include 'connexion.php';
@@ -59,6 +94,8 @@
                 $this->message = mysqli_error($db);
                 return;
             }
+            array_push($this->delete_arr, (array("idSortie"=> $this->idSortie)));
+            $this->write();
         }
     }
 
@@ -111,7 +148,7 @@
     }
 
     if(end($tabC) == 'delete') {
-        $idCaisse = $tabC[4];
+        
         if ($q !== "") {
             $hint = $q;
             $salaire = new Sortie(1, 2, 3, 4);

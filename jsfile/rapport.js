@@ -18,6 +18,10 @@ const paiements = document.querySelector('#paiements');
 const paiements_client = document.querySelector('#paiements-client');
 const paiements_facture = document.querySelector('#paiements-facture');
 
+//Prediction
+
+const prediction_periode = document.querySelector('#prediction-periode')
+
 const toute_vente2 = document.querySelector('#toute-vente2');
 const paye_cache2 = document.querySelector('#paye-cache2');
 const vente_dette2 = document.querySelector('#vente-dette2');
@@ -199,7 +203,7 @@ paye_cache_facture.addEventListener('click', () => {
 
 
 btn.addEventListener('click', () => {
-  if(type.value == 'approvisionnements' || type.value == 'approvisionnements2' || type.value == 'resume-journaliere' || type.value == 'resume-periode') {
+  if(type.value == 'approvisionnements' || type.value == 'approvisionnements2' || type.value == 'resume-journaliere' || type.value == 'resume-periode' || type.value == 'prediction-journaliere' || type.value == 'prediction-periode') {
     document.forms[0].action = 'thinkApprov.php';
   } else {
     document.forms[0].action = 'think.php';
@@ -354,3 +358,10 @@ paiements_par_personnel.addEventListener('click', () => {
 paiements_personnel.addEventListener('click', () => {
   deuxDate('tous les paiements du personnels entre 2 date', 'paiements-personnel');
 });
+
+prediction_periode.addEventListener('click', () => {
+  deuxDate('entre une periode et le produit pour lequelle vous voulez faire une prediction ', 'prediction-periode');
+  contInput3.style.display = 'flex';
+})
+
+

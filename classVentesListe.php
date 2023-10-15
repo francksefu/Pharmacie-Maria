@@ -1,6 +1,7 @@
 <?php
 function dataVente($operation){
     include 'connexion.php';
+    $valeur = '';
     $sql= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and (Operation = $operation)");
     $result = mysqli_query($db, $sql);
             
