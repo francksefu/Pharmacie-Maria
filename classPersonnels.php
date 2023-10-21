@@ -1,9 +1,14 @@
 <?php
-
+include 'write_read_json.php';
     class Clients {
         public $idClient;
         private $nom;
         private $telephone;
+        //table for contain json 
+
+        private $insert_arr = array();
+        private $update_arr = array();
+        private $delete_arr = array();
         
         
         public $message;
@@ -12,6 +17,30 @@
             
             $this->nom = $nom;
             $this->telephone = $telephone;
+            $this->read();
+        }
+
+        function read() {
+            read($this->insert_arr, $this->update_arr, $this->delete_arr, "data_client.json");
+        }
+
+        function write() {
+            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_client.json");
+        }
+
+        function write_insert() {
+            array_push($this->insert_arr, (array("nom"=>$this->nom, "telephone"=>$this->telephone)));
+            $this->write();
+        }
+
+        function write_update() {
+            array_push($this->update_arr, (array("idClient"=> $this->idClient ,"nom"=>$this->nom, "telephone"=>$this->telephone)));
+            $this->write();
+        }
+
+        function write_delete() {
+            array_push($this->delete_arr, (array("idClient"=> $this->idClient)));
+            $this->write();
         }
 
         
@@ -61,6 +90,7 @@
             $hint = $q;
             $tracteur = new Clients($tabC[0], $tabC[1]);
             $tracteur->insererClient();
+            $tracteur->write_insert();
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
@@ -83,6 +113,7 @@
             $tracteur = new Clients($tabC[0], $tabC[1]);
             $tracteur->idClient = $tabC[2];
             $tracteur->updateClient();
+            $tracteur->write_update();
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
@@ -106,6 +137,7 @@
             $tracteur = new Clients(0, 1);
             $tracteur->idClient = $tabC[0];
             $tracteur->deleteClient();
+            $tracteur->write_delete();
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;

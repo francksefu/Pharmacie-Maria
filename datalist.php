@@ -149,10 +149,13 @@ $autre = '';
           break;
           case 'updateDataPersonnel' :
             $hint = dataDataPersonnel();
-          case 'updatePersoPaie' :
-            $hint = dataPersoPaie();
+          break;
           case 'updatePerteOccaz' :
             $hint = dataPerteOccaz();
+          break;
+          case 'updatePersoPaie' :
+            $hint = dataPersoPaie();
+          break;
         }
   } else {
         $hint = 'erreur';

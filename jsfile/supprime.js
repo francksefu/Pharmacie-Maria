@@ -119,6 +119,10 @@ btn.addEventListener('click', () => {
       showvente(input.value.split('::')[1]+"__:delete", "classApprov.php?q=")
     }
 
+    if(fichier.value === 'perte-occaz') {
+      showHint(input.value.split('::')[1]+"::delete", "classPerteOccaz.php?q=")
+    }
+
     input.value = "";
     document.querySelector('.montre-moi').style.display = "none";
 });

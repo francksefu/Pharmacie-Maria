@@ -1,31 +1,25 @@
 <?php 
-// elimine ce fichier , j ai changE d avis sur la facon de dupliquer les donnees
-function write($data) {
-    
-    $jsonData = json_encode($data);
-    
-    if (file_put_contents('data.json', $jsonData)) {
-        echo "Data written to JSON file successfully.";
-    } else {
-        echo "Failed to write data to JSON file.";
-    }
-    
+function write ($insert_arr, $update_arr, $delete_arr, $datajson) {
+    $myfile = fopen($datajson, "w") or die("Unable to open file!");
+    $txt = json_encode(array("insert_arr"=>$insert_arr, "update_arr"=>$update_arr, "delete_arr"=>$delete_arr));
+    fwrite($myfile, $txt);
+    fclose($myfile);
 }
 
-function read() {
-    $jsonData = file_get_contents('data.json');
-
-    if ($jsonData !== false) {
-        $data = json_decode($jsonData, true); // Use true for associative array, omit for object
-        if ($data !== null) {
-            echo "Data loaded from JSON file successfully.";
-            print_r($data); // Output the PHP array
-        } else {
-            echo "Failed to decode JSON data.";
-        }
+function read(&$insert_arr, &$update_arr, &$delete_arr, $datajson) {
+    $myfile = fopen($datajson, "r") or die("Unable to open file!");
+    $big_arrjs = fread($myfile,filesize($datajson));
+    $big_arr = json_decode($big_arrjs, true);
+    if ($big_arrjs) {
+        $insert_arr = $big_arr['insert_arr'];
+        $update_arr = $big_arr['update_arr'];
+        $delete_arr = $big_arr['delete_arr'];
     } else {
-        echo "Failed to read JSON file.";
+        $insert_arr = array();
+        $update_arr =  array();
+        $delete_arr = array();
     }
+    
+    fclose($myfile);
 }
-
 ?>

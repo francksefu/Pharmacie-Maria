@@ -1,15 +1,62 @@
 <?php
 
+include 'write_read_json.php';
+
+    class TakeVente {
+        //table for contain json 
+
+        private $insert_arr = array();
+        private $update_arr = array();
+        private $delete_arr = array();
+        private $vente_json;
+
+        function __construct($vente_json) {
+            $this->vente_json = $vente_json;
+            $this->read();
+        }
+
+        function read() {
+            read($this->insert_arr, $this->update_arr, $this->delete_arr, "data_vente.json");
+        }
+
+        function write() {
+            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_vente.json");
+        }
+
+        //$idProduit, $idClient, $quantite, $pu, $date, $operation, $dette, $total_facture, $montant
+
+        function write_insert() {
+            for ($j = 0; $j < count($this->vente_json); $j++) {
+                array_push($this->insert_arr, (array("idProduit"=>$this->vente_json[$j]->idProduit, "idClient"=>$this->vente_json[$j]->idClient, "quantite"=>$this->vente_json[$j]->quantite, "pu"=>$this->vente_json[$j]->pu, "date"=>$this->vente_json[$j]->date, "operation"=>$this->vente_json[$j]->operation, "dette"=>$this->vente_json[$j]->dette, "total_facture"=>$this->vente_json[$j]->total_facture, "montant"=>$this->vente_json[$j]->montant)));
+            }
+            $this->write();
+        }
+
+        function write_update() {
+            for ($j = 0; $j < count($this->vente_json); $j++) {
+                array_push($this->update_arr, (array("idProduit"=>$this->vente_json[$j]->idProduit, "quantite"=>$this->vente_json[$j]->quantite, "pu"=>$this->vente_json[$j]->pu, "date"=>$this->vente_json[$j]->date, "operation"=>$this->vente_json[$j]->operation, "total_facture"=>$this->vente_json[$j]->total_facture, "source"=>$this->vente_json[$j]->source, "destination"=>$this->vente_json[$j]->destination)));
+            }
+            $this->write();
+        }
+
+        function write_delete() {
+            for ($j = 0; $j < count($this->vente_json); $j++) {
+                array_push($this->delete_arr, (array( "operation"=>$this->vente_json[$j]->operation)));
+            }
+            $this->write();
+        }
+    }
+
     class Ventes {
         public $operation;
-        private $idProduit;
-        private $quantite;
-        private $idClient;
-        private $total_facture;
-        private $montant;
-        private $date;
-        private $pu;
-        private $dette; 
+        public $idProduit;
+        public $quantite;
+        public $idClient;
+        public $total_facture;
+        public $montant;
+        public $date;
+        public $pu;
+        public $dette; 
         public $message;
 
 
@@ -116,6 +163,11 @@
     $tabObj = explode("__:", $q);
     $autre = '';
     $hint = '';
+
+    $insert_table = array();
+    $update_table = array();
+    $delete_table = array();
+
     if (end($tabObj) == "add") {
     for ($i = 0; $i < count($tabObj) - 1; $i += 1) {
         $tabElement = explode("::", $tabObj[$i]);
@@ -125,6 +177,7 @@
             $hint = $q;
             $tracteur = new Ventes($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7], $tabElement[8]);
             $tracteur->insererVentes();
+            array_push($insert_table, $tracteur);
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
@@ -136,7 +189,8 @@
             
         }
     }
-    
+    $take_vente_tojson = new TakeVente($insert_table);
+    $take_vente_tojson->write_insert();
     
     
         $sucess = '<div class="alert alert-success" role="alert">
@@ -165,6 +219,7 @@
                     $tracteur->findIDProduit($tabElement[5]);
                 }
                 $tracteur->updateVentes();
+                array_push($update_table, $tracteur);
                 $autre = $tracteur->message;
                 if( $tracteur->message) {
                     $hint = $autre;
@@ -201,6 +256,8 @@
             }
         }
         
+        $take_vente_tojson = new TakeVente($update_table);
+        $take_vente_tojson->write_update();
         
         $sucess = '<div class="alert alert-success" role="alert">
         Modification fait avec success
@@ -219,6 +276,7 @@
             $tracteur = new Ventes(0, 1, 2, 3, 4, 5, 6,7, 8);
             $tracteur->operation = $tabObj[0];
             $tracteur->deleteVentes();
+            array_push($delete_table, $tracteur);
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
@@ -230,6 +288,8 @@
             
         }
         
+        $take_vente_tojson = new TakeVente($delete_table);
+        $take_vente_tojson->write_delete();
         
             $sucess = '<div class="alert alert-success" role="alert">
             Suppression fait avec success

@@ -1,12 +1,17 @@
 <?php
-
+include 'write_read_json.php';
     class  Paiements {
         public $idPaiements;
         private $dates;
         private $montant;
         private $operation;
         
-        
+        //table for contain json 
+
+        private $insert_arr = array();
+        private $update_arr = array();
+        private $delete_arr = array();
+
         public $message;
 
         function __construct($dates, $montant, $operation) {
@@ -14,6 +19,30 @@
             $this->dates = $dates;
             $this->montant = $montant;
             $this->operation = $operation;
+            $this->read();
+        }
+
+        function read() {
+            read($this->insert_arr, $this->update_arr, $this->delete_arr, "data_paiement_vente.json");
+        }
+
+        function write() {
+            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_paiement_vente.json");
+        }
+
+        function write_insert() {
+            array_push($this->insert_arr, (array("dates"=>$this->dates, "montant"=>$this->montant, "operation"=>$this->operation)));
+            $this->write();
+        }
+
+        function write_update() {
+            array_push($this->update_arr, (array("idPaiements"=>$this->idPaiements ,"dates"=>$this->dates, "montant"=>$this->montant, "operation"=>$this->operation)));
+            $this->write();
+        }
+
+        function write_delete() {
+            array_push($this->delete_arr, (array("idPaiements"=> $this->idPaiements)));
+            $this->write();
         }
 
         function updateDette($operation) {
@@ -150,6 +179,7 @@
             $hint = $q;
             $tracteur = new Paiements($tabC[0], $tabC[1], $tabC[2]);
             $tracteur->insererPaiements();
+            $tracteur->write_insert();
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
@@ -172,6 +202,7 @@
             $tracteur = new Paiements($tabC[0], $tabC[1], $tabC[2]);
             $tracteur->idPaiements = $tabC[3];
             $tracteur->updatePaiements();
+            $tracteur->write_update();
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
@@ -195,6 +226,7 @@
             $tracteur = new Paiements(0, 1,2);
             $tracteur->idPaiements = $tabC[0];
             $tracteur->deletePaiements();
+            $tracteur->write_delete();
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;

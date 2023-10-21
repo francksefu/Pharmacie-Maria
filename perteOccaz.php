@@ -90,7 +90,7 @@
                     </span>
                 </div>
                 <small id="txtHint"></small>
-                <input type="hidden" value="caisseout" id="type" >
+                <input type="hidden" value="perte-occaz" id="type" >
         </div>
     
         <div class="container-fluid pt-5 bg-transparent">

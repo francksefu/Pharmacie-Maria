@@ -1,10 +1,14 @@
 <?php
-
+include 'write_read_json.php';
     class PerteOccaz {
         public $idSortie;
         private $montant;
         private $motif;
         private $datesout;
+
+        private $insert_arr = array();
+        private $update_arr = array();
+        private $delete_arr = array();
         
         
         public $message;
@@ -13,6 +17,30 @@
             $this->montant = $montant;
             $this->motif = $motif;
             $this->datesout = $datesout;
+            $this->read();
+        }
+
+        function read() {
+            read($this->insert_arr, $this->update_arr, $this->delete_arr, "data_perteOccaz.json");
+        }
+
+        function write() {
+            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_perteOccaz.json");
+        }
+
+        function write_insert() {
+            array_push($this->insert_arr, (array("montant"=>$this->montant, "motif"=>$this->motif, "datesout"=>$this->datesout)));
+            $this->write();
+        }
+
+        function write_update() {
+            array_push($this->update_arr, (array("idPerteOccaz"=> $this->idSortie, "montant"=>$this->montant, "motif"=>$this->motif, "datesout"=>$this->datesout)));
+            $this->write();
+        }
+
+        function write_delete() {
+            array_push($this->delete_arr, (array("idPerteOccaz"=> $this->idSortie)));
+            $this->write();
         }
 
        
@@ -64,6 +92,7 @@
             $hint = $q;
             $salaire = new PerteOccaz($tabC[0], $tabC[1], $tabC[2]);
             $salaire->insererSortie();
+            $salaire->write_insert();
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;
@@ -88,6 +117,7 @@
             $salaire = new PerteOccaz($tabC[0], $tabC[1], $tabC[2]);
             $salaire->idSortie = $idCaisse;
             $salaire->updateSortie();
+            $salaire->write_update();
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;
@@ -105,12 +135,13 @@
     }
 
     if(end($tabC) == 'delete') {
-        $idCaisse = $tabC[4];
+       
         if ($q !== "") {
             $hint = $q;
             $salaire = new PerteOccaz(1, 2, 3);
             $salaire->idSortie = $tabC[0];
             $salaire->deleteCaisse();
+            $salaire->write_delete();
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;
@@ -118,7 +149,7 @@
             
         }
         $sucess = '<div class="alert alert-success" role="alert">
-    Modification fait avec success
+    suppression fait avec success
   </div>';
 
   $error = '<div class="alert alert-danger" role="alert">

@@ -40,6 +40,21 @@ function dataPersonnel(){
    }else{echo "Une erreur s est produite ";}  
 
 }
+
+function dataPersoPaie(){
+    include 'connexion.php';
+    $sql = ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) order by idPersonnelPaie desc");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+                        
+        while($row= mysqli_fetch_assoc($result)){
+            echo "<option value='ID ::".$row["idPersonnelPaie"].":: dates  ::".$row["Date"].":: Nom ::".$row["Nom"].":: Montant ::".$row["Montant"].":: Mois ::".$row["Mois"].":: iDPerso ::".$row["idDataPersonnel"].":: Observation ::".$row["Observation"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"].":".$row["Montant"]." $ mois:".$row["Mois"]."</option>"; 
+        }
+                
+   }else{echo "Une erreur s est produite ";} 
+  
+  }
 ?>
 <body class="back">
 
@@ -57,7 +72,6 @@ function dataPersonnel(){
                         <span class="input-group-text " id="id">Identifiant*</span>
                         <input required type="text" list="dataBesoin" id="identifiantM" class="form-control w-50" placeholder="entrer identifiant" aria-label="Username" aria-describedby="nom" >
                             <datalist id="dataBesoin">
-                                
                             </datalist>
                     </div>
                     <div class="input-group mb-3 w-50 mx-auto d-block">

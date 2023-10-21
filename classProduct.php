@@ -1,4 +1,5 @@
 <?php
+include 'write_read_json.php';
 
     class Produit {
         public $idProduit;
@@ -10,6 +11,11 @@
         private $quantiteMin;
         private $description;
         
+        //table for contain json 
+
+        private $insert_arr = array();
+        private $update_arr = array();
+        private $delete_arr = array();
         
         public $message;
 
@@ -21,8 +27,31 @@
             $this->quantite = $quantite;
             $this->quantiteMin = $quantiteMin;
             $this->description = $description;
+            $this->read();
         }
 
+        function read() {
+            read($this->insert_arr, $this->update_arr, $this->delete_arr, "data_stock.json");
+        }
+
+        function write() {
+            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_stock.json");
+        }
+
+        function write_insert() {
+            array_push($this->insert_arr, (array("nom"=>$this->nom, "pa"=>$this->pa, "pv"=>$this->pv, "pvmin"=>$this->pvmin, "quantite"=>$this->quantite, "quantiteMin"=>$this->quantiteMin, "description"=>$this->description)));
+            $this->write();
+        }
+
+        function write_update() {
+            array_push($this->update_arr,(array("idProduit"=>$this->idProduit, "nom"=>$this->nom, "pa"=>$this->pa, "pv"=>$this->pv, "pvmin"=>$this->pvmin, "quantite"=>$this->quantite, "quantiteMin"=>$this->quantiteMin, "description"=>$this->description)));
+            $this->write();
+        }
+
+        function write_delete() {
+            array_push($this->delete_arr, (array("idProduit"=>$this->idProduit)));
+            $this->write();
+        }
        
         function insererProduct() {
             include 'connexion.php';
@@ -92,6 +121,7 @@
             $hint = $q;
             $produit = new Produit($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4], $tabC[5], $tabC[6]);
             $produit->insererProduct();
+            $produit->write_insert();
             $autre = $produit->message;
             if( $produit->message) {
                 $hint = $autre;
@@ -116,6 +146,7 @@
             $produit = new Produit($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4], $tabC[5], $tabC[6]);
             $produit->idProduit = $id;
             $produit->updateProduct();
+            $produit->write_update();
             $autre = $produit->message;
             if( $produit->message) {
                 $hint = $autre;
@@ -133,12 +164,12 @@
     }
 
     if(end($tabC) == 'delete') {
-        $idCaisse = $tabC[4];
         if ($q !== "") {
             $hint = $q;
             $salaire = new Produit(1, 2, 3, 4,5,6,7);
             $salaire->idProduit = $tabC[0];
             $salaire->deleteProduct();
+            $salaire->write_delete();
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;

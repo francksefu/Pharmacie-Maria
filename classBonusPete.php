@@ -1,5 +1,6 @@
 <?php
-
+include 'write_read_json.php';
+ 
     class BonusPerte {
         public $idBonusPerte;
         private $idProduit;
@@ -10,11 +11,10 @@
         public $message;
 
         //table for contain json 
-
         private $insert_arr = array();
         private $update_arr = array();
         private $delete_arr = array();
-        private $update_product_arr = array();
+        
 
         function __construct($idProduit, $quantiteGagne, $quantitePerdu, $motif, $date) {
             $this->idProduit = $idProduit;
@@ -25,33 +25,29 @@
             $this->read();
         }
 
-        function write () {
-            $myfile = fopen("data_bonus_perte.json", "w") or die("Unable to open file!");
-            $txt = json_encode(array("insert_arr"=>$this->insert_arr, "update_arr"=>$this->update_arr, "delete_arr"=>$this->delete_arr, "update_product_arr"=>$this->update_product_arr));
-            fwrite($myfile, $txt);
-            fclose($myfile);
-        }
-
         function read() {
-            $myfile = fopen("data_bonus_perte.json", "r") or die("Unable to open file!");
-            $big_arrjs = fread($myfile,filesize("data_bonus_perte.json"));
-            $big_arr = json_decode($big_arrjs, true);
-            if ($big_arrjs) {
-                $this->insert_arr = $big_arr['insert_arr'];
-                $this->update_arr =  $big_arr['update_arr'];
-                $this->delete_arr = $big_arr['delete_arr'];
-                $this->update_product_arr = $big_arr['update_product_arr'];
-            } else {
-                $this->insert_arr = array();
-                $this->update_arr =  array();
-                $this->delete_arr = array();
-                $this->update_product_arr = array();
-            }
-            
-            fclose($myfile);
+            read($this->insert_arr, $this->update_arr, $this->delete_arr, "data_bonus_perte.json");
         }
 
+        function write() {
+            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_bonus_perte.json");
+        }
 
+        function write_insert() {
+            array_push($this->insert_arr, (array("idProduit"=>$this->idProduit, "quantiteGagne"=>$this->quantiteGagne, "quantitePerdu"=>$this->quantitePerdu, "motif"=>$this->motif, "date"=>$this->date)));
+            $this->write();
+        }
+
+        function write_update() {
+            array_push($this->update_arr, (array("idProduit"=>$this->idProduit, "quantiteGagne"=>$this->quantiteGagne, "quantitePerdu"=>$this->quantitePerdu, "motif"=>$this->motif, "date"=>$this->date, "idBonusPerte"=>$this->idBonusPerte)));
+            $this->write();
+        }
+
+        function write_delete() {
+            array_push($this->delete_arr, (array("idBonusPerte"=>$this->idBonusPerte)));
+            $this->write();
+        }
+       
         function rechercheProductAndUpdate($type) {
             include 'connexion.php';
             /**
@@ -101,10 +97,7 @@
             
 
             $upd= ("UPDATE `Produit` SET `QuantiteStock` = $value WHERE idProduit =$idProduitA");
-            if(mysqli_query($db,$upd)){
-                array_push($this->update_product_arr, (array("idProduit"=>$idProduitA, "quantite_stock"=>$value)));
-                $this->write();
-            }else{
+            if(mysqli_query($db,$upd)){echo""; }else{
                 $this->message = mysqli_error($db);
                 return;
             }
@@ -120,8 +113,7 @@
             
             $sql = ("INSERT INTO  BonusPerte (idProduit, QuantitePerdu, QuantiteGagne, DatesD, Motif) values ($this->idProduit, $this->quantitePerdu, $this->quantiteGagne, '".$this->date."', '".$this->motif."')");
             if(mysqli_query($db, $sql)){
-                /*Update array must go in json file for host data*/
-                array_push($this->insert_arr, (array("idProduit"=>$this->idProduit, "quantitePerdu"=>$this->quantitePerdu, "quantiteGagne"=>$this->quantiteGagne, "date"=>$this->date, "motif"=>$this->motif)));
+                
             }else{
                 $this->message = mysqli_error($db);
             }
@@ -140,8 +132,7 @@
             $valeur = $quantite + $this->quantiteGagne - $this->quantitePerdu;
             $upd= ("UPDATE `Produit` SET `QuantiteStock` = $valeur WHERE idProduit =$this->idProduit");
             if(mysqli_query($db,$upd)){
-                array_push($this->update_product_arr, (array("idProduit"=>$this->idProduit, "quantite_stock"=>$valeur)));
-                $this->write();
+
             }else{
                 $this->message = mysqli_error($db);
                 return;
@@ -175,10 +166,10 @@
                 $this->message = mysqli_error($db);
                 return;
             }
+
             $updC5= ("UPDATE `BonusPerte` SET DatesD = '".$this->date."' WHERE idBonusPerte =$this->idBonusPerte");
             if(mysqli_query($db,$updC5)){
-                array_push($this->update_arr, (array( "idBonusPerte"=>$this->idBonusPerte,"idProduit"=>$this->idProduit, "quantitePerdu"=>$this->quantitePerdu, "quantiteGagne"=>$this->quantiteGagne, "date"=>$this->date, "motif"=>$this->motif)));
-                $this->write()
+                
             }else{
                 $this->message = mysqli_error($db);
                 return;
@@ -196,8 +187,7 @@
             }else{echo "Une erreur s est produite";}
             $upd= ("UPDATE `Produit` SET `QuantiteStock` = $quantite + $this->quantiteGagne - $this->quantitePerdu WHERE idProduit =$this->idProduit");
             if(mysqli_query($db,$upd)){
-                array_push($this->update_product_arr, (array("idProduit"=>$this->idProduit, "quantite_stock"=>$valeur)));
-                $this->write();
+                
             }else{
                 $this->message = mysqli_error($db);
                 return;
@@ -208,8 +198,7 @@
             $this->rechercheProductAndUpdate("update");
             $delete = ("DELETE FROM BonusPerte WHERE idBonusPerte =$this->idBonusPerte");
             if (mysqli_query($db, $delete)){
-                array_push($this->delete_arr, (array("idBonusPerte"=>$this->idBonusPerte)));
-                $this->write();
+                
             } else {
                 $this->message = mysqli_error($db);
                 return;
@@ -220,11 +209,17 @@
     $q = $_REQUEST["q"];
     $tabC = explode("::", $q);
     $autre = '';
+    
     if (end($tabC) == 'add') {
         if ($q !== "") {
+            
             $hint = $q;
             $produit = new BonusPerte($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4]);
             $produit->insererBonusPerte();
+
+            /*Update array must go in json file for host data*/
+            $produit->write_insert();
+
             $autre = $produit->message;
             if( $produit->message) {
                 $hint = $autre;
@@ -249,6 +244,8 @@
             $produit = new BonusPerte($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4]);
             $produit->idBonusPerte = $id;
             $produit->updateBonusPerte();
+            //write in json
+            $produit->write_update();
             $autre = $produit->message;
             if( $produit->message) {
                 $hint = $autre;
@@ -266,12 +263,14 @@
     }
 
     if(end($tabC) == 'delete') {
-        $idCaisse = $tabC[4];
+       
         if ($q !== "") {
             $hint = $q;
             $salaire = new BonusPerte(1, 2, 3, 4,5);
             $salaire->idBonusPerte = $tabC[0];
             $salaire->deleteBonusPerte();
+            //write in json
+            $salaire->write_delete();
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;

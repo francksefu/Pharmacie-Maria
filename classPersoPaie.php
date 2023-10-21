@@ -1,4 +1,5 @@
 <?php
+include 'write_read_json.php';
 
     class PersoPaie {
         public $idPersoPaie;
@@ -8,6 +9,11 @@
         private $mois;
         private $datesout;
         
+        //table for contain json 
+
+        private $insert_arr = array();
+        private $update_arr = array();
+        private $delete_arr = array();
         
         public $message;
 
@@ -17,8 +23,31 @@
             $this->motif = $motif;
             $this->datesout = $datesout;
             $this->mois = $mois;
+            $this->read();
         }
 
+        function read() {
+            read($this->insert_arr, $this->update_arr, $this->delete_arr, "data_persopaie.json");
+        }
+
+        function write() {
+            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_persopaie.json");
+        }
+
+        function write_insert() {
+            array_push($this->insert_arr, (array("montant"=>$this->montant, "motif"=>$this->motif, "mois"=>$this->mois, "datesout"=>$this->datesout, "idDataPerso"=>$this->idDataPerso)));
+            $this->write();
+        }
+
+        function write_update() {
+            array_push($this->update_arr, (array("idPersoPaie"=>$this->idPersoPaie ,"montant"=>$this->montant, "motif"=>$this->motif, "mois"=>$this->mois, "datesout"=>$this->datesout, "idDataPerso"=>$this->idDataPerso)));
+            $this->write();
+        }
+
+        function write_delete() {
+            array_push($this->delete_arr, (array("idPersoPaie"=>$this->idPersoPaie)));
+            $this->write();
+        }
        
         function insererPersonnelPaie() {
             include 'connexion.php';
@@ -77,6 +106,7 @@
             $hint = $q;
             $salaire = new PersoPaie($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4]);
             $salaire->insererPersonnelPaie();
+            $salaire->write_insert();
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;
@@ -101,6 +131,7 @@
             $salaire = new PersoPaie($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4]);
             $salaire->idPersoPaie = $idCaisse;
             $salaire->updatePersonnelPaie();
+            $salaire->write_update();
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;
@@ -123,6 +154,7 @@
             $salaire = new PersoPaie(1, 2, 3, 4, 5);
             $salaire->idPersoPaie = $tabC[0];
             $salaire->deletePersonnelPaie();
+            $salaire->write_delete();
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;

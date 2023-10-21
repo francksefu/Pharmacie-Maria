@@ -1,0 +1,1 @@
+{"insert_arr":[{"montant":"100","motif":"Plamedi","mois":"Juin","datesout":"2023-10-21","idDataPerso":"4"},{"montant":"230","motif":"oooo","mois":"Novembre","datesout":"2023-10-21","idDataPerso":"2"}],"update_arr":[{"idPersoPaie":"8","montant":"230","motif":"ooookkkkk","mois":"Novembre","datesout":"2023-10-21","idDataPerso":"2"}],"delete_arr":[{"idPersoPaie":"8"}]}

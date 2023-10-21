@@ -1,5 +1,5 @@
 <?php
-
+include 'write_read_json.php';
     class Sortie {
         public $idSortie;
         private $montant;
@@ -24,38 +24,34 @@
             $this->read();
         }
 
-        function write () {
-            $myfile = fopen("data_caisse_out.json", "w") or die("Unable to open file!");
-            $txt = json_encode(array("insert_arr"=>$this->insert_arr, "update_arr"=>$this->update_arr, "delete_arr"=>$this->delete_arr));
-            fwrite($myfile, $txt);
-            
-            fclose($myfile);
-        }
-
         function read() {
-            $myfile = fopen("data_caisse_out.json", "r") or die("Unable to open file!");
-            $big_arrjs = fread($myfile,filesize("data_caisse_out.json"));
-            $big_arr = json_decode($big_arrjs, true);
-            if ($big_arrjs) {
-                $this->insert_arr = $big_arr['insert_arr'];
-                $this->update_arr =  $big_arr['update_arr'];
-                $this->delete_arr = $big_arr['delete_arr'];
-            } else {
-                $this->insert_arr = array();
-                $this->update_arr =  array();
-                $this->delete_arr = array();
-            }
-            
-            fclose($myfile);
+            read($this->insert_arr, $this->update_arr, $this->delete_arr, "data_caisse_out.json");
         }
 
+        function write() {
+            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_caisse_out.json");
+        }
+
+        function write_insert() {
+            array_push($this->insert_arr, (array("montant"=>$this->montant, "motif"=>$this->motif, "type"=>$this->type, "datesout"=>$this->datesout)));
+            $this->write();
+        }
+
+        function write_update() {
+            array_push($this->update_arr, (array("idSortie"=> $this->idSortie, "montant"=>$this->montant, "motif"=>$this->motif, "type"=>$this->type, "datesout"=>$this->datesout)));
+            $this->write();
+        }
+
+        function write_delete() {
+            array_push($this->delete_arr, (array("idSortie"=> $this->idSortie)));
+            $this->write();
+        }
       
         function insererSortie() {
             include 'connexion.php';
             $sql = ("INSERT INTO Sortie (Montant, il_pris_quoi, `TypeD`, DatesD) values ('".$this->montant."', '".$this->motif."', '".$this->type."', '".$this->datesout."')");
             if(mysqli_query($db, $sql)){
-                array_push($this->insert_arr, (array("montant"=>$this->montant, "motif"=>$this->motif, "type"=>$this->type, "datesout"=>$this->datesout)));
-                $this->write();
+                
             }else{
                 $this->message = mysqli_error($db);
             }
@@ -84,8 +80,7 @@
                 $this->message = mysqli_error($db);
                 return;
             }
-            array_push($this->update_arr, (array("idSortie"=> $this->idSortie, "montant"=>$this->montant, "motif"=>$this->motif, "type"=>$this->type, "datesout"=>$this->datesout)));
-            $this->write();
+            
         }
         function deleteCaisse() {
             include 'connexion.php';
@@ -94,8 +89,7 @@
                 $this->message = mysqli_error($db);
                 return;
             }
-            array_push($this->delete_arr, (array("idSortie"=> $this->idSortie)));
-            $this->write();
+            
         }
     }
 
@@ -107,6 +101,7 @@
             $hint = $q;
             $salaire = new Sortie($tabC[0], $tabC[1], $tabC[2], $tabC[3]);
             $salaire->insererSortie();
+            $salaire->write_insert();
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;
@@ -131,6 +126,7 @@
             $salaire = new Sortie($tabC[0], $tabC[1], $tabC[2], $tabC[3]);
             $salaire->idSortie = $idCaisse;
             $salaire->updateSortie();
+            $salaire->write_update();
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;
@@ -154,6 +150,7 @@
             $salaire = new Sortie(1, 2, 3, 4);
             $salaire->idSortie = $tabC[0];
             $salaire->deleteCaisse();
+            $salaire->write_delete();
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;
