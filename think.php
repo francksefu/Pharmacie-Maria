@@ -31,6 +31,22 @@
     <script defer src="./jsfile/ventesList.js"></script>
 </head>
 <?php
+//session
+$user = "";
+session_start();
+if(isset($_GET['deconnexion']))
+{ 
+if($_GET['deconnexion']==true)
+{  
+    session_destroy();
+    header("location:index.php");
+}
+}
+else if($_SESSION['username'] !== ""){
+    $user = $_SESSION['username'];
+}
+// session
+
 $date1 = $_POST["Date1"];
 $date2 = $_POST["Date2"];
 $cache = $_POST["Cache"];
@@ -1033,6 +1049,7 @@ function perte_occasionnee($reqSql) {
 <body>
 <main>
     <?php 
+    if ($user !== "") {
       if($cache == 'toute_vente') {
         $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') GROUP BY Operation order by Operation desc");
         ventes($reqSq);
@@ -1249,6 +1266,7 @@ function perte_occasionnee($reqSql) {
         $reqSql= ("SELECT * FROM PerteOccaz WHERE (`Dates` BETWEEN '".$date1."' AND '".$date2."')  order by idPerteOccaz desc");
         perte_occasionnee($reqSql);
       } 
+    }
     ?>
 </main>
 <div class="bg-light" id="superieur">

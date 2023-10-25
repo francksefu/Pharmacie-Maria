@@ -30,7 +30,20 @@
     <script defer src="./jsfile/ventesList.js"></script>
 </head>
 <?php
-
+$user = "";
+session_start();
+if(isset($_GET['deconnexion']))
+{ 
+if($_GET['deconnexion']==true)
+{  
+    session_destroy();
+    header("location:index.php");
+}
+}
+else if($_SESSION['username'] !== ""){
+    $user = $_SESSION['username'];
+}
+// session
 function dataPaiements(){
     include 'connexion.php';
     $sql= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) order by idPaiements desc");
@@ -45,7 +58,7 @@ function dataPaiements(){
 }
 function render($reqSql) {
     include 'connexion.php';
-    //$reqSql= ("SELECT * FROM Produit order by idProduit asc");
+    
     $result= mysqli_query($db, $reqSql);
     if(mysqli_num_rows($result)>0){
         echo '<table class="table border border-1">
@@ -170,8 +183,9 @@ function render($reqSql) {
                     <input type="text" id="supprimons" list="dataBesoin" class="form-control" placeholder="metez quelque chose dont vous vous rappeler pour le supprimer" >
                       <datalist id="dataBesoin">
                          <?php 
+                         if($user !== "") {
                             dataPaiements();
-
+                         }
                         ?>
                       </datalist>
                     <span class="input-group-text pointe" id="cross">&cross;</span>
@@ -189,8 +203,10 @@ function render($reqSql) {
     
         <div class="container-fluid pt-5 bg-transparent">
         <?php
+        if( $user !== "") {
             $reqSql0= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) GROUP BY idPaiements order by idPaiements desc limit 500");
             render($reqSql0);
+        }
           ?>  
         </div>
         

@@ -28,6 +28,20 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <?php
+    $user = "";
+    session_start();
+    if(isset($_GET['deconnexion']))
+    { 
+    if($_GET['deconnexion']==true)
+    {  
+        session_destroy();
+        header("location:index.php");
+    }
+    }
+    else if($_SESSION['username'] !== ""){
+        $user = $_SESSION['username'];
+    }
+
   function dataPerteOccaz(){
     include 'connexion.php';
     $sql = ("SELECT * FROM PerteOccaz order by idPerteOccaz desc");
@@ -77,8 +91,9 @@
                     <input type="text" id="supprimons" list="dataBesoin" class="form-control" placeholder="metez quelque chose dont vous vous rappeler pour le supprimer" >
                       <datalist id="dataBesoin">
                          <?php 
+                         if($user !== "") {
                             dataPerteOccaz();
-
+                         }
                         ?>
                       </datalist>
                     <span class="input-group-text pointe" id="cross">&cross;</span>
@@ -96,7 +111,7 @@
         <div class="container-fluid pt-5 bg-transparent">
         <?php
                 include 'connexion.php';
-                        
+            if($user !== "") {            
                 $reqSql= ("SELECT * FROM PerteOccaz order by idPerteOccaz desc limit 500");
                 $result= mysqli_query($db, $reqSql);
                 if(mysqli_num_rows($result)>0){
@@ -145,7 +160,7 @@
                     }
                     echo"</table>";
                 }else{echo "Pas des donnees dans la base ";}
-
+            }
             ?> 
         </div>
         

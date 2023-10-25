@@ -25,12 +25,34 @@
    
     <link rel="stylesheet" href="index.css">
 </head>
+<?php 
+$user = "";
+session_start();
+if(isset($_GET['deconnexion']))
+{ 
+   if($_GET['deconnexion']==true)
+   {  
+      session_destroy();
+      header("location:index.php");
+   }
+}
+else if($_SESSION['username'] !== ""){
+    $user = $_SESSION['username'];
+}
+?>
 <body class="bg-light">
+    <?php 
+        if($user == "") {
+            echo "<h1> Vous ne pouvez pas voir cette page sans autorisation</h1><br>";
+            echo "<h1> Vous ne pouvez pas voir cette page sans autorisation</h1><br>";
+            echo "<h1> Vous ne pouvez pas voir cette page sans autorisation</h1><br>";
+        } else {
+    ?>
      <main>
         <div class="container bg-transparent pt-5">
             <div class="row bg-transparent pt-5">
                 <div class="col-md-5 bg-transparent m-2">
-                    <h2>Hi Maria, Good Morning</h2>
+                    <h2>Hi <?php echo $user; ?>, Good Morning</h2>
                     <p class=" text-secondary pt-3">
                         Votre dashboard vous donne une vues sur vos performances ou l evolution
                          de votre busness
@@ -45,6 +67,7 @@
                     <div class="p-3">
                         <p class="">Total vendues</p>
                         <h2 class="">31</h2>
+                        <a href='index.php?deconnexion=true' >Déconnexion</a>
                     </div>
                    
                 </div>
@@ -99,7 +122,7 @@
         <hr class="w-100">
         <p class="text-secondary text-center p-3">&copy; copyright Maria</p>
     </footer>
-    
+    <?php } ?>
     <!--<script  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>-->
 </body>
 </html>

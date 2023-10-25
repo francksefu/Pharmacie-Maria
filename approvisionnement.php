@@ -29,6 +29,21 @@
     <link rel="stylesheet" href="vente.css">
     <script defer src="./jsfile/approvList.js"></script>
 </head>
+<?php 
+    $user = "";
+    session_start();
+    if(isset($_GET['deconnexion']))
+    { 
+    if($_GET['deconnexion']==true)
+    {  
+        session_destroy();
+        header("location:index.php");
+    }
+    }
+    else if($_SESSION['username'] !== ""){
+        $user = $_SESSION['username'];
+    }
+?>
 <?php
 
 function dataApprov(){
@@ -112,7 +127,7 @@ function render($reqSql) {
         <div class="container bg-transparent pt-5" >
             <div class="row bg-transparent pt-5">
                 <div class="col-md-6 bg-transparent m-2">
-                    <h2>Liste des approvisionnements</h2>
+                    <h2>Liste des approvisionnements, <?php echo $user; ?></h2>
                     <p class=" text-secondary pt-3">
                         Les approvisionnements vous permettent de controler efficacement les KPI des approvisionnements et de surveiller
                         dans un lieu centrale tout en aidant les equipes a atteindre leur objectif de vente 
@@ -148,7 +163,9 @@ function render($reqSql) {
                     <input type="text" id="supprimons" list="dataBesoin" class="form-control" placeholder="metez quelque chose dont vous vous rappeler pour le supprimer" >
                       <datalist id="dataBesoin">
                          <?php 
+                         if($user !== "") {
                             dataApprov();
+                        }
 
                         ?>
                       </datalist>
@@ -167,8 +184,10 @@ function render($reqSql) {
     
         <div class="container-fluid pt-5 bg-transparent">
         <?php
+          if($user !== "" ){
             $reqSql0= ("SELECT * FROM Approvisionnement, Produit WHERE (Approvisionnement.idProduit = Produit.idProduit) GROUP BY Operation order by Operation desc limit 500");
             render($reqSql0);
+          }
           ?>  
         </div>
         

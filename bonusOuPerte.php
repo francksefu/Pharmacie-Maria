@@ -29,6 +29,22 @@
     <link rel="stylesheet" href="modifier.css">
 </head>
 <?php
+//session
+    $user = "";
+    session_start();
+    if(isset($_GET['deconnexion']))
+    { 
+    if($_GET['deconnexion']==true)
+    {  
+        session_destroy();
+        header("location:index.php");
+    }
+    }
+    else if($_SESSION['username'] !== ""){
+        $user = $_SESSION['username'];
+    }
+//session
+
 function dataBonusPerte(){
     include 'connexion.php';
     $sql= ("SELECT * FROM BonusPerte, Produit WHERE (BonusPerte.idProduit = Produit.idProduit) order by idBonusPerte desc");
@@ -111,7 +127,7 @@ function render($reqSql) {
         <div class="container bg-transparent pt-5" >
             <div class="row bg-transparent pt-5">
                 <div class="col-md-8 bg-transparent m-2">
-                    <h2>Liste des bonus ou pertes</h2>
+                    <h2>Liste des bonus ou pertes, <?php echo $user; ?></h2>
                     <p class=" text-secondary pt-3">
                         Cette section de bonus ou perte repertories tous les bonus (par exemple vous avez acheté un carton
                         des lampes tous en sachant que dans ce carton vous trouverez 24 pieces mais par surprise vous en trouvez 26, vous vous
@@ -146,8 +162,9 @@ function render($reqSql) {
                     <input type="text" id="supprimons" list="dataBesoin" class="form-control" placeholder="metez quelque chose dont vous vous rappeler pour le supprimer" >
                       <datalist id="dataBesoin">
                          <?php 
+                         if($user !== "") {
                             dataBonusPerte();
-
+                         }
                         ?>
                       </datalist>
                     <span class="input-group-text pointe" id="cross">&cross;</span>
@@ -165,8 +182,10 @@ function render($reqSql) {
     
         <div class="container-fluid pt-5 bg-transparent">
           <?php
+          if($user !== "") {
             $reqSql0= ("SELECT * FROM BonusPerte, Produit WHERE (BonusPerte.idProduit = Produit.idProduit) order by idBonusPerte desc limit 500");
             render($reqSql0);
+          }
           ?>
         </div>
         
