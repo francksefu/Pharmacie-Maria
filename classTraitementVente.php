@@ -24,7 +24,7 @@
             $this->montant = $montant;
             $this->date = $date;
         }
-
+//This method find first the id of product, and after that put againquantity in product if the operation of vente(sell) is delete
         function findIDProduit($operationA) {
             include 'connexion.php';
             $sql = ("SELECT * FROM Ventes WHERE (Operation = $operationA)");
