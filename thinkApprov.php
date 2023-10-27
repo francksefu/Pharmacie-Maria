@@ -21,7 +21,7 @@
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.js"></script>
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
     <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
-    <script src="./jsfile/reg.js"></script>
+    <script src="./jsfile/tfs.min.js"></script>
     <script defer src="./jsfile/prediction.js"></script>
     
     <script defer src="./navbar.js"></script>
@@ -360,8 +360,7 @@ function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements,
     <main>
         <br><br><br>
         <input type="hidden" id="checker" value="<?php echo $cache ?>" />
-         <label>Pour ce produit la tendance de ventes dans une journée est de : </label>
-          <input type="text" id="result" />
+         
         <?php
         if($cache == 'approvisionnements') {
             $reqSql0= ("SELECT * FROM Approvisionnement, Produit WHERE (Approvisionnement.idProduit = Produit.idProduit) and (DatesApprov = '".$date1."') GROUP BY Operation order by Operation desc limit 1000");
@@ -398,10 +397,13 @@ function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements,
           if($cache == 'prediction-journaliere' || $cache == 'prediction-periode') {
             $produit = $_POST["Produit"];
             $id_produit = explode("::", $produit)[1];
-            $sql= ("SELECT * FROM Ventes, Produit WHERE (Ventes.idProduit = Produit.idProduit) and Ventes.idProduit = $id_produit");
+            $sql= ("SELECT * FROM Ventes, Produit WHERE (Ventes.idProduit = Produit.idProduit) and Ventes.idProduit = $id_produit order by Ventes.DatesVente limit 200");
             echo prediction($sql);
           }
         ?>
+        <h2 id="titre-pred"></h2>
+        <h2 id="resultat-pred"></h2>
+        <h2 id="jour"></h2>
     </main>
     <div class="bg-light" id="superieur">
     <h1 id="croix">&cross;</h1>
