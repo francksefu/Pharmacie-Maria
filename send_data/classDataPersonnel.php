@@ -20,12 +20,12 @@ include 'write_read_json.php';
         public $idClient;
         private $nom;
         private $telephone;
+        
         //table for contain json 
 
         private $insert_arr = array();
         private $update_arr = array();
         private $delete_arr = array();
-        
         
         public $message;
 
@@ -37,11 +37,11 @@ include 'write_read_json.php';
         }
 
         function read() {
-            read($this->insert_arr, $this->update_arr, $this->delete_arr, "data_client.json");
+            read($this->insert_arr, $this->update_arr, $this->delete_arr, "data_personnel.json");
         }
 
         function write() {
-            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_client.json");
+            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_personnel.json");
         }
 
         function write_insert() {
@@ -58,11 +58,10 @@ include 'write_read_json.php';
             array_push($this->delete_arr, (array("idClient"=> $this->idClient)));
             $this->write();
         }
-
         
         function insererClient() {
             include 'connexion.php';
-            $sql = ("INSERT INTO Client ( NomClient, Telephone) values ('".$this->nom."', '".$this->telephone."')");
+            $sql = ("INSERT INTO DataPersonnel ( Nom, Telephone) values ('".$this->nom."', '".$this->telephone."')");
             if(mysqli_query($db, $sql)){
                 //echo"<small style='color: green'>insertion fait</small>";
                 }else{
@@ -74,12 +73,12 @@ include 'write_read_json.php';
         function updateClient() {
             include 'connexion.php';
 
-            $updC1= ("UPDATE `Client` SET `NomClient` ='".$this->nom."' WHERE idClient =$this->idClient");
+            $updC1= ("UPDATE `DataPersonnel` SET `Nom` ='".$this->nom."' WHERE idDataPersonnel =$this->idClient");
             if(mysqli_query($db,$updC1)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
             }
-            $updC2= ("UPDATE `Client` SET `Telephone` = '".$this->telephone."' WHERE idClient =$this->idClient");
+            $updC2= ("UPDATE `DataPersonnel` SET `Telephone` = '".$this->telephone."' WHERE idDataPersonnel =$this->idClient");
             if(mysqli_query($db,$updC2)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
@@ -88,7 +87,7 @@ include 'write_read_json.php';
 
         function deleteClient() {
             include 'connexion.php';
-            $delete = ("DELETE FROM Client WHERE idClient =$this->idClient");
+            $delete = ("DELETE FROM DataPersonnel WHERE idDataPersonnel =$this->idClient");
             if (mysqli_query($db, $delete)){echo"";} else {
                 $this->message = mysqli_error($db);
                 return;
@@ -101,7 +100,7 @@ include 'write_read_json.php';
     $tabC = explode("::", $q);
     
     $autre = '';
-    if (end($tabC) == 'add' && $user != "") {
+    if (end($tabC) == 'add') {
         if ($q !== "") {
             $hint = $q;
             $tracteur = new Clients($tabC[0], $tabC[1]);
@@ -123,7 +122,7 @@ include 'write_read_json.php';
     </div>';
         echo $hint == $autre ? $error : $sucess;
     } 
-    if (end($tabC) == 'update' && $user != "") {
+    if (end($tabC) == 'update') {
         if ($q !== "") {
             $hint = $q;
             $tracteur = new Clients($tabC[0], $tabC[1]);
@@ -147,7 +146,7 @@ include 'write_read_json.php';
         echo $hint == $autre ? $error : $sucess;
     }
 
-    if (end($tabC) == 'delete' && $user != "") {
+    if (end($tabC) == 'delete') {
         if ($q !== "") {
             $hint = $q;
             $tracteur = new Clients(0, 1);

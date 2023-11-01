@@ -101,7 +101,7 @@ include 'write_read_json.php';
     $tabC = explode("::", $q);
     
     $autre = '';
-    if (end($tabC) == 'add' && $user != "") {
+    if (end($tabC) == 'add') {
         if ($q !== "") {
             $hint = $q;
             $tracteur = new Clients($tabC[0], $tabC[1]);
@@ -123,7 +123,7 @@ include 'write_read_json.php';
     </div>';
         echo $hint == $autre ? $error : $sucess;
     } 
-    if (end($tabC) == 'update' && $user != "") {
+    if (end($tabC) == 'update') {
         if ($q !== "") {
             $hint = $q;
             $tracteur = new Clients($tabC[0], $tabC[1]);
@@ -147,7 +147,7 @@ include 'write_read_json.php';
         echo $hint == $autre ? $error : $sucess;
     }
 
-    if (end($tabC) == 'delete' && $user != "") {
+    if (end($tabC) == 'delete') {
         if ($q !== "") {
             $hint = $q;
             $tracteur = new Clients(0, 1);

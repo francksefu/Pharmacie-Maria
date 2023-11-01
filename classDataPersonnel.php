@@ -1,3 +1,19 @@
+<?php 
+    $user = "";
+    session_start();
+    if(isset($_GET['deconnexion']))
+    { 
+    if($_GET['deconnexion']==true)
+    {  
+        session_destroy();
+        header("location:index.php");
+    }
+    }
+    else if($_SESSION['username'] !== ""){
+        $user = $_SESSION['username'];
+    }
+?>
+
 <?php
 include 'write_read_json.php';
     class Clients {
@@ -84,7 +100,7 @@ include 'write_read_json.php';
     $tabC = explode("::", $q);
     
     $autre = '';
-    if (end($tabC) == 'add') {
+    if (end($tabC) == 'add' && $user != "") {
         if ($q !== "") {
             $hint = $q;
             $tracteur = new Clients($tabC[0], $tabC[1]);
@@ -106,7 +122,7 @@ include 'write_read_json.php';
     </div>';
         echo $hint == $autre ? $error : $sucess;
     } 
-    if (end($tabC) == 'update') {
+    if (end($tabC) == 'update' && $user != "") {
         if ($q !== "") {
             $hint = $q;
             $tracteur = new Clients($tabC[0], $tabC[1]);
@@ -130,7 +146,7 @@ include 'write_read_json.php';
         echo $hint == $autre ? $error : $sucess;
     }
 
-    if (end($tabC) == 'delete') {
+    if (end($tabC) == 'delete' && $user != "") {
         if ($q !== "") {
             $hint = $q;
             $tracteur = new Clients(0, 1);

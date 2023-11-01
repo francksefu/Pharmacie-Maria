@@ -185,7 +185,7 @@ include 'write_read_json.php';
     $update_table = array();
     $delete_table = array();
 
-    if (end($tabObj) == "add" && $user != "") {
+    if (end($tabObj) == "add") {
     for ($i = 0; $i < count($tabObj) - 1; $i += 1) {
         $tabElement = explode("::", $tabObj[$i]);
         $autre = '';
@@ -220,7 +220,7 @@ include 'write_read_json.php';
     echo $hint == $autre ? $error : $sucess;
     }
 
-    if (end($tabObj) == "update" && $user != "") {
+    if (end($tabObj) == "update") {
         for ($i = 0; $i < count($tabObj) - 1; $i += 1) {
             $tabElement = explode("::", $tabObj[$i]);
             $autre = '';
@@ -257,7 +257,7 @@ include 'write_read_json.php';
          * ensuite supprimer la vente
          * et enfin inserer une nouvelle vente en se servant de l ancien numero d operation
          */
-            if ($q !== "" && $user != "") {
+            if ($q !== "") {
                 $hint = $q;
                 $tracteur = new Ventes($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7], $tabElement[8]);
                 $tracteur->insererVentes();

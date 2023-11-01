@@ -15,7 +15,7 @@
 ?>
 
 <?php
-    include 'write_read_json.php';
+include 'write_read_json.php';
     class PerteOccaz {
         public $idSortie;
         private $montant;
@@ -103,7 +103,7 @@
     $q = $_REQUEST["q"];
     $tabC = explode("::", $q);
     $autre = '';
-    if (end($tabC) == 'add' && $user != "") {
+    if (end($tabC) == 'add') {
         if ($q !== "") {
             $hint = $q;
             $salaire = new PerteOccaz($tabC[0], $tabC[1], $tabC[2]);
@@ -126,7 +126,7 @@
         echo $hint == $autre ? $error : $sucess;
         
     }
-    if(end($tabC) == 'update' && $user != "") {
+    if(end($tabC) == 'update') {
         $idCaisse = $tabC[3];
         if ($q !== "") {
             $hint = $q;
@@ -150,7 +150,7 @@
     echo $hint == $autre ? $error : $sucess;
     }
 
-    if(end($tabC) == 'delete' && $user != "") {
+    if(end($tabC) == 'delete') {
        
         if ($q !== "") {
             $hint = $q;

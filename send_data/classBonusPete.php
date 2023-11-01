@@ -73,7 +73,7 @@ include 'write_read_json.php';
              $idProduitA ='';
              $quantiteGagneA = '';
              $quantitePerduA = '';
-             if ($type == "update" ) {
+             if ($type == "update") {
                 $sql = ("SELECT * FROM BonusPerte WHERE idBonusPerte = $this->idBonusPerte");
                 $result = mysqli_query($db, $sql);
                      
@@ -226,7 +226,7 @@ include 'write_read_json.php';
     $tabC = explode("::", $q);
     $autre = '';
     
-    if (end($tabC) == 'add' && $user != "") {
+    if (end($tabC) == 'add') {
         if ($q !== "") {
             
             $hint = $q;
@@ -253,7 +253,7 @@ include 'write_read_json.php';
         echo $hint == $autre ? $error : $sucess;
         
     }
-    if(end($tabC) == 'update' && $user != "") {
+    if(end($tabC) == 'update') {
         $id = $tabC[5];
         if ($q !== "") {
             $hint = $q;
@@ -278,7 +278,7 @@ include 'write_read_json.php';
     echo $hint == $autre ? $error : $sucess;
     }
 
-    if(end($tabC) == 'delete' && $user != "") {
+    if(end($tabC) == 'delete') {
        
         if ($q !== "") {
             $hint = $q;

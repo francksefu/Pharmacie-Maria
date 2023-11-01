@@ -277,7 +277,7 @@ include 'write_read_json.php';
     $update_table = array();
     $delete_table = array();
 
-    if (end($tabObj) == "add" && $user != "") {
+    if (end($tabObj) == "add") {
     for ($i = 0; $i < count($tabObj) - 1; $i += 1) {
         $tabElement = explode("::", $tabObj[$i]);
         $autre = '';
@@ -312,7 +312,7 @@ include 'write_read_json.php';
     echo $hint == $autre ? $error : $sucess;
     }
 
-    if (end($tabObj) == "update" && $user != "") {
+    if (end($tabObj) == "update") {
         for ($i = 0; $i < count($tabObj) - 1; $i += 1) {
             $tabElement = explode("::", $tabObj[$i]);
             $autre = '';
@@ -378,7 +378,7 @@ include 'write_read_json.php';
         echo $hint == $autre ? $error : $sucess;
     }
     
-    if (end($tabObj) == "delete" && $user != "") {
+    if (end($tabObj) == "delete") {
         if ($q !== "") {
             $hint = $q;
             

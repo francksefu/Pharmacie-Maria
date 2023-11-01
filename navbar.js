@@ -7,7 +7,7 @@ function navbar() {
   header.classList.add('position-fixed', 'w-100', 'shadow');
   nav.classList.add('navbar', 'navbar-expand-sm', 'navbar-dark', 'bg-dark');
   nav.innerHTML = `<div class="container-fluid">
-  <a class="navbar-brand" href="maria.html">Maria</a>
+  <a class="navbar-brand" href="maria.php">Maria</a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
     <span class="navbar-toggler-icon"></span>
   </button>

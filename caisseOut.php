@@ -1,3 +1,19 @@
+<?php 
+    $user = "";
+    session_start();
+    if(isset($_GET['deconnexion']))
+    { 
+    if($_GET['deconnexion']==true)
+    {  
+        session_destroy();
+        header("location:index.php");
+    }
+    }
+    else if($_SESSION['username'] !== ""){
+        $user = $_SESSION['username'];
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,20 +44,7 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <?php
-//session
-$user = "";
-session_start();
-if(isset($_GET['deconnexion']))
-{ 
-if($_GET['deconnexion']==true)
-{  
-    session_destroy();
-    header("location:index.php");
-}
-}
-else if($_SESSION['username'] !== ""){
-    $user = $_SESSION['username'];
-}
+
 //session
 
   function dataCaisseOut(){

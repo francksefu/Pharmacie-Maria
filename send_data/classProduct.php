@@ -15,7 +15,7 @@
 ?>
 
 <?php
-    include 'write_read_json.php';
+include 'write_read_json.php';
 
     class Produit {
         public $idProduit;
@@ -132,7 +132,7 @@
     $q = $_REQUEST["q"];
     $tabC = explode("::", $q);
     $autre = '';
-    if (end($tabC) == 'add' && $user != "") {
+    if (end($tabC) == 'add') {
         if ($q !== "") {
             $hint = $q;
             $produit = new Produit($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4], $tabC[5], $tabC[6]);
@@ -155,7 +155,7 @@
         echo $hint == $autre ? $error : $sucess;
         
     }
-    if(end($tabC) == 'update' && $user != "") {
+    if(end($tabC) == 'update') {
         $id= $tabC[7];
         if ($q !== "") {
             $hint = $q;
@@ -179,7 +179,7 @@
     echo $hint == $autre ? $error : $sucess;
     }
 
-    if(end($tabC) == 'delete' && $user != "") {
+    if(end($tabC) == 'delete') {
         if ($q !== "") {
             $hint = $q;
             $salaire = new Produit(1, 2, 3, 4,5,6,7);
