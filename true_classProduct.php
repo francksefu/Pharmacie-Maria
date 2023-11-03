@@ -1,5 +1,4 @@
 <?php
-include 'write_read_json.php';
 
     class Produit {
         public $idProduit;
@@ -18,6 +17,7 @@ include 'write_read_json.php';
         private $delete_arr = array();
         
         public $message;
+        public $remote = false;
 
         function __construct($nom, $pa, $pv, $pvmin, $quantite, $quantiteMin, $description) {
             $this->nom = $nom;
@@ -30,10 +30,9 @@ include 'write_read_json.php';
             $this->read();
         }
 
-        function read() {
+        function read() {   
             read($this->insert_arr, $this->update_arr, $this->delete_arr, "data_stock.json");
         }
-
         function write() {
             write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_stock.json");
         }
@@ -54,7 +53,11 @@ include 'write_read_json.php';
         }
        
         function insererProduct() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $sql = ("INSERT INTO Produit (Nom, PrixAchat, PrixVente, PrixVmin, QuantiteStock, QuantiteStockMin, DescriptionP) values ('".$this->nom."', '".$this->pa."', '".$this->pv."', '".$this->pvmin."', '".$this->quantite."', '".$this->quantiteMin."', '".$this->description."')");
             if(mysqli_query($db, $sql)){
                 
@@ -64,7 +67,11 @@ include 'write_read_json.php';
         }
 
         function updateProduct() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $updC= ("UPDATE `Produit` SET `Nom` = '".$this->nom."' WHERE idProduit =$this->idProduit");
             if(mysqli_query($db,$updC)){echo"";}else{
                 $this->message = mysqli_error($db);
@@ -104,7 +111,12 @@ include 'write_read_json.php';
             }
         }
         function deleteProduct() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
+
             $delete = ("DELETE FROM Produit WHERE idProduit =$this->idProduit");
             if (mysqli_query($db, $delete)){echo"";} else {
                 $this->message = mysqli_error($db);

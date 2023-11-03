@@ -15,6 +15,7 @@
 ?>
 
 <?php
+    include 'write_read_json.php';
     include 'true_classApprov.php'; // the location of class
 
     $q = $_REQUEST["q"];
@@ -74,7 +75,7 @@
                 $hint = $q;
                 $tracteur = new Approvisionnement($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7]);
                 if ($i == 0) {
-                    $tracteur->findIDProduit($tabElement[4]);
+                    $tracteur->findIDProduit($tabElement[4]);//commence par remettre ce qui etait dans le stock avant l operation
                 }
                 $tracteur->updateApprov();
                 array_push($update_table, $tracteur);

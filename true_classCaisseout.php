@@ -1,5 +1,5 @@
 <?php
-include 'write_read_json.php';
+
     class Sortie {
         public $idSortie;
         private $montant;

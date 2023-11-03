@@ -5,14 +5,15 @@
  * devient vide, faut le recreer pour qu il contienne des donnees
  */
 
-include 'write_read_json.php';
+
 
     class TakeApprov {
-        //table for contain json 
+        //table for contain json
+        // this array is public because I wanna access on the moment to send data remotely 
 
-        private $insert_arr = array();
-        private $update_arr = array();
-        private $delete_arr = array();
+        public $insert_arr = array();
+        public $update_arr = array();
+        public $delete_arr = array();
         private $approv_insert;
 
         function __construct($approv_insert) {
@@ -60,6 +61,7 @@ include 'write_read_json.php';
         public $source;
         public $destination;
         public $message;
+        public $remote = false;
 
         function __construct($idProduit, $quantite, $pu, $date, $operation, $total_facture, $source, $destination) {
             $this->operation = $operation;
@@ -75,7 +77,11 @@ include 'write_read_json.php';
         
 
         function enleveProduitSource($idProduitA) {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $quantite_stock = 0;
             $sql = ("SELECT * FROM Produit2 WHERE (idProduit = $idProduitA)");
             $result = mysqli_query($db, $sql);
@@ -95,7 +101,11 @@ include 'write_read_json.php';
         }
 
         function remettreProduitSource ($idProduitA, $quantiteA) {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $quantite_stock = 0;
             $sql = ("SELECT * FROM Produit2 WHERE (idProduit = $idProduitA)");
             $result = mysqli_query($db, $sql);
@@ -115,7 +125,11 @@ include 'write_read_json.php';
         }
 
         function findIDProduit($operationA) {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $sql = ("SELECT * FROM Approvisionnement WHERE (Operation = $operationA)");
             $result = mysqli_query($db, $sql);
                     
@@ -139,7 +153,11 @@ include 'write_read_json.php';
 
         }
         function remettreProduit($idProduitA, $quantiteA) {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $quantite_stock = 0;
             $sql = ("SELECT * FROM Produit WHERE (idProduit = $idProduitA)");
             $result = mysqli_query($db, $sql);
@@ -159,7 +177,11 @@ include 'write_read_json.php';
         }
 
         function remettreProduit2($idProduitA, $quantiteA) {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $quantite_stock = 0;
             $sql = ("SELECT * FROM Produit2 WHERE (idProduit = $idProduitA)");
             $result = mysqli_query($db, $sql);
@@ -179,7 +201,11 @@ include 'write_read_json.php';
         }
         // ici eneleveProduit signifie  ajouter dans produit vu que c est l approvisionnement, on ne voudrait pas recommencer, on s appuis sur la vente
         function enleveProduit($idProduitA) {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $quantite_stock = 0;
             $sql = ("SELECT * FROM Produit WHERE (idProduit = $idProduitA)");
             $result = mysqli_query($db, $sql);
@@ -199,7 +225,11 @@ include 'write_read_json.php';
         }
        
         function enleveProduit2($idProduitA) {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $quantite_stock = 0;
             $sql = ("SELECT * FROM Produit2 WHERE (idProduit = $idProduitA)");
             $result = mysqli_query($db, $sql);
@@ -219,7 +249,11 @@ include 'write_read_json.php';
         }
 
         function insererApprov() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $sql = ("INSERT INTO Approvisionnement (idProduit, QuantiteApprov, PrixA, DatesApprov, Operation, TotalFacture, `Source`, Destination) values ($this->idProduit, $this->quantite, $this->pu, '".$this->date."', $this->operation, $this->total_facture, '".$this->source."', '".$this->destination."')");
             if(mysqli_query($db, $sql)){
                 
@@ -237,8 +271,11 @@ include 'write_read_json.php';
            
         }
         function updateApprov() {
-            include 'connexion.php';
-
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $delete = ("DELETE FROM Approvisionnement WHERE Operation =$this->operation");
             if (mysqli_query($db, $delete)){echo"";} else {
                 $this->message = 'delete'.mysqli_error($db);
@@ -247,7 +284,12 @@ include 'write_read_json.php';
         }
 
         function deleteVentes() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
+
            $this->findIDProduit($this->operation);
             $delete = ("DELETE FROM Approvisionnement WHERE Operation =$this->operation");
             if (mysqli_query($db, $delete)){echo"";} else {
