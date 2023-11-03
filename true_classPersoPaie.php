@@ -1,6 +1,4 @@
 <?php
-include 'write_read_json.php';
-
     class PersoPaie {
         public $idPersoPaie;
         private $montant;
@@ -16,6 +14,7 @@ include 'write_read_json.php';
         private $delete_arr = array();
         
         public $message;
+        public $remote = false;
 
         function __construct($montant, $motif, $mois, $datesout, $idDataPerso) {
             $this->montant = $montant;
@@ -50,7 +49,12 @@ include 'write_read_json.php';
         }
        
         function insererPersonnelPaie() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
+
             $sql = ("INSERT INTO PersonnelPaie (idDataPersonnel, `Date`, `Mois`, Montant, Observation) values ('".$this->idDataPerso."', '".$this->datesout."', '".$this->mois."', '".$this->montant."', '".$this->motif."')");
             if(mysqli_query($db, $sql)){
                 
@@ -60,7 +64,11 @@ include 'write_read_json.php';
         }
 
         function updatePersonnelPaie() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $updC= ("UPDATE `PersonnelPaie` SET `Montant` = $this->montant WHERE idPersonnelPaie =$this->idPersoPaie");
             if(mysqli_query($db,$updC)){echo"";}else{
                 $this->message = mysqli_error($db);
@@ -89,7 +97,11 @@ include 'write_read_json.php';
             }
         }
         function deletePersonnelPaie() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $delete = ("DELETE FROM PersonnelPaie WHERE idPersonnelPaie =$this->idPersoPaie");
             if (mysqli_query($db, $delete)){echo"";} else {
                 $this->message = mysqli_error($db);

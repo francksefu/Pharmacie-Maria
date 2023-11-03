@@ -1,6 +1,6 @@
 <?php
-include 'write_read_json.php';
-    class Clients {
+
+    class Personnel {
         public $idClient;
         private $nom;
         private $telephone;
@@ -12,6 +12,7 @@ include 'write_read_json.php';
         private $delete_arr = array();
         
         public $message;
+        public $remote = false;
 
         function __construct($nom, $telephone) {
             
@@ -44,7 +45,11 @@ include 'write_read_json.php';
         }
         
         function insererClient() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $sql = ("INSERT INTO DataPersonnel ( Nom, Telephone) values ('".$this->nom."', '".$this->telephone."')");
             if(mysqli_query($db, $sql)){
                 //echo"<small style='color: green'>insertion fait</small>";
@@ -55,7 +60,11 @@ include 'write_read_json.php';
             }
         }
         function updateClient() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
 
             $updC1= ("UPDATE `DataPersonnel` SET `Nom` ='".$this->nom."' WHERE idDataPersonnel =$this->idClient");
             if(mysqli_query($db,$updC1)){echo"";}else{
@@ -70,7 +79,11 @@ include 'write_read_json.php';
         }
 
         function deleteClient() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $delete = ("DELETE FROM DataPersonnel WHERE idDataPersonnel =$this->idClient");
             if (mysqli_query($db, $delete)){echo"";} else {
                 $this->message = mysqli_error($db);

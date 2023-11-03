@@ -15,6 +15,7 @@
 ?>
 
 <?php
+    include 'write_read_json.php';
     include 'true_classDataPersonnel.php';
     $q = $_REQUEST["q"];
     $tabC = explode("::", $q);
@@ -23,7 +24,7 @@
     if (end($tabC) == 'add' && $user != "") {
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Clients($tabC[0], $tabC[1]);
+            $tracteur = new Personnel($tabC[0], $tabC[1]);
             $tracteur->insererClient();
             $tracteur->write_insert();
             $autre = $tracteur->message;
@@ -45,7 +46,7 @@
     if (end($tabC) == 'update' && $user != "") {
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Clients($tabC[0], $tabC[1]);
+            $tracteur = new Personnel($tabC[0], $tabC[1]);
             $tracteur->idClient = $tabC[2];
             $tracteur->updateClient();
             $tracteur->write_update();
@@ -69,7 +70,7 @@
     if (end($tabC) == 'delete' && $user != "") {
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Clients(0, 1);
+            $tracteur = new Personnel(0, 1);
             $tracteur->idClient = $tabC[0];
             $tracteur->deleteClient();
             $tracteur->write_delete();

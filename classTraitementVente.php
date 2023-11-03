@@ -15,6 +15,7 @@
 ?>
 
 <?php
+    include 'write_read_json.php';
     include 'true_classTraitementVente.php';
 
     $q = $_REQUEST["q"];

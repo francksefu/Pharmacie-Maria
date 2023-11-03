@@ -44,7 +44,7 @@ function dataVente(){
         $take .= "<option value='".$valeur."'>operation : ".$row["Operation"]."client: ".$row["NomClient"]." :Totol :".$row["TotalFacture"]."</option>"; 
         }
 
-   }else{echo "Une erreur s est produite ";}  
+   }else{$take = "Une erreur s est produite ";}  
   return $take;
 }
 

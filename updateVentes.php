@@ -1,3 +1,18 @@
+<?php 
+    $user = "";
+    session_start();
+    if(isset($_GET['deconnexion']))
+    { 
+    if($_GET['deconnexion']==true)
+    {  
+        session_destroy();
+        header("location:index.php");
+    }
+    }
+    else if($_SESSION['username'] !== ""){
+        $user = $_SESSION['username'];
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,7 +110,7 @@ function dataPersonnel(){
             <div class="input-group mb-3  mx-auto d-block">
                 <span class="input-group-text " id="id">Identifiant*</span>
                 <input required type="text" list="dataBesoin" id="identifiantM" class="form-control w-50" placeholder="entrer identifiant" aria-label="Username" aria-describedby="nom" >
-                    <datalist id="dataBesoin"></datalist>
+                    <datalist id="dataBesoin"> </datalist>
             </div>
             <div class="row border border-1 mt-3 pt-3 w-75 d-block mx-auto">
             

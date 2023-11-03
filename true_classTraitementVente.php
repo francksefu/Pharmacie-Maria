@@ -1,13 +1,11 @@
 <?php
 
-include 'write_read_json.php';
-
     class TakeVente {
         //table for contain json 
 
-        private $insert_arr = array();
-        private $update_arr = array();
-        private $delete_arr = array();
+        public $insert_arr = array();
+        public $update_arr = array();
+        public $delete_arr = array();
         private $vente_json;
 
         function __construct($vente_json) {
@@ -58,6 +56,7 @@ include 'write_read_json.php';
         public $pu;
         public $dette; 
         public $message;
+        public $remote = false;
 
 
         function __construct($idProduit, $idClient, $quantite, $pu, $date, $operation, $dette, $total_facture, $montant) {
@@ -73,7 +72,11 @@ include 'write_read_json.php';
         }
 //This method find first the id of product, and after that put againquantity in product if the operation of vente(sell) is delete
         function findIDProduit($operationA) {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $sql = ("SELECT * FROM Ventes WHERE (Operation = $operationA)");
             $result = mysqli_query($db, $sql);
                     
@@ -89,7 +92,11 @@ include 'write_read_json.php';
 
         }
         function remettreProduit($idProduitA, $quantiteA) {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $quantite_stock = 0;
             $sql = ("SELECT * FROM Produit WHERE (idProduit = $idProduitA)");
             $result = mysqli_query($db, $sql);
@@ -108,7 +115,11 @@ include 'write_read_json.php';
             }
         }
         function enleveProduit($idProduitA) {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $quantite_stock = 0;
             $sql = ("SELECT * FROM Produit WHERE (idProduit = $idProduitA)");
             $result = mysqli_query($db, $sql);
@@ -129,7 +140,11 @@ include 'write_read_json.php';
 
         
         function insererVentes() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $sql = ("INSERT INTO Ventes (idProduit, idClient, QuantiteVendu, PU, PT, DatesVente, Operation, Dette, TotalFacture, MontantPaye) values ($this->idProduit, $this->idClient, $this->quantite, $this->pu, $this->pu * $this->quantite, '".$this->date."', $this->operation, '".$this->dette."', $this->total_facture, $this->montant)");
             if(mysqli_query($db, $sql)){
                 
@@ -139,7 +154,11 @@ include 'write_read_json.php';
             $this->enleveProduit($this->idProduit);
         }
         function updateVentes() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
 
             $delete = ("DELETE FROM Ventes WHERE Operation =$this->operation");
             if (mysqli_query($db, $delete)){echo"";} else {
@@ -149,7 +168,11 @@ include 'write_read_json.php';
         }
 
         function deleteVentes() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
            $this->findIDProduit($this->operation);
             $delete = ("DELETE FROM Ventes WHERE Operation =$this->operation");
             if (mysqli_query($db, $delete)){echo"";} else {
