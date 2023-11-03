@@ -1,1 +1,1 @@
-{"insert_arr":[{"montant":"230","motif":"bon","type":"Aucun","datesout":"2023-10-08"},{"montant":"20","motif":"J essai encore","type":"Aucun","datesout":"2023-10-15"},{"montant":"100","motif":"ess","type":"Aucun","datesout":"2023-10-16"}],"update_arr":[{"idSortie":"20","montant":"106","motif":"esskk","type":"Aucun","datesout":"2023-10-16"}],"delete_arr":[{"idSortie":"20"},{"idSortie":"4"},{"idSortie":"4"},{"idSortie":"4"},{"idSortie":"4"}]}
+{"insert_arr":[],"update_arr":[],"delete_arr":[]}
