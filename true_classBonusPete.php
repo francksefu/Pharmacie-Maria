@@ -1,5 +1,4 @@
 <?php
-include 'write_read_json.php';
  
     class BonusPerte {
         public $idBonusPerte;
@@ -9,6 +8,7 @@ include 'write_read_json.php';
         private $motif;
         private $date;
         public $message;
+        public $remote = false;
 
         //table for contain json 
         private $insert_arr = array();
@@ -49,7 +49,11 @@ include 'write_read_json.php';
         }
        
         function rechercheProductAndUpdate($type) {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             /**
              * take old value from bonusPerte table
              */
@@ -109,7 +113,11 @@ include 'write_read_json.php';
 
        
         function insererBonusPerte() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             
             $sql = ("INSERT INTO  BonusPerte (idProduit, QuantitePerdu, QuantiteGagne, DatesD, Motif) values ($this->idProduit, $this->quantitePerdu, $this->quantiteGagne, '".$this->date."', '".$this->motif."')");
             if(mysqli_query($db, $sql)){
@@ -142,7 +150,11 @@ include 'write_read_json.php';
         
 
         function updateBonusPerte() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
 
             $this->rechercheProductAndUpdate("update");
 
@@ -194,7 +206,11 @@ include 'write_read_json.php';
             }
         }
         function deleteBonusPerte() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $this->rechercheProductAndUpdate("update");
             $delete = ("DELETE FROM BonusPerte WHERE idBonusPerte =$this->idBonusPerte");
             if (mysqli_query($db, $delete)){

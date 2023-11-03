@@ -3,6 +3,42 @@
   include 'true_classCaisseout.php';
   include 'true_classProduct.php';
   include 'true_classApprov.php';
+  include 'true_classBonusPete.php';
+  include 'true_classPersonnels.php';
+
+  //Client
+
+$insert_arr = array();
+$update_arr = array();
+$delete_arr = array();
+
+read($insert_arr, $update_arr, $delete_arr, "data_client.json");
+
+for ($i = 0; $i < count($insert_arr); $i ++) {
+  $caisse = new Clients($insert_arr[$i]['nom'], $insert_arr[$i]['telephone']);
+  $caisse->remote = true;
+  $caisse->insererClient();
+  echo "Insertion fait avec sucess";
+}
+
+for ($i = 0; $i < count($update_arr); $i ++) {
+  $tracteur = new Clients($update_arr[$i]['nom'], $update_arr[$i]['telephone']);
+  $tracteur->remote = true;
+  $tracteur->idClient = $update_arr[$i]['idClient'];
+  $tracteur->updateClient();
+  echo "Insertion fait avec sucess";
+}
+
+for ($i = 0; $i < count($delete_arr); $i ++) {
+  $caisse = new Clients(0, 1);
+  $caisse->remote = true;
+  $caisse->idClient = $delete_arr[$i]['idClient'];
+  $caisse->deleteClient();
+  echo "Insertion fait avec sucess";
+}
+
+write(array(), array(), array(), "data_client.json");
+  //Client fin
 // produit
   $insert_arr = array();
   $update_arr = array();
@@ -97,6 +133,35 @@
   write(array(), array(), array(), "data_approv.json");
 
 //Fin Approvisionnement
+//Bonus et perte 
+  $insert_arr = array();
+  $update_arr = array();
+  $delete_arr = array();
+  read($insert_arr, $update_arr, $delete_arr, "data_bonus_perte.json");
+  for ($i = 0; $i < count($insert_arr); $i ++) {
+    $produit = new BonusPerte($insert_arr[$i]['idProduit'], $insert_arr[$i]['quantiteGagne'], $insert_arr[$i]['quantitePerdu'], $insert_arr[$i]['motif'], $insert_arr[$i]['date']);
+    $produit->remote = true;
+    $produit->insererBonusPerte();
+    echo "Insertion bonus perte fait avec sucess";
+  }
+
+  for ($i = 0; $i < count($update_arr); $i ++) {
+    $produit = new BonusPerte($update_arr[$i]['idProduit'], $update_arr[$i]['quantiteGagne'], $update_arr[$i]['quantitePerdu'], $update_arr[$i]['motif'], $update_arr[$i]['date']);
+    $produit->remote = true;
+    $produit->idBonusPerte = $update_arr[$i]['idBonusPerte'];
+    $produit->updateBonusPerte();
+    echo "Insertion bonus perte fait avec sucess";
+  }
+
+  for ($i = 0; $i < count($delete_arr); $i ++) {
+    $produit = new BonusPerte(1, 2, 3, 4, 5);
+    $produit->remote = true;
+    $produit->idBonusPerte = $delete_arr[$i]['idBonusPerte'];
+    $produit->deleteBonusPerte();
+    echo "Insertion bonus perte fait avec sucess";
+  }
+  write(array(), array(), array(), "data_bonus_perte.json");
+//Fin Bonus et perte
   // Caisse ou sortie
   $insert_arr = array();
   $update_arr = array();

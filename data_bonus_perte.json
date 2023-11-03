@@ -1,1 +1,1 @@
-{"insert_arr":[{"idProduit":"17","quantiteGagne":"0","quantitePerdu":"2","motif":"jkj","date":"2023-10-16"}],"update_arr":[{"idProduit":"17","quantiteGagne":"3","quantitePerdu":"2","motif":"jkj","date":"2023-10-16","idBonusPerte":"30"}],"delete_arr":[{"idBonusPerte":"29"}]}
+{"insert_arr":[],"update_arr":[],"delete_arr":[]}
