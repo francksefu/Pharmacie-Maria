@@ -35,12 +35,41 @@
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.js"></script>
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
     <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+    
     <script defer src="navbar.js"></script>
     <link rel="stylesheet" href="index.css">
+    <!--<script defer src="jsfile/datalist.js"></script>-->
     <script defer src="jsfile/takeVente.js"></script>
-    <script defer src="./jsfile/datalist.js"></script>
+    
 </head>
 <?php
+
+function dataVente(){
+    include 'connexion.php';
+    //$take = '';
+    $sql= ("SELECT * FROM Ventes, Produit, Client WHERE (Produit.idProduit = Ventes.idProduit) and (Client.idClient = Ventes.idClient) group by Operation order by Operation desc");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+      $valeur = '';
+        while($row= mysqli_fetch_assoc($result)){
+            //
+            $sql1= ("SELECT * FROM Ventes, Produit, Client WHERE (Operation = ".$row["Operation"].") and (Produit.idProduit = Ventes.idProduit) and (Client.idClient = Ventes.idClient) order by Operation desc");
+            $result1 = mysqli_query($db, $sql1);
+                    
+            if(mysqli_num_rows($result1)>0){
+            $valeur = '';
+                while($row1= mysqli_fetch_assoc($result1)){
+                    $valeur .= $row1["Operation"]."::".$row1["idClient"]."::".$row1["NomClient"]."::".$row1["idProduit"].":: Nom ::".$row1["Nom"].":: PA ::".$row1["PrixAchat"].":: PV = ::".$row1["PrixVente"].":: PVmin =::".$row1["PrixVmin"].":: QstockMin = ::".$row1["QuantiteStockMin"]."::".$row1["QuantiteVendu"]."::".$row1["PU"]."::".$row1["DatesVente"]."::".$row1["TotalFacture"]."::".$row1["MontantPaye"]."::__:";
+                }
+
+        }else{echo "Une erreur s est produite ";}  
+        echo "<option value='".$valeur."'>operation : ".$row["Operation"]."client: ".$row["NomClient"]." :Totol :".$row["TotalFacture"]."</option>"; 
+        }
+
+   }else{echo "Une erreur s est produite ";}  
+  //return $take;
+}
 
 function findIDVente(){
     include 'connexion.php';
@@ -109,8 +138,12 @@ function dataPersonnel(){
             <input type="hidden" id="check-datalist" value="updateVentes">
             <div class="input-group mb-3  mx-auto d-block">
                 <span class="input-group-text " id="id">Identifiant*</span>
-                <input required type="text" list="dataBesoin" id="identifiantM" class="form-control w-50" placeholder="entrer identifiant" aria-label="Username" aria-describedby="nom" >
-                    <datalist id="dataBesoin"> </datalist>
+                <input required type="text" list="dataBesoin" id="identifiantM" class="form-control w-50" placeholder="entrer identifiant">
+                    <datalist id="dataBesoin">
+                    <?php
+                        dataVente();
+                    ?>
+                    </datalist>
             </div>
             <div class="row border border-1 mt-3 pt-3 w-75 d-block mx-auto">
             

@@ -3,8 +3,8 @@
  */
 const check_datalist = document.querySelector('#check-datalist');
 const formName = check_datalist.value;
-const identifiant = document.querySelector('#identifiantM');
-const enve = document.querySelector('#envoi');
+const identifianta = document.querySelector('#identifiantM');
+//const enve = document.querySelector('#envoi');
 function showHint1(str) {
     if (str.length == 0) {
       document.getElementById("dataBesoin").innerHTML = "";
@@ -24,11 +24,11 @@ window.addEventListener('load', () => {
     showHint1(formName);
 })
 
-identifiant.addEventListener('change', () => {
+identifianta.addEventListener('change', () => {
     showHint1(formName);
 })
-if (identifiant.value === "") {
-  identifiant.addEventListener('focus', () => {
+if (identifianta.value === "") {
+  identifianta.addEventListener('focus', () => {
     showHint1(formName);
 })
 }
