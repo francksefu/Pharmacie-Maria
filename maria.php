@@ -1,3 +1,18 @@
+<?php 
+$user = "";
+session_start();
+if(isset($_GET['deconnexion']))
+{ 
+   if($_GET['deconnexion']==true)
+   {  
+      session_destroy();
+      header("location:index.php");
+   }
+}
+else if($_SESSION['username'] !== ""){
+    $user = $_SESSION['username'];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,19 +40,47 @@
    
     <link rel="stylesheet" href="index.css">
 </head>
-<?php 
-$user = "";
-session_start();
-if(isset($_GET['deconnexion']))
-{ 
-   if($_GET['deconnexion']==true)
-   {  
-      session_destroy();
-      header("location:index.php");
-   }
+
+<?php
+function prediction($sql) {
+    $data_input = 0;
+    //$data_out = '';
+    include 'connexion.php';
+    //$sql= ("SELECT * FROM Ventes, Produit WHERE (Ventes.idProduit = Produit.idProduit)");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+        while($row= mysqli_fetch_assoc($result)){
+            //echo"<option value='ID ::".$row["Operation"].":: date ::".$row["DatesVente"].":: client  ::".$row["NomClient"].":: Total facture ::".$row["TotalFacture"]."'>client = ".$row["NomClient"]." dette : ".$row["Dette"]."</option>"; 
+            $data_input += $row["QuantiteVendu"];
+            
+        }
+        
+   }else{$data_input = 0;}
+   
+   return $data_input;
 }
-else if($_SESSION['username'] !== ""){
-    $user = $_SESSION['username'];
+function dataProduct(){
+    include 'connexion.php';
+    $sql = ("SELECT * FROM Produit order by Nom asc");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+        
+        while($row= mysqli_fetch_assoc($result)){
+            $id = $row["idProduit"];
+            $sq= ("SELECT * FROM Ventes, Produit WHERE ( Ventes.idProduit = $id) and (Ventes.idProduit = Produit.idProduit)");
+            $valeur = prediction($sq);
+            echo'
+            <div class=" border border-1 p-3   ms-2" style="width:200px; height: 200px;">
+                <img src="banane.png" alt="Product-1" class="img-fluid rounded-3">
+                <h6>'.$row["Nom"].'</h6>
+                <p class="text-secondary">'.$valeur.' items</p>
+            </div>';
+        }
+                
+   }else{echo "Une erreur s est produite ";}  
+   
 }
 ?>
 <body class="bg-light">
@@ -66,7 +109,7 @@ else if($_SESSION['username'] !== ""){
                     </div>
                     <div class="p-3">
                         <p class="">Total vendues</p>
-                        <h2 class="">31</h2>
+                        <h2 class="">look number of item</h2>
                         <a href='index.php?deconnexion=true' >Déconnexion</a>
                     </div>
                    
@@ -79,7 +122,7 @@ else if($_SESSION['username'] !== ""){
                     </div>
                     <div class="p-3">
                         <p class="">Total vendues</p>
-                        <h2 class="">31</h2>
+                        <h2 class="">in top product</h2>
                     </div>
                     
                 </div>
@@ -88,28 +131,10 @@ else if($_SESSION['username'] !== ""){
             <div class=" p-3 mb-5 border border-1 rounded mt-5" id="sa">
                 <h2 class="p-2">Top product</h2>
                 <hr class="w-auto">
-                <div class="d-flex flex-row ps-1 pe-1 pt-3 pb-3">
-                    <div class=" border border-1 p-3 w-auto ms-2">
-                        <img src="banane.png" alt="Product-1" class="img-fluid rounded-3">
-                        <h3>Banenes</h3>
-                        <p class="text-secondary">667 items</p>
-                    </div>
-                    <div class=" border border-1 p-3 w-auto ms-2">
-                        <img src="banane.png" alt="Product-1" class="img-fluid rounded-3">
-                        <h3>Banenes</h3>
-                        <p class="text-secondary">667 items</p>
-                    </div>
-                    <div class=" border border-1 p-3 w-auto ms-2">
-                        <img src="banane.png" alt="Product-1" class="img-fluid rounded-3">
-                        <h3>Banenes</h3>
-                        <p class="text-secondary">667 items</p>
-                    </div>
-    
-                    <div class=" border border-1 p-3 w-auto ms-2">
-                        <img src="banane.png" alt="Product-1" class="img-fluid rounded-3">
-                        <h3>Banenes</h3>
-                        <p class="text-secondary">667 items</p>
-                    </div>
+                <div class="d-flex flex-row ps-1 pe-1 pt-3 pb-3" style="width:100%; overflow-x: auto; overflow-y: hidden;">
+                    <?php
+                        dataProduct();
+                    ?>
                 </div>
             </div>
             

@@ -26,6 +26,19 @@
     
 </head>
 <?php
+//Pour imprimer une facture quelconque
+function dataVente(){
+    include 'connexion.php';
+    $sql= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) GROUP BY Operation order by Operation desc");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+        while($row= mysqli_fetch_assoc($result)){
+            echo"<option value='ID ::".$row["Operation"].":: date ::".$row["DatesVente"].":: client  ::".$row["NomClient"].":: Total facture ::".$row["TotalFacture"]."'>client = ".$row["NomClient"]." dette : ".$row["Dette"]."</option>"; 
+        }
+   }else{echo "Une erreur s est produite ";}  
+
+}
 //find id for vente to make a nmber of operation
 function findIDVente(){
     include 'connexion.php';
@@ -216,6 +229,20 @@ function dataPersonnel(){
                 <input type="hidden" id="typeForm" value="add" />
     </form>
         </div>
+
+        <form class="input-group col-md-10 mt-3 mb-3" action="imprimer.php" method="POST">
+            <span class="input-group-text">choisissez une facture : </span>
+            <input required type="text" id="imprimer" name="Facture" list="dataBesoin" class="form-control" placeholder="metez quelque chose dont vous vous rappeler pour l imprimer" >
+                <datalist id="dataBesoin">
+                    <?php 
+                        dataVente();
+                    ?>
+                </datalist>
+            <span class="input-group-text pointe" id="cross">&cross;</span>
+            <span class="input-group-text pointe" id="btn">
+            <input type="submit" value="Imprimer" />  
+            </span>
+        </form>
     </main>
 </body>
 </html>

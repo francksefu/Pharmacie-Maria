@@ -47,28 +47,27 @@
     <script defer src="./jsfile/ventesList.js"></script>
 </head>
 <?php
-// session
 
 $date1 = $_POST["Date1"];
 $date2 = $_POST["Date2"];
 $cache = $_POST["Cache"];
 $personnel = $_POST["Personnel"];
 $facture = $_POST["Facture"];
-$paie_perso = $_POST["PaiePerso"];
+//$paie_perso = $_POST["PaiePerso"];
 $tabC = explode("::", $personnel);
 $tabFacture = explode("::", $facture);
-$tabPerso = explode("::", $paie_perso);
+//$tabPerso = explode("::", $paie_perso);
 if($tabC[0] != ''){
   $id = $tabC[1];
 } else {
   $id = '';
 }
 
-if($tabPerso[0] != ''){
+/*if($tabPerso[0] != ''){
   $idi = $tabPerso[1];
 } else {
   $idi = '';
-}
+}*/
 
 if($tabFacture[0] != '') {
   $operation = $tabFacture[1];

@@ -51,7 +51,7 @@ if(checker == 'prediction-periode') {
       
       model.fit(xs, ys, { epochs: 50 }).then(() => {
         // Faire une prédiction
-        const inputSequence = salesData.slice(90, 95); // Utiliser les 10 dernières valeurs pour prédire la prochaine
+        const inputSequence = salesData.slice(95, 100); // Utiliser les 10 dernières valeurs pour prédire la prochaine
         const inputTensor = tf.tensor3d([inputSequence.map(val => [val])], [1, sequenceLength, 1]);
         const prediction = model.predict(inputTensor);
         const predictedValue = prediction.dataSync()[0];
