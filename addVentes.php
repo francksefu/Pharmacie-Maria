@@ -23,6 +23,7 @@
     <script defer src="navbar.js"></script>
     <link rel="stylesheet" href="index.css">
     <script defer src="jsfile/takeVente.js"></script>
+    <script defer src="jsfile/imprime.js"></script>
     
 </head>
 <?php

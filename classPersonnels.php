@@ -27,7 +27,7 @@
             $hint = $q;
             $tracteur = new Clients($tabC[0], $tabC[1]);
             $tracteur->insererClient();
-            $tracteur->write_insert();
+            
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
@@ -50,7 +50,7 @@
             $tracteur = new Clients($tabC[0], $tabC[1]);
             $tracteur->idClient = $tabC[2];
             $tracteur->updateClient();
-            $tracteur->write_update();
+            
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
@@ -74,7 +74,7 @@
             $tracteur = new Clients(0, 1);
             $tracteur->idClient = $tabC[0];
             $tracteur->deleteClient();
-            $tracteur->write_delete();
+            
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;

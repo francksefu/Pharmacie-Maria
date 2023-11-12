@@ -29,8 +29,7 @@
             $produit = new BonusPerte($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4]);
             $produit->insererBonusPerte();
 
-            /*Update array must go in json file for host data*/
-            $produit->write_insert();
+            
 
             $autre = $produit->message;
             if( $produit->message) {
@@ -57,7 +56,7 @@
             $produit->idBonusPerte = $id;
             $produit->updateBonusPerte();
             //write in json
-            $produit->write_update();
+            
             $autre = $produit->message;
             if( $produit->message) {
                 $hint = $autre;
@@ -81,8 +80,7 @@
             $salaire = new BonusPerte(1, 2, 3, 4,5);
             $salaire->idBonusPerte = $tabC[0];
             $salaire->deleteBonusPerte();
-            //write in json
-            $salaire->write_delete();
+            
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;

@@ -23,9 +23,7 @@
     $autre = '';
     $hint = '';
 
-    $insert_table = array();
-    $update_table = array();
-    $delete_table = array();
+    
 
     if (end($tabObj) == "add" && $user != "") {
     for ($i = 0; $i < count($tabObj) - 1; $i += 1) {
@@ -36,7 +34,7 @@
             $hint = $q;
             $tracteur = new Ventes($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7], $tabElement[8]);
             $tracteur->insererVentes();
-            array_push($insert_table, $tracteur);
+           
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
@@ -48,8 +46,7 @@
             
         }
     }
-    $take_vente_tojson = new TakeVente($insert_table);
-    $take_vente_tojson->write_insert();
+    
     
     
         $sucess = '<div class="alert alert-success" role="alert">
@@ -78,7 +75,7 @@
                     $tracteur->findIDProduit($tabElement[5]);
                 }
                 $tracteur->updateVentes();
-                array_push($update_table, $tracteur);
+                
                 $autre = $tracteur->message;
                 if( $tracteur->message) {
                     $hint = $autre;
@@ -115,8 +112,7 @@
             }
         }
         
-        $take_vente_tojson = new TakeVente($update_table);
-        $take_vente_tojson->write_update();
+        
         
         $sucess = '<div class="alert alert-success" role="alert">
         Modification fait avec success
@@ -135,7 +131,7 @@
             $tracteur = new Ventes(0, 1, 2, 3, 4, 5, 6,7, 8);
             $tracteur->operation = $tabObj[0];
             $tracteur->deleteVentes();
-            array_push($delete_table, $tracteur);
+            
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
@@ -147,8 +143,7 @@
             
         }
         
-        $take_vente_tojson = new TakeVente($delete_table);
-        $take_vente_tojson->write_delete();
+        
         
             $sucess = '<div class="alert alert-success" role="alert">
             Suppression fait avec success

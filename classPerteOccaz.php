@@ -26,7 +26,7 @@
             $hint = $q;
             $salaire = new PerteOccaz($tabC[0], $tabC[1], $tabC[2]);
             $salaire->insererSortie();
-            $salaire->write_insert();
+            
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;
@@ -51,7 +51,7 @@
             $salaire = new PerteOccaz($tabC[0], $tabC[1], $tabC[2]);
             $salaire->idSortie = $idCaisse;
             $salaire->updateSortie();
-            $salaire->write_update();
+            
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;
@@ -75,7 +75,7 @@
             $salaire = new PerteOccaz(1, 2, 3);
             $salaire->idSortie = $tabC[0];
             $salaire->deleteCaisse();
-            $salaire->write_delete();
+            
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;

@@ -33,7 +33,7 @@
             $hint = $q;
             $tracteur = new Approvisionnement($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7]);
             $tracteur->insererApprov();
-            array_push($insert_table, $tracteur);
+            
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
@@ -72,7 +72,7 @@
                     $tracteur->findIDProduit($tabElement[4]);//commence par remettre ce qui etait dans le stock avant l operation
                 }
                 $tracteur->updateApprov();
-                array_push($update_table, $tracteur);
+                
                 $autre = $tracteur->message;
                 if( $tracteur->message) {
                     $hint = $autre;
@@ -126,7 +126,7 @@
             $tracteur = new Approvisionnement(0, 1, 2, 3, 4, 5, 6,7);
             $tracteur->operation = $tabObj[0];
             $tracteur->deleteVentes();
-            array_push($delete_table, $tracteur);
+            
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;

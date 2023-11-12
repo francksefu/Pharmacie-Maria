@@ -26,7 +26,7 @@
             $hint = $q;
             $salaire = new PersoPaie($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4]);
             $salaire->insererPersonnelPaie();
-            $salaire->write_insert();
+            
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;
@@ -51,7 +51,7 @@
             $salaire = new PersoPaie($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4]);
             $salaire->idPersoPaie = $idCaisse;
             $salaire->updatePersonnelPaie();
-            $salaire->write_update();
+            
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;
@@ -74,7 +74,7 @@
             $salaire = new PersoPaie(1, 2, 3, 4, 5);
             $salaire->idPersoPaie = $tabC[0];
             $salaire->deletePersonnelPaie();
-            $salaire->write_delete();
+            
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;

@@ -26,7 +26,7 @@
             $hint = $q;
             $produit = new Produit($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4], $tabC[5], $tabC[6]);
             $produit->insererProduct();
-            $produit->write_insert();
+            
             $autre = $produit->message;
             if( $produit->message) {
                 $hint = $autre;
@@ -51,7 +51,7 @@
             $produit = new Produit($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4], $tabC[5], $tabC[6]);
             $produit->idProduit = $id;
             $produit->updateProduct();
-            $produit->write_update();
+            
             $autre = $produit->message;
             if( $produit->message) {
                 $hint = $autre;
@@ -74,7 +74,7 @@
             $salaire = new Produit(1, 2, 3, 4,5,6,7);
             $salaire->idProduit = $tabC[0];
             $salaire->deleteProduct();
-            $salaire->write_delete();
+            
             $autre = $salaire->message;
             if( $salaire->message) {
                 $hint = $autre;

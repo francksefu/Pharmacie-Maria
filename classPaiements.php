@@ -27,7 +27,7 @@
             $hint = $q;
             $tracteur = new Paiements($tabC[0], $tabC[1], $tabC[2]);
             $tracteur->insererPaiements();
-            $tracteur->write_insert();
+            
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
@@ -50,7 +50,7 @@
             $tracteur = new Paiements($tabC[0], $tabC[1], $tabC[2]);
             $tracteur->idPaiements = $tabC[3];
             $tracteur->updatePaiements();
-            $tracteur->write_update();
+            
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
@@ -74,7 +74,7 @@
             $tracteur = new Paiements(0, 1,2);
             $tracteur->idPaiements = $tabC[0];
             $tracteur->deletePaiements();
-            $tracteur->write_delete();
+            
             $autre = $tracteur->message;
             if( $tracteur->message) {
                 $hint = $autre;
