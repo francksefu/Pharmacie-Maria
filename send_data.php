@@ -8,6 +8,7 @@
   include 'true_classDataPersonnel.php';
   include 'true_classPersoPaie.php';
   include 'true_classTraitementVente.php';
+  include 'true_classPerteOccaz.php';
 
   //Client
 
@@ -302,11 +303,11 @@ write(array(), array(), array(), "data_client.json");
     if( $tracteur->message) {
       $hint = $autre;
       echo '<div class="alert alert-danger" role="alert">
-        Erreur fran '.$hint.'
+        Erreur franc '.$hint.'
         </div>';
       return;
     }
-    echo 'Insertion Approv fait';
+    echo 'Insertion vente fait';
   }
   //Debut suppression
   for ($i = 0; $i < count($take_approv->delete_arr); $i++) {
@@ -322,10 +323,67 @@ write(array(), array(), array(), "data_client.json");
       </div>';
       return;
     }
-    echo 'Insertion Approv fait';
+    echo 'Insertion vente fait';
   }
 
   write(array(), array(), array(), "data_vente.json");
 
 //Fin Vente
+
+//Pertes occasionnee
+  $insert_arr = array();
+  $update_arr = array();
+  $delete_arr = array();
+
+  read($insert_arr, $update_arr, $delete_arr, "data_perteOccaz.json");
+
+  for ($i = 0; $i < count($insert_arr); $i ++) {
+    $caisse = new PerteOccaz($insert_arr[$i]['montant'], $insert_arr[$i]['motif'], $insert_arr[$i]['datesout']);
+    $caisse->remote = true;
+    $caisse->insererSortie();
+    $autre = $caisse->message;
+    if( $caisse->message) {
+      $hint = $autre;
+      echo '<div class="alert alert-danger" role="alert">
+            Erreur '.$hint.'
+      </div>';
+      return;
+    }
+    echo "Insertion fait avec sucess";
+  }
+
+  for ($i = 0; $i < count($update_arr); $i ++) {
+    $salaire = new PerteOccaz($update_arr[$i]['montant'], $update_arr[$i]['motif'], $update_arr[$i]['datesout']);
+    $salaire->remote = true;
+    $salaire->idSortie = $update_arr[$i]['idSortie'];
+    $salaire->updateSortie();
+    $autre = $salaire->message;
+    if( $salaire->message) {
+      $hint = $autre;
+      echo '<div class="alert alert-danger" role="alert">
+            Erreur '.$hint.'
+      </div>';
+      return;
+    }
+    echo "Insertion fait avec sucess";
+  }
+
+  for ($i = 0; $i < count($delete_arr); $i ++) {
+    $caisse = new PerteOccaz(0, 1, 2);
+    $caisse->remote = true;
+    $caisse->idSortie = $delete_arr[$i]['idSortie'];
+    $caisse->deleteCaisse();
+    $autre = $caisse->message;
+    if( $caisse->message) {
+      $hint = $autre;
+      echo '<div class="alert alert-danger" role="alert">
+            Erreur '.$hint.'
+      </div>';
+      return;
+    }
+    echo "Insertion fait avec sucess";
+  }
+
+  write(array(), array(), array(), "data_perteOccaz.json");
+//fin perte occasionnee
 ?>

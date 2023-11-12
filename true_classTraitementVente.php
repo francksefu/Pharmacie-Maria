@@ -32,7 +32,7 @@
 
         function write_update() {
             for ($j = 0; $j < count($this->vente_json); $j++) {
-                array_push($this->update_arr, (array("idProduit"=>$this->vente_json[$j]->idProduit, "quantite"=>$this->vente_json[$j]->quantite, "pu"=>$this->vente_json[$j]->pu, "date"=>$this->vente_json[$j]->date, "operation"=>$this->vente_json[$j]->operation, "total_facture"=>$this->vente_json[$j]->total_facture, "source"=>$this->vente_json[$j]->source, "destination"=>$this->vente_json[$j]->destination)));
+                array_push($this->update_arr, (array("idProduit"=>$this->vente_json[$j]->idProduit, "idClient"=>$this->vente_json[$j]->idClient, "quantite"=>$this->vente_json[$j]->quantite, "pu"=>$this->vente_json[$j]->pu, "date"=>$this->vente_json[$j]->date, "operation"=>$this->vente_json[$j]->operation, "dette"=>$this->vente_json[$j]->dette, "total_facture"=>$this->vente_json[$j]->total_facture, "montant"=>$this->vente_json[$j]->montant)));
             }
             $this->write();
         }

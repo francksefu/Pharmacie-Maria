@@ -1,5 +1,5 @@
 <?php
-include 'write_read_json.php';
+
     class PerteOccaz {
         public $idSortie;
         private $montant;
@@ -12,6 +12,7 @@ include 'write_read_json.php';
         
         
         public $message;
+        public $remote = false;
 
         function __construct($montant, $motif, $datesout) {
             $this->montant = $montant;
@@ -34,18 +35,22 @@ include 'write_read_json.php';
         }
 
         function write_update() {
-            array_push($this->update_arr, (array("idPerteOccaz"=> $this->idSortie, "montant"=>$this->montant, "motif"=>$this->motif, "datesout"=>$this->datesout)));
+            array_push($this->update_arr, (array("idSortie"=> $this->idSortie, "montant"=>$this->montant, "motif"=>$this->motif, "datesout"=>$this->datesout)));
             $this->write();
         }
 
         function write_delete() {
-            array_push($this->delete_arr, (array("idPerteOccaz"=> $this->idSortie)));
+            array_push($this->delete_arr, (array("idSortie"=> $this->idSortie)));
             $this->write();
         }
 
        
         function insererSortie() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $sql = ("INSERT INTO PerteOccaz (Montant, Commentaire, Dates) values ('".$this->montant."', '".$this->motif."', '".$this->datesout."')");
             if(mysqli_query($db, $sql)){
                 
@@ -55,7 +60,11 @@ include 'write_read_json.php';
         }
 
         function updateSortie() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $updC= ("UPDATE `PerteOccaz` SET `Montant` = $this->montant WHERE idPerteOccaz =$this->idSortie");
             if(mysqli_query($db,$updC)){echo"";}else{
                 $this->message = mysqli_error($db);
@@ -75,7 +84,11 @@ include 'write_read_json.php';
             }
         }
         function deleteCaisse() {
-            include 'connexion.php';
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
             $delete = ("DELETE FROM PerteOccaz WHERE idPerteOccaz =$this->idSortie");
             if (mysqli_query($db, $delete)){echo"";} else {
                 $this->message = mysqli_error($db);
