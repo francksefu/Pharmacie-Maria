@@ -23,7 +23,7 @@ function navbar() {
         </a>
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="product.php">Liste des produits</a></li>
-            <li><a class="dropdown-item" href="addProduct.php">Ajouter produit</a></li>
+            
           </ul>
       </li>
      
@@ -39,7 +39,7 @@ function navbar() {
         </a>
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="ventesList.php">Liste des ventes</a></li>
-            <li><a class="dropdown-item" href="addVentes.php">Ajouter vente</a></li>
+            
           </ul>
       </li>
       <li class="nav-item pe-3 dropdown" >
@@ -51,7 +51,7 @@ function navbar() {
         </a>
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="personnels.php">Clients</a></li>
-            <li><a class="dropdown-item" href="addPersonnels.php">Ajoutez clients</a></li>
+            
           </ul>
       </li>
 
@@ -64,9 +64,9 @@ function navbar() {
         </a>
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="dataPersonnel.php">Personnel</a></li>
-            <li><a class="dropdown-item" href="addDataPersonnel.php">Ajoutez personnel</a></li>
+            <li><a class="dropdown-item" href="addDataPersonnel.php">Ajouter Personnel</a></li>
             <li><a class="dropdown-item" href="paiePerso.php">Paiement du personnel</a></li>
-            <li><a class="dropdown-item" href="addPersoPaie.php">Ajoutez paiement du personnel</a></li>
+            <li><a class="dropdown-item" href="addPersoPaie.php">Ajouter Paiement du personnel</a></li>
           </ul>
       </li>
 
@@ -79,10 +79,10 @@ function navbar() {
         </a>
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="caisseOut.php">Listez les sorties</a></li>
-            <li><a class="dropdown-item" href="addCaisseOut.php">Ajoutez sortie</a></li>
+            
             <li><a class="dropdown-item" href="updateTaux.php">Modifier taux d echange</a></li>
             <li><a class="dropdown-item" href="perteOccaz.php">Listez pertes occasionnée</a></li>
-            <li><a class="dropdown-item" href="addPerteOccaz.php">Ajouter perte occasionnée</a></li>
+            
           </ul>
       </li>
 
@@ -95,7 +95,7 @@ function navbar() {
         </a>
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="approvisionnement.php">Listez les approvisionnement</a></li>
-          <li><a class="dropdown-item" href="addApprovisionnement.php">Ajoutez les approvisionnements</a></li>
+          
         </ul>
       </li>
 
@@ -108,10 +108,8 @@ function navbar() {
         </a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="bonusOuPerte.php">Listez les bonus ou les pertes</a></li>
-                <li><a class="dropdown-item" href="addBonusOuPerte.php">Ajoutez les bonus ou les pertes</a></li>
+                
                 <li><a class="dropdown-item" href="paiements.php">Listez les paiements</a></li>
-                <li><a class="dropdown-item" href="addPaiements.php">Ajoutez un paiements</a></li>
-                <li><a class="dropdown-item" href="send_data.php">Envoyez vos données</a></li>
             </ul>
         </li>
 
