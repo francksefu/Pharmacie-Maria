@@ -22,10 +22,7 @@
     $tabObj = explode("__:", $q);
     $autre = '';
     $hint = '';
-// we will create table of approv with this table before convert it in json
-    $insert_table = array();
-    $update_table = array();
-    $delete_table = array();
+
 
     if (end($tabObj) == "add" && $user != "") {
     for ($i = 0; $i < count($tabObj) - 1; $i += 1) {
@@ -48,9 +45,6 @@
             
         }
     }
-    $take_approv_tojson = new TakeApprov($insert_table);
-    $take_approv_tojson->write_insert();
-    
     
         $sucess = '<div class="alert alert-success" role="alert">
         Insertion fait avec success
@@ -114,9 +108,6 @@
                
             }
         }
-        $take_approv_tojson = new TakeApprov($update_table);
-        $take_approv_tojson->write_update();
-        
         
         $sucess = '<div class="alert alert-success" role="alert">
         Modification fait avec success
@@ -147,8 +138,6 @@
             
         }
         
-        $take_approv_tojson = new TakeApprov($delete_table);
-        $take_approv_tojson->write_delete();
         
             $sucess = '<div class="alert alert-success" role="alert">
             Suppression fait avec success
