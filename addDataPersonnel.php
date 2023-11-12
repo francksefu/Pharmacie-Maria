@@ -22,7 +22,6 @@
     <script defer src="./jsfile/takePersonnels.js"></script>
     <link rel="stylesheet" href="index.css">
 </head>
-
 <body class="bg-light">
 
     <main>

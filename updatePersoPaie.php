@@ -53,7 +53,6 @@ function dataPersonnel(){
         }
                 
    }else{echo "Une erreur s est produite ";}  
-
 }
 
 function dataPersoPaie(){
