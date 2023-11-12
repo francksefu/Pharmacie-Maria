@@ -39,7 +39,6 @@
     <script defer src="navbar.js"></script>
     <link rel="stylesheet" href="index.css">
     <script defer src="jsfile/takeApprov.js"></script>
-    
 </head>
 <?php
 //find id for vente to make a nmber of operation

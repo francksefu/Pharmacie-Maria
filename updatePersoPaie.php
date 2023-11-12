@@ -31,7 +31,6 @@
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.css">
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.css">
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.min.css">
-    
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
     <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
