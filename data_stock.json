@@ -1,1 +1,1 @@
-{"insert_arr":[],"update_arr":[],"delete_arr":[]}
+{"insert_arr":[{"nom":"Mock franck","pa":"10","pv":"12","pvmin":"15","quantite":"25","quantiteMin":"10","description":"j essai"}],"update_arr":[],"delete_arr":[]}
