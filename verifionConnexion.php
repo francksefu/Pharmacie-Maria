@@ -11,7 +11,7 @@ if(isset($_POST['username']) && isset($_POST['password']))
     
     if($username !== "" && $password !== "")
     {
-        $requete = "SELECT count(*) FROM commandant where 
+        $requete = "SELECT count(*) FROM Commandant where 
               email = '".$username."' and code = '".$password."' ";
          
          
