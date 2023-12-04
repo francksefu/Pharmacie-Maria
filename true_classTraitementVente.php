@@ -10,7 +10,7 @@
 
         function __construct($vente_json) {
             $this->vente_json = $vente_json;
-            $this->read();
+           // $this->read();
         }
 
         function read() {
@@ -18,7 +18,7 @@
         }
 
         function write() {
-            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_vente.json");
+            //write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_vente.json");
         }
 
         //$idProduit, $idClient, $quantite, $pu, $date, $operation, $dette, $total_facture, $montant

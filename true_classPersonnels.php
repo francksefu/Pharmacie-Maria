@@ -14,10 +14,10 @@
         public $message;
 
         function __construct($nom, $telephone) {
-            
+           
             $this->nom = $nom;
             $this->telephone = $telephone;
-            $this->read();
+            //$this->read();
         }
 
         function read() {
@@ -25,7 +25,7 @@
         }
 
         function write() {
-            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_client.json");
+            //write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_client.json");
         }
 
         function write_insert() {

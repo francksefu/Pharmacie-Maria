@@ -15,10 +15,10 @@
         public $remote = false;
 
         function __construct($nom, $telephone) {
-            
+           
             $this->nom = $nom;
             $this->telephone = $telephone;
-            $this->read();
+            //$this->read();
         }
 
         function read() {
@@ -26,7 +26,7 @@
         }
 
         function write() {
-            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_personnel.json");
+            //write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_personnel.json");
         }
 
         function write_insert() {

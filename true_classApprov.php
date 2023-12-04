@@ -18,36 +18,26 @@
 
         function __construct($approv_insert) {
             $this->approv_insert = $approv_insert;
-            $this->read();
+           
         }
 
         function read() {
             read($this->insert_arr, $this->update_arr, $this->delete_arr, "data_approv.json");
         }
 
-        function write() {
-            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_approv.json");
-        }
+        
 
         function write_insert() {
-            for ($j = 0; $j < count($this->approv_insert); $j++) {
-                array_push($this->insert_arr, (array("idProduit"=>$this->approv_insert[$j]->idProduit, "quantite"=>$this->approv_insert[$j]->quantite, "pu"=>$this->approv_insert[$j]->pu, "date"=>$this->approv_insert[$j]->date, "operation"=>$this->approv_insert[$j]->operation, "total_facture"=>$this->approv_insert[$j]->total_facture, "source"=>$this->approv_insert[$j]->source, "destination"=>$this->approv_insert[$j]->destination)));
-            }
-            $this->write();
+            $this->approv_insert = "mock";
+           //delete because we don't want to write json file in this case 
         }
 
         function write_update() {
-            for ($j = 0; $j < count($this->approv_insert); $j++) {
-                array_push($this->update_arr, (array("idProduit"=>$this->approv_insert[$j]->idProduit, "quantite"=>$this->approv_insert[$j]->quantite, "pu"=>$this->approv_insert[$j]->pu, "date"=>$this->approv_insert[$j]->date, "operation"=>$this->approv_insert[$j]->operation, "total_facture"=>$this->approv_insert[$j]->total_facture, "source"=>$this->approv_insert[$j]->source, "destination"=>$this->approv_insert[$j]->destination)));
-            }
-            $this->write();
+           // delete because we don't want to write json file in this case 
         }
 
         function write_delete() {
-            for ($j = 0; $j < count($this->approv_insert); $j++) {
-                array_push($this->delete_arr, (array( "operation"=>$this->approv_insert[$j]->operation)));
-            }
-            $this->write();
+            // delete because we don't want to write json file in this case
         }
     }
 

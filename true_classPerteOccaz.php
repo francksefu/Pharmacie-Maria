@@ -18,7 +18,7 @@
             $this->montant = $montant;
             $this->motif = $motif;
             $this->datesout = $datesout;
-            $this->read();
+            //$this->read();
         }
 
         function read() {
@@ -26,7 +26,7 @@
         }
 
         function write() {
-            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_perteOccaz.json");
+            //write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_perteOccaz.json");
         }
 
         function write_insert() {

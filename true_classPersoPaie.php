@@ -22,7 +22,7 @@
             $this->motif = $motif;
             $this->datesout = $datesout;
             $this->mois = $mois;
-            $this->read();
+            //$this->read();
         }
 
         function read() {
@@ -30,7 +30,7 @@
         }
 
         function write() {
-            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_persopaie.json");
+            //write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_persopaie.json");
         }
 
         function write_insert() {

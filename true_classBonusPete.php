@@ -22,7 +22,7 @@
             $this->quantitePerdu = $quantitePerdu;
             $this->motif = $motif;
             $this->date = $date;
-            $this->read();
+            //$this->read();
         }
 
         function read() {
@@ -30,7 +30,7 @@
         }
 
         function write() {
-            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_bonus_perte.json");
+            //write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_bonus_perte.json");
         }
 
         function write_insert() {

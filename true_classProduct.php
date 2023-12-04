@@ -27,14 +27,14 @@
             $this->quantite = $quantite;
             $this->quantiteMin = $quantiteMin;
             $this->description = $description;
-            $this->read();
+           //$this->read();
         }
 
         function read() {   
             read($this->insert_arr, $this->update_arr, $this->delete_arr, "data_stock.json");
         }
         function write() {
-            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_stock.json");
+            //write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_stock.json");
         }
 
         function write_insert() {

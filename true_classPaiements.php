@@ -15,11 +15,11 @@ include 'write_read_json.php';
         public $message;
 
         function __construct($dates, $montant, $operation) {
-        
+       
             $this->dates = $dates;
             $this->montant = $montant;
             $this->operation = $operation;
-            $this->read();
+            //$this->read();
         }
 
         function read() {
@@ -27,7 +27,7 @@ include 'write_read_json.php';
         }
 
         function write() {
-            write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_paiement_vente.json");
+           // write($this->insert_arr, $this->update_arr, $this->delete_arr, "data_paiement_vente.json");
         }
 
         function write_insert() {
