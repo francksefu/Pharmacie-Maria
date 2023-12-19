@@ -238,13 +238,13 @@ function dataVente(){
 
                       <div class="input-group  mt-3 mb-3" id="cont-input6">
                           <span class="input-group-text">choisir : </span>
-                          <input type="text" name="DataPersonnel" id="input-6" list="datadataPerso" class="form-control" placeholder="entrer le personnel" >
+                          <input type="text" name="PersonnelSalaire" id="input-6" list="datadataPerso" class="form-control" placeholder="entrer le personnel" >
                             <datalist id="datadataPerso">
                               <?php 
                                  dataDataPersonnel();
                               ?>
                             </datalist>
-                          <span class="input-group-text pointe" id="cross">&cross;</span>
+                          <span class="input-group-text pointe" id="crss">&cross;</span>
                       </div>
 
                         <div class="input-group  mt-3 mb-3" id="cont-input5">
@@ -266,7 +266,7 @@ function dataVente(){
                         </div>
                         <div class="input-group mb-3" id="cont-input4">
                           <span class="input-group-text w-50" id="dates">Annee *</span>
-                          <input required type="year"  name="dates" id="year" class="form-control w-50" placeholder="mettre la date" aria-label="Username" aria-describedby="nom" value="<?php $d = strtotime("today"); echo date('Y',$d); ?>">
+                          <input required type="year"  name="Year" id="year" class="form-control w-50" placeholder="mettre la date" aria-label="Username" aria-describedby="nom" value="<?php $d = strtotime("today"); echo date('Y',$d); ?>">
                         </div>
                       
 
