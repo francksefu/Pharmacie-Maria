@@ -3,7 +3,7 @@ const identifiantM = document.querySelector('#identifiantM');
 const nomPersonnel = document.querySelector('#nomPersonnel');
 const telephone = document.querySelector('#telephone');
 const titre = document.querySelector('#titre');
-const salaire = document.querySelector('#salaire');
+
 
 const btn = document.querySelector('#envoie');
 
@@ -23,7 +23,7 @@ if (type.value === 'update') {
       nomPersonnel.value = tabValeur[3];
       telephone.value = tabValeur[5];
       idPersonnel = tabValeur[1];
-      salaire.value = tabValeur[7];
+      
     })
     
   }
@@ -35,7 +35,7 @@ const messageComplete = valeur => {
 
 const enleveMessage = valeur => {
   valeur.textContent = '';
-  valeur.style.color = 'balck';
+  valeur.style.color = 'black';
 }
 
 
@@ -54,11 +54,9 @@ function showHint(str) {
         feedback = this.responseText;
         document.getElementById("txtHint").innerHTML = this.responseText;
       }
-      if (titre.value === 'data-personnel') {
-        xmlhttp.open("GET", "classDataPersonnel.php?q=" + str);
-      } else {
+      
         xmlhttp.open("GET", "classPersonnels.php?q=" + str);
-      }
+      
     xmlhttp.send();
     }
   }
@@ -75,16 +73,16 @@ btn.addEventListener('click', () => {
 
   let prend;
   if (type.value == 'update') {
-    prend = nomPersonnel.value+"::"+telephone.value+"::"+salaire.value+"::"+idPersonnel+"::update";
+    prend = nomPersonnel.value+"::"+telephone.value+"::"+idPersonnel+"::update";
   } else {
-    prend =nomPersonnel.value+"::"+telephone.value+"::"+salaire.value+"::add";
+    prend =nomPersonnel.value+"::"+telephone.value+"::add";
   }
 
   showHint(prend);
   
     nomPersonnel.value =""; 
     telephone.value = "";
-    salaire.value = "";
+    
    identifiantM.value = "";
     
 });

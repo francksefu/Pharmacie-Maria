@@ -57,17 +57,25 @@ const perte_periode = document.querySelector('#perte-periode');
 const resume_journaliere = document.querySelector('#resume-journaliere');
 const resume_periode = document.querySelector('#resume-periode');
 
+const paiements_par_mois_annee = document.querySelector('#paiements-par-mois-annee');
+const paiements_par_mois_annee_par_personnel = document.querySelector('#paiements-par-mois-annee-par-personnel');
+
 const date1 = document.querySelector('#date1');
 const date2 = document.querySelector('#date2');
 const input1 = document.querySelector('#input-1');
 const input2 = document.querySelector('#input-2');
 const input3 = document.querySelector('#input-3');
+const input6 = document.querySelector('#input-6');
+
 
 const contDate1 = document.querySelector('#cont-date1');
 const contDate2 = document.querySelector('#cont-date2');
 const contInput1 = document.querySelector('#cont-input1');
 const contInput2 = document.querySelector('#cont-input2');
 const contInput3 = document.querySelector('#cont-input3');
+const contInput4 = document.querySelector('#cont-input4');
+const contInput5 = document.querySelector('#cont-input5');
+const contInput6 = document.querySelector('#cont-input6');
 
 const type = document.querySelector('#type');
 const paragrapheP = document.querySelector('#paragraphe');
@@ -87,6 +95,9 @@ window.addEventListener('load', () => {
   contInput1.style.display = 'none';
   contInput2.style.display = 'none';
   contInput3.style.display = 'none';
+  contInput4.style.display = 'none';
+  contInput5.style.display = 'none';
+  contInput6.style.display = 'none';
   btn.style.display = 'none'
 });
 
@@ -97,9 +108,42 @@ function uneDate(message, part) {
     contInput1.style.display = 'none';
     contInput2.style.display = 'none';
     contInput3.style.display = 'none';
+    contInput4.style.display = 'none';
+    contInput5.style.display = 'none';
+    contInput6.style.display = 'none';
     btn.style.display = 'block';
     paragraphe(paragrapheP, message);
     type.value = part;
+}
+
+function personnelMois(message, part) {
+  enleveMessage(paragrapheP);
+  contDate1.style.display = 'none';
+  contDate2.style.display = 'none';
+  contInput1.style.display = 'none';
+  contInput2.style.display = 'none';
+  contInput3.style.display = 'none';
+  contInput4.style.display = 'flex';
+  contInput5.style.display = 'flex';
+  contInput6.style.display = 'none';
+  btn.style.display = 'block';
+  paragraphe(paragrapheP, message);
+  type.value = part;
+}
+
+function personnelMoisPersonnel(message, part) {
+  enleveMessage(paragrapheP);
+  contDate1.style.display = 'none';
+  contDate2.style.display = 'none';
+  contInput1.style.display = 'none';
+  contInput2.style.display = 'none';
+  contInput3.style.display = 'none';
+  contInput4.style.display = 'flex';
+  contInput5.style.display = 'flex';
+  contInput6.style.display = 'flex';
+  btn.style.display = 'block';
+  paragraphe(paragrapheP, message);
+  type.value = part;
 }
 
 function personnelInput(message, part) {
@@ -109,6 +153,9 @@ function personnelInput(message, part) {
     contInput3.style.display = 'none';
     contDate1.style.display = 'none';
     contDate2.style.display = 'none';
+    contInput4.style.display = 'none';
+    contInput5.style.display = 'none';
+    contInput6.style.display = 'none';
     btn.style.display = 'block';
     paragraphe(paragrapheP, message);
     type.value = part;
@@ -118,9 +165,12 @@ function personnelpaie(message, part) {
   enleveMessage(paragrapheP);
   contInput1.style.display = 'none';
   contInput2.style.display = 'none';
-  contInput3.style.display = 'flex';
+  contInput3.style.display = 'none';
   contDate1.style.display = 'none';
   contDate2.style.display = 'none';
+  contInput4.style.display = 'none';
+  contInput5.style.display = 'none';
+  contInput6.style.display = 'flex';
   btn.style.display = 'block';
   paragraphe(paragrapheP, message);
   type.value = part;
@@ -133,6 +183,9 @@ function factureInput(message, part) {
     contDate2.style.display = 'none';
     contInput1.style.display = 'none';
     contInput3.style.display = 'none';
+    contInput4.style.display = 'none';
+    contInput5.style.display = 'none';
+    contInput6.style.display = 'none';
     btn.style.display = 'block';
     paragraphe(paragrapheP, message);
     type.value = part;
@@ -145,6 +198,9 @@ function deuxDate(message, part) {
     contInput1.style.display = 'none';
     contInput2.style.display = 'none';
     contInput3.style.display = 'none';
+    contInput4.style.display = 'none';
+    contInput5.style.display = 'none';
+    contInput6.style.display = 'none';
     btn.style.display = 'block';
     paragraphe(paragrapheP, message);
     type.value = part;
@@ -157,6 +213,9 @@ function InputEtDeuxDate(message, part) {
     contInput1.style.display = 'flex';
     contInput2.style.display = 'none';
     contInput3.style.display = 'none';
+    contInput4.style.display = 'none';
+    contInput5.style.display = 'none';
+    contInput6.style.display = 'none';
     btn.style.display = 'block';
     paragraphe(paragrapheP, message);
     type.value = part;
@@ -168,6 +227,9 @@ function InputEtDeuxDateFacture(message, part) {
     contDate2.style.display = 'flex';
     contInput2.style.display = 'flex';
     contInput3.style.display = 'none';
+    contInput4.style.display = 'none';
+    contInput5.style.display = 'none';
+    contInput6.style.display = 'none';
     btn.style.display = 'block';
     paragraphe(paragrapheP, message);
     type.value = part;
@@ -363,5 +425,13 @@ prediction_periode.addEventListener('click', () => {
   deuxDate('entre une periode et le produit pour lequelle vous voulez faire une prediction ', 'prediction-periode');
   contInput3.style.display = 'flex';
 })
+
+paiements_par_mois_annee_par_personnel.addEventListener('click', () => {
+  personnelMoisPersonnel('choisissez le mois, l année et le nom dont vous voulez voir les paiements que vous avez donne au personnel', 'paiements-par-mois-annee-par-personnel');
+});
+
+paiements_par_mois_annee.addEventListener('click', () => {
+  personnelMois('choisissez le mois et l année dont vous voulez voir les paiements que vous avez donné au personnel', 'paiements-par-mois-annee');
+});
 
 

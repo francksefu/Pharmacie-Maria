@@ -6,6 +6,7 @@
         private $motif;
         private $mois;
         private $datesout;
+        private $year;
         
         //table for contain json 
 
@@ -16,12 +17,13 @@
         public $message;
         public $remote = false;
 
-        function __construct($montant, $motif, $mois, $datesout, $idDataPerso) {
+        function __construct($montant, $motif, $mois, $datesout, $idDataPerso, $year) {
             $this->montant = $montant;
             $this->idDataPerso = $idDataPerso;
             $this->motif = $motif;
             $this->datesout = $datesout;
             $this->mois = $mois;
+            $this->year = $year;
             //$this->read();
         }
 
@@ -55,7 +57,7 @@
                 include 'connexion.php';
             }
 
-            $sql = ("INSERT INTO PersonnelPaie (idDataPersonnel, `Date`, `Mois`, Montant, Observation) values ('".$this->idDataPerso."', '".$this->datesout."', '".$this->mois."', '".$this->montant."', '".$this->motif."')");
+            $sql = ("INSERT INTO PersonnelPaie (idDataPersonnel, `Date`, `Mois`, Montant, Observation, Annee) values ('".$this->idDataPerso."', '".$this->datesout."', '".$this->mois."', '".$this->montant."', '".$this->motif."', '".$this->year."')");
             if(mysqli_query($db, $sql)){
                 
             }else{
@@ -92,6 +94,12 @@
             }
             $updC4= ("UPDATE `PersonnelPaie` SET idDataPersonnel = $this->idDataPerso WHERE idPersonnelPaie =$this->idPersoPaie");
             if(mysqli_query($db,$updC4)){echo"";}else{
+                $this->message = mysqli_error($db);
+                return;
+            }
+
+            $updC5= ("UPDATE `PersonnelPaie` SET Annee = $this->year WHERE idPersonnelPaie =$this->idPersoPaie");
+            if(mysqli_query($db,$updC5)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
             }

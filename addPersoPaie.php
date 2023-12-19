@@ -49,7 +49,7 @@
                 <hr class="w-auto">
                 <div class="ps-1 pe-1 pt-3 pb-3">
                 <input required type="hidden" id="identifiantM" value="">
-                  
+                 
                 <!--<form class="ps-1 pe-1 pt-3 pb-3" method= "POST" action="<?php //echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">-->
                     <div class="input-group mb-3 w-50 mx-auto d-block">
                         <span class="input-group-text w-50" id="dates">Dates *</span>
@@ -84,6 +84,11 @@
                               <option value="Novembre">Novembre</option>
                               <option value="Decembre">Decembre</option>
                             </select>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text w-50" id="dates">Annee *</span>
+                                <input required type="year"  name="dates" id="year" class="form-control w-50" placeholder="mettre la date" aria-label="Username" aria-describedby="nom" value="<?php $d = strtotime("today"); echo date('Y',$d); ?>">
+                            </div>
                         </div>
                             
                           

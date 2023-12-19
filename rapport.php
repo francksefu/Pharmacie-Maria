@@ -40,6 +40,21 @@ function dataPersonnel(){
 
 }
 
+function dataDataPersonnel(){
+  include 'connexion.php';
+  $sql = ("SELECT * FROM DataPersonnel order by idDataPersonnel desc");
+  $result = mysqli_query($db, $sql);
+          
+  if(mysqli_num_rows($result)>0){
+                      
+      while($row= mysqli_fetch_assoc($result)){
+          echo "<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["Nom"].":: Telephone ::".$row["Telephone"].":: Salaire ::".$row["SalaireDeBase"]."'> = ".$row["Nom"]."</option>"; 
+      }
+              
+ }else{echo "Une erreur s est produite ";} 
+
+}
+
 function dataPersoPaie(){
   include 'connexion.php';
   $sql = ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) order by idPersonnelPaie desc");
@@ -221,6 +236,40 @@ function dataVente(){
                           <span class="input-group-text pointe" id="cross">&cross;</span>
                       </div>
 
+                      <div class="input-group  mt-3 mb-3" id="cont-input6">
+                          <span class="input-group-text">choisir : </span>
+                          <input type="text" name="DataPersonnel" id="input-6" list="datadataPerso" class="form-control" placeholder="entrer le personnel" >
+                            <datalist id="datadataPerso">
+                              <?php 
+                                 dataDataPersonnel();
+                              ?>
+                            </datalist>
+                          <span class="input-group-text pointe" id="cross">&cross;</span>
+                      </div>
+
+                        <div class="input-group  mt-3 mb-3" id="cont-input5">
+                          <label class="input-group-text" for="type">Mois</label>
+                          <select class="form-select" id="type">
+                              <option selected value="Janvier">Janvier</option>
+                              <option value="Fevrier">Fevrier</option>
+                              <option value="Mars">Mars</option>
+                              <option value="Avril">Avril</option>
+                              <option value="Mai">Mai</option>
+                              <option value="Juin">Juin</option>
+                              <option value="Juillet">Juillet</option>
+                              <option value="Aout">Aout</option>
+                              <option value="Septembre">Septembre</option>
+                              <option value="Octobre">Octobre</option>
+                              <option value="Novembre">Novembre</option>
+                              <option value="Decembre">Decembre</option>
+                          </select>
+                        </div>
+                        <div class="input-group mb-3" id="cont-input4">
+                          <span class="input-group-text w-50" id="dates">Annee *</span>
+                          <input required type="year"  name="dates" id="year" class="form-control w-50" placeholder="mettre la date" aria-label="Username" aria-describedby="nom" value="<?php $d = strtotime("today"); echo date('Y',$d); ?>">
+                        </div>
+                      
+
                      <input type="hidden" id="type" name="Cache">
                      <button type="submit" class="btn btn-primary" id="envoi">Soumettre</button> 
                   </form>
@@ -299,6 +348,8 @@ function dataVente(){
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                       <li id="paiements-personnel"><a class="dropdown-item" href="#">Tous les paiements du personnel</a></li>
                       <li id="paiements-par-personnel"><a class="dropdown-item" href="#">Paiements par personnel</a></li>
+                      <li id="paiements-par-mois-annee"><a class="dropdown-item" href="#">Paiements par mois specifique de tous les personnels</a></li>
+                      <li id="paiements-par-mois-annee-par-personnel"><a class="dropdown-item" href="#">Paiements par mois specifique d un personnel</a></li>
                     </ul>
                 </div>
             </div>

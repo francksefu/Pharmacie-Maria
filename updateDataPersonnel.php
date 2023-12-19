@@ -76,6 +76,16 @@
                             </div>
                             <small id="telephoneVide"></small>
                         </div>
+
+                        <div class="col-md-7 mb-3">
+                            <div class="input-group ">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="nom">Salaire de base*</span>
+                                    <input type="float"  name="nom" id="salaire" class="form-control" placeholder="Entrer le salaire" aria-label="Username" aria-describedby="nom" >
+                                </div>
+                            </div>
+                            <small id="SalaireVide"></small>
+                        </div>
                     </div>
                    
                     <p id="txtHint"></p>

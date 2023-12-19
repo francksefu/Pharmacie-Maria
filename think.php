@@ -20,7 +20,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ventes</title>
+    <title>Gestion</title>
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.css">
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.css">
@@ -52,17 +52,26 @@ $date1 = $_POST["Date1"];
 $date2 = $_POST["Date2"];
 $cache = $_POST["Cache"];
 $personnel = $_POST["Personnel"];
+//$data_personnel = $_POST["DataPersonnel"];
 $facture = $_POST["Facture"];
 //$paie_perso = $_POST["PaiePerso"];
 $tabC = explode("::", $personnel);
 $tabFacture = explode("::", $facture);
 //$tabPerso = explode("::", $paie_perso);
+//$idP = 0;
 if($tabC[0] != ''){
   $id = $tabC[1];
 } else {
   $id = '';
 }
 
+/*$tabP = explode("::", $data_personnel);
+
+if($tabP[0] != ''){
+  $idP = $tabP[1];
+} else {
+  $idP = '';
+}*/
 /*if($tabPerso[0] != ''){
   $idi = $tabPerso[1];
 } else {
@@ -1249,7 +1258,7 @@ function perte_occasionnee($reqSql) {
 
       //$reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) order by idPersonnelPaie desc");
       if($cache == 'paiements-par-personnel') {
-        $reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) and (DataPersonnel.idDataPersonnel = $idi) order by idPersonnelPaie desc");
+        $reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) and (DataPersonnel.idDataPersonnel = $idP) order by idPersonnelPaie desc");
         paiement_personnel($reqSql);
       }
 

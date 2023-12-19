@@ -119,8 +119,13 @@ function dataPersoPaie(){
                               <option value="Novembre">Novembre</option>
                               <option value="Decembre">Decembre</option>
                             </select>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text w-50" id="dates">Annee *</span>
+                                <input required type="year"  name="dates" id="year" class="form-control w-50" placeholder="mettre la date" aria-label="Username" aria-describedby="nom" value="<?php $d = strtotime("today"); echo date('Y',$d); ?>">
+                            </div>
                         </div>
-                            
+                           
                           
 
                           <div class="col-md-7 mt-5 mb-4">

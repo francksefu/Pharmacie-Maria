@@ -20,7 +20,7 @@
     <script defer src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
     <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
     <script defer src="./navbar.js"></script>
-    <script defer src="./jsfile/takePersonnels.js"></script>
+    <script defer src="./jsfile/takeClient.js"></script>
     <link rel="stylesheet" href="index.css">
 </head>
 

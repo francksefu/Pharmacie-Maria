@@ -24,7 +24,7 @@
     if (end($tabC) == 'add' && $user != "") {
         if ($q !== "") {
             $hint = $q;
-            $salaire = new PersoPaie($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4]);
+            $salaire = new PersoPaie($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4], $tabC[5]);
             $salaire->insererPersonnelPaie();
             $salaire->write_insert();
             $autre = $salaire->message;
@@ -45,10 +45,10 @@
         
     }
     if(end($tabC) == 'update' && $user != "") {
-        $idCaisse = $tabC[5];
+        $idCaisse = $tabC[6];
         if ($q !== "") {
             $hint = $q;
-            $salaire = new PersoPaie($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4]);
+            $salaire = new PersoPaie($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4], $tabC[5]);
             $salaire->idPersoPaie = $idCaisse;
             $salaire->updatePersonnelPaie();
             $salaire->write_update();
@@ -71,7 +71,7 @@
     if(end($tabC) == 'delete' && $user != "") {
         if ($q !== "") {
             $hint = $q;
-            $salaire = new PersoPaie(1, 2, 3, 4, 5);
+            $salaire = new PersoPaie(1, 2, 3, 4, 5,6);
             $salaire->idPersoPaie = $tabC[0];
             $salaire->deletePersonnelPaie();
             $salaire->write_delete();

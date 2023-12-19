@@ -124,6 +124,7 @@
                         <th>ID</th>
                         <th>Nom</th>
                         <th>phone number</th>
+                        <th> Salaire de base </th>
                         <th>Action</th>
                     </tr>
                     </thead>';
@@ -134,6 +135,7 @@
                     <td>'.$row["idDataPersonnel"].'</td>
                     <td>'.$row["Nom"].'</td>
                     <td>'.$row["Telephone"].'</td>
+                    <td>'.$row["SalaireDeBase"].'</td>
                     <td >
                         <div class="d-flex flex-row justify-content-center">
                             

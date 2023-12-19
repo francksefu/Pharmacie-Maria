@@ -126,12 +126,13 @@
                         <th>Nom du personnel</th>
                         <th>Date</th>
                         <th>Mois</th>
+                        <th>Annee</th>
                         <th>Montant</th>
                         <th>Observation</th>
                         <th>Action</th>
                     </tr>
                     </thead>';
-              
+            
                     while($row= mysqli_fetch_assoc($result)){
                             echo'
                             <tr>
@@ -139,6 +140,7 @@
                     <td>'.$row["Nom"].'</td>
                     <td>'.$row["Date"].'</td>
                     <td>'.$row["Mois"].'</td>
+                    <td>'.$row["Annee"].'</td>
                     <td>'.$row["Montant"].'</td>
                     <td>'.$row["Observation"].'</td>
                     <td >

@@ -19,12 +19,12 @@
     include 'true_classDataPersonnel.php';
     $q = $_REQUEST["q"];
     $tabC = explode("::", $q);
-    
+   
     $autre = '';
     if (end($tabC) == 'add' && $user != "") {
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Personnel($tabC[0], $tabC[1]);
+            $tracteur = new Personnel($tabC[0], $tabC[1], $tabC[2]);
             $tracteur->insererClient();
             $tracteur->write_insert();
             $autre = $tracteur->message;
@@ -46,8 +46,8 @@
     if (end($tabC) == 'update' && $user != "") {
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Personnel($tabC[0], $tabC[1]);
-            $tracteur->idClient = $tabC[2];
+            $tracteur = new Personnel($tabC[0], $tabC[1], $tabC[2]);
+            $tracteur->idClient = $tabC[3];
             $tracteur->updateClient();
             $tracteur->write_update();
             $autre = $tracteur->message;
@@ -70,7 +70,7 @@
     if (end($tabC) == 'delete' && $user != "") {
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Personnel(0, 1);
+            $tracteur = new Personnel(0, 1, 2);
             $tracteur->idClient = $tabC[0];
             $tracteur->deleteClient();
             $tracteur->write_delete();
