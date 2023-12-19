@@ -69,6 +69,22 @@ function data(){
         }       
    }  
 }
+
+function dataDataPersonnel(){
+    include 'connexion.php';
+    $sql = ("SELECT * FROM DataPersonnel order by idDataPersonnel desc");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+                        
+        while($row= mysqli_fetch_assoc($result)){
+            echo "<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]."</option>"; 
+        }
+                
+   }else{echo "Une erreur s est produite ";} 
+  
+  }
+
 function dataProduct(){
     include 'connexion.php';
     $sql = ("SELECT * FROM Produit order by Nom asc");
@@ -156,9 +172,20 @@ function dataPersonnel(){
                                               
                     </tbody>
                 </table>
-         
+        
                 <div class="row">
                     <div class="border border-1 p-4 col-md-4 m-2">
+                    <div class="input-group mb-3 ">
+                        <span class="input-group-text">Nom du vendeur</span>
+                        <input type="text" id="personnel" list="dataPersonnel_" class="form-control"  >
+                        <datalist id="dataPersonnel_">
+                        <?php
+                          dataDataPersonnel();
+                        ?>
+                      </datalist>
+                      <small id="personnelVide"></small>
+                    </div>
+
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupSelect01">Choisir stock</label>
                             <select class="form-select" id="inputGroupSelect01">

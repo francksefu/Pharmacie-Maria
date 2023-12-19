@@ -53,7 +53,7 @@
     if(mysqli_num_rows($result)>0){
                         
         while($row= mysqli_fetch_assoc($result)){
-            echo"<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["Nom"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]."</option>"; 
+            echo"<option value='ID ::".$row["idDataPersonnel"].":: Nom ::".$row["NomP"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]."</option>"; 
         }
                 
    }else{echo "Une erreur s est produite ";}  
@@ -115,7 +115,7 @@
         <?php
             include 'connexion.php';
             if($user !== "") {            
-                $reqSql= ("SELECT * FROM DataPersonnel order by Nom asc");
+                $reqSql= ("SELECT * FROM DataPersonnel order by NomP asc");
                 $result= mysqli_query($db, $reqSql);
                 if(mysqli_num_rows($result)>0){
                     echo '<table class="table border border-1">
@@ -133,7 +133,7 @@
                             echo'
                             <tr>
                     <td>'.$row["idDataPersonnel"].'</td>
-                    <td>'.$row["Nom"].'</td>
+                    <td>'.$row["NomP"].'</td>
                     <td>'.$row["Telephone"].'</td>
                     <td>'.$row["SalaireDeBase"].'</td>
                     <td >

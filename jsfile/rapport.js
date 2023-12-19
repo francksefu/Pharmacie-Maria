@@ -2,6 +2,8 @@ const toute_vente = document.querySelector('#toute-vente');
 const paye_cache = document.querySelector('#paye-cache');
 const vente_dette = document.querySelector('#vente-dette');
 const vente_sortie = document.querySelector('#vente-sortie');
+const vente_personnel = document.querySelector('#vente-personnel');
+const vente_personnel_facture = document.querySelector('#vente-personnel-facture');
 
 const toute_vente_facture = document.querySelector('#toute-vente-facture');
 const paye_cache_facture = document.querySelector('#paye-cache-facture');
@@ -204,6 +206,21 @@ function deuxDate(message, part) {
     btn.style.display = 'block';
     paragraphe(paragrapheP, message);
     type.value = part;
+}
+
+function ventePersonnel(message, part) {
+  enleveMessage(paragrapheP);
+  contDate1.style.display = 'flex';
+  contDate2.style.display = 'flex';
+  contInput1.style.display = 'none';
+  contInput2.style.display = 'none';
+  contInput3.style.display = 'none';
+  contInput4.style.display = 'none';
+  contInput5.style.display = 'none';
+  contInput6.style.display = 'flex';
+  btn.style.display = 'block';
+  paragraphe(paragrapheP, message);
+  type.value = part;
 }
 
 function InputEtDeuxDate(message, part) {
@@ -432,6 +449,14 @@ paiements_par_mois_annee_par_personnel.addEventListener('click', () => {
 
 paiements_par_mois_annee.addEventListener('click', () => {
   personnelMois('choisissez le mois et l année dont vous voulez voir les paiements que vous avez donné au personnel', 'paiements-par-mois-annee');
+});
+
+vente_personnel.addEventListener('click', () => {
+  ventePersonnel('Choisissez le nom d un personnel et completez les dates auxquells vous voulez voir les ventes qu il a fait', 'vente-personnel');
+});
+
+vente_personnel_facture.addEventListener('click', () => {
+  ventePersonnel('Choisissez le nom d un personnel et completez les dates auxquells vous voulez voir les ventes qu il a fait', 'vente-personnel-facture');
 });
 
 

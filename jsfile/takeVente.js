@@ -6,6 +6,7 @@ const cdf = document.querySelector('#cdf');
 const chilling = document.querySelector('#chilling');
 const rwandais = document.querySelector('#rwandais');
 const nomClient = document.querySelector('#nomClient');
+const personnel = document.querySelector('#personnel');
 const newClient = document.querySelector('#newClient');
 const newPhone = document.querySelector('#newPhone');
 const produit = document.querySelector('#produit');
@@ -20,6 +21,7 @@ const quantiteVide = document.querySelector('#quantiteVide');
 const pvuVide = document.querySelector('#pvuVide');
 const clientVide = document.querySelector('#clientVide');
 const montantVide = document.querySelector('#montantVide');
+const personnelVide = document.querySelector('#personnelVide');
 const btn = document.querySelector('#envoi');
 const content = document.querySelector('tbody');
 const changer = document.querySelector('#change');
@@ -73,11 +75,13 @@ const messageComplete = (valeur, champs) => {
     identifiant.addEventListener('change', () => {
       const tabObj = identifiant.value.split('__:');
       let clientUpdate = '';
+      let personnelUpdate = '';
       for (let p = 0; p < tabObj.length - 1; p += 1) {
         const tabElement = tabObj[p].split('::');
         let detailUpdate = "ID::"+tabElement[3]+"::"+tabElement[4]+"::"+tabElement[5]+"::"+tabElement[6]+"::"+tabElement[7]+"::"+tabElement[8]+"::"+tabElement[9]+"::"+tabElement[10]+"::"+tabElement[11]+"::"+tabElement[12]+"::"+tabElement[13];
          operationUpdate = tabElement[0];
         clientUpdate = "ID::"+tabElement[1]+"::"+tabElement[2];
+        personnelUpdate = "ID::"+tabElement[20]+"::"+tabElement[21]+"::"+tabElement[22];
         const obj = { 
           produit: tabElement[5],
           quantite: tabElement[14],
@@ -91,6 +95,7 @@ const messageComplete = (valeur, champs) => {
         total.value = tabElement[17];
       }
       nomClient.value = clientUpdate;
+      personnel.value = personnelUpdate;
       rendons();
     });
   }
@@ -454,6 +459,13 @@ btn.addEventListener('click', () => {
     enleveMessage(montantVide);
   }
 
+  if (personnel.value == "") {
+    messageComplete(personnelVide, 'personnel');
+    return;
+  } else {
+    enleveMessage(personnelVide);
+  }
+
   if (container.length == 0) {
     messageComplete(clientVide, 'produit et table');
     return;
@@ -481,7 +493,8 @@ btn.addEventListener('click', () => {
   for (let k = 0; k < container.length; k += 1) {
     let idProduit = container[k].detail.split('::')[1];
     let idClient = nomClient.value.split('::')[1];
-    table += idProduit + '::' + idClient + '::'+container[k].quantite +'::'+container[k].pvu+'::'+dateVente.value+'::'+operation+'::'+dette+'::'+total.value+'::'+montant.value+'::___:';
+    let idPersonnel = personnel.value.split('::')[1];
+    table += idProduit + '::' + idClient + '::'+container[k].quantite +'::'+container[k].pvu+'::'+dateVente.value+'::'+operation+'::'+dette+'::'+total.value+'::'+montant.value+'::'+idPersonnel+'::___:';
   }
 
   table += etatFormulaire;
@@ -489,6 +502,7 @@ btn.addEventListener('click', () => {
   container.splice(0, container.length);
   rendons();
   nomClient.value = "";
+  personnel.value = "";
   identifiant.value = "";
 });
 

@@ -47,7 +47,7 @@
 function dataVente(){
     include 'connexion.php';
     //$take = '';
-    $sql= ("SELECT * FROM Ventes, Produit, Client WHERE (Produit.idProduit = Ventes.idProduit) and (Client.idClient = Ventes.idClient) group by Operation order by Operation desc");
+    $sql= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Produit.idProduit = Ventes.idProduit) and (Client.idClient = Ventes.idClient and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) group by Operation order by Operation desc");
     $result = mysqli_query($db, $sql);
             
     if(mysqli_num_rows($result)>0){
@@ -60,7 +60,7 @@ function dataVente(){
             if(mysqli_num_rows($result1)>0){
             $valeur = '';
                 while($row1= mysqli_fetch_assoc($result1)){
-                    $valeur .= $row1["Operation"]."::".$row1["idClient"]."::".$row1["NomClient"]."::".$row1["idProduit"].":: Nom ::".$row1["Nom"].":: PA ::".$row1["PrixAchat"].":: PV = ::".$row1["PrixVente"].":: PVmin =::".$row1["PrixVmin"].":: QstockMin = ::".$row1["QuantiteStockMin"]."::".$row1["QuantiteVendu"]."::".$row1["PU"]."::".$row1["DatesVente"]."::".$row1["TotalFacture"]."::".$row1["MontantPaye"]."::__:";
+                    $valeur .= $row1["Operation"]."::".$row1["idClient"]."::".$row1["NomClient"]."::".$row1["idProduit"].":: Nom ::".$row1["Nom"].":: PA ::".$row1["PrixAchat"].":: PV = ::".$row1["PrixVente"].":: PVmin =::".$row1["PrixVmin"].":: QstockMin = ::".$row1["QuantiteStockMin"]."::".$row1["QuantiteVendu"]."::".$row1["PU"]."::".$row1["DatesVente"]."::".$row1["TotalFacture"]."::".$row1["MontantPaye"]."::ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"]."::__:";
                 }
 
         }else{echo "Une erreur s est produite ";}  
@@ -113,6 +113,21 @@ function dataProduct(){
    }else{echo "Une erreur s est produite ";}  
 
 }
+
+function dataDataPersonnel(){
+    include 'connexion.php';
+    $sql = ("SELECT * FROM DataPersonnel order by idDataPersonnel desc");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+                        
+        while($row= mysqli_fetch_assoc($result)){
+            echo "<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]."</option>"; 
+        }
+                
+   }else{echo "Une erreur s est produite ";} 
+  
+  }
 
 function dataPersonnel(){
     include 'connexion.php';
@@ -200,6 +215,16 @@ function dataPersonnel(){
          
                 <div class="row">
                     <div class="border border-1 p-4 col-md-4 m-2">
+                        <div class="input-group mb-3 ">
+                            <span class="input-group-text">Nom du vendeur</span>
+                            <input type="text" id="personnel" list="dataPersonnel_" class="form-control"  >
+                            <datalist id="dataPersonnel_">
+                            <?php
+                            dataDataPersonnel();
+                            ?>
+                        </datalist>
+                        <small id="personnelVide"></small>
+                        </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupSelect01">Choisir stock</label>
                             <select class="form-select" id="inputGroupSelect01">

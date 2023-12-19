@@ -52,7 +52,7 @@
             } else {
                 include 'connexion.php';
             }
-            $sql = ("INSERT INTO DataPersonnel ( Nom, Telephone, SalaireDeBase) values ('".$this->nom."','".$this->telephone."','".$this->salaire."')");
+            $sql = ("INSERT INTO DataPersonnel ( NomP, Telephone, SalaireDeBase) values ('".$this->nom."','".$this->telephone."','".$this->salaire."')");
             if(mysqli_query($db, $sql)){
                 //echo"<small style='color: green'>insertion fait</small>";
                 }else{
@@ -68,7 +68,7 @@
                 include 'connexion.php';
             }
 
-            $updC1= ("UPDATE `DataPersonnel` SET `Nom` ='".$this->nom."' WHERE idDataPersonnel =$this->idClient");
+            $updC1= ("UPDATE `DataPersonnel` SET `NomP` ='".$this->nom."' WHERE idDataPersonnel =$this->idClient");
             if(mysqli_query($db,$updC1)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;

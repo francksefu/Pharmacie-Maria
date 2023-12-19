@@ -2,7 +2,7 @@
 function dataVente($operation){
     include 'connexion.php';
     $valeur = '';
-    $sql= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and (Operation = $operation)");
+    $sql= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and (Operation = $operation)");
     $result = mysqli_query($db, $sql);
             
     if(mysqli_num_rows($result)>0){
@@ -21,6 +21,7 @@ function dataVente($operation){
         while($row= mysqli_fetch_assoc($result)){
             $nomClient = $row["NomClient"];
             $date = $row["DatesVente"];
+            $personnel = $row["NomP"];
             $total += $row["PT"];
             $valeur .= '
                 <tr>
@@ -32,10 +33,11 @@ function dataVente($operation){
                     <td>'.$row["PT"].'</td>
                 </tr>';
         }
-        
+       
         $valeur .= '</tbody>
         <h5 class=" mb-3 mt-3 ms-3"> date : '.$date.'</h5>
         <h3 class=" mb-3 mt-3 ms-3"> client : '.$nomClient.'</h3>
+        <h6 class=" mb-3 mt-3 ms-3"> nom du vendeur : '.$personnel.'</h6>
         </table>
         <h3 class="text-center mb-3 mt-3"> total : '.$total.' $</h3>';
         return $valeur;

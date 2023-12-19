@@ -52,6 +52,9 @@ $date1 = $_POST["Date1"];
 $date2 = $_POST["Date2"];
 $cache = $_POST["Cache"];
 $personnel = $_POST["Personnel"];
+$data_personnel = $_POST["PersonnelSalaire"];
+$mois = $_POST["Mois"];
+$annee = $_POST["Annee"];
 $facture = $_POST["Facture"];
 //$paie_perso = $_POST["PaiePerso"];
 $tabC = explode("::", $personnel);
@@ -61,6 +64,16 @@ if($tabC[0] != ''){
   $id = $tabC[1];
 } else {
   $id = '';
+}
+
+
+$tabP = explode("::", $data_personnel);
+
+//$tabPerso = explode("::", $paie_perso);
+if($tabP[0] != ''){
+  $idP = $tabP[1];
+} else {
+  $idP = '';
 }
 
 /*if($tabPerso[0] != ''){
@@ -162,7 +175,7 @@ function ventes($reqSql) {
 
 function dataVente($operation){
     include 'connexion.php';
-    $sql= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and (Operation = $operation)");
+    $sql= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and (Client.idClient = Ventes.idClient) and (Operation = $operation)");
     $result = mysqli_query($db, $sql);
     $valeur = '';  
     if(mysqli_num_rows($result)>0){
@@ -196,6 +209,7 @@ function dataVente($operation){
 
             $op = $row["Operation"];
             $nomClient = $row["NomClient"];
+            $personnel = $row["NomP"];
             $date = $row["DatesVente"];
             $total += $row["PT"];
             $valeur .= '
@@ -208,11 +222,12 @@ function dataVente($operation){
                     <td>'.$row["PT"].'</td>
                 </tr>';
         }
-       
+      
         $valeur .= '</tbody>
         <h5 class=" mb-3 mt-3 ms-3"> numero : '.$op.'</h5>
         <h5 class=" mb-3 mt-3 ms-3"> date : '.$date.'</h5>
         <h3 class=" mb-3 mt-3 ms-3"> client : '.$nomClient.'</h3>
+        <h6 class=" mb-3 mt-3 ms-3"> nom du vendeur : '.$personnel.'</h6>
         <br />
         <div class="mb-2">'.$status.'<div>
         <br />
@@ -929,7 +944,7 @@ function paiements($reqSql, $req) {
 
 function paiement_personnel($reqSql) {
     include 'connexion.php';
-    echo '<h2 class="mt-0 mb-2 text-center">Paiements du personnel</h2>';
+    
     echo '<h2 class="mt-4 mb-2 text-center">Paiements du personnel</h2>';
     $total = 0;
     //$reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) order by idPersonnelPaie desc");
@@ -953,7 +968,7 @@ function paiement_personnel($reqSql) {
                 echo'
                 <tr>
         <td>'.$row["idPersonnelPaie"].'</td>
-        <td>'.$row["Nom"].'</td>
+        <td>'.$row["NomP"].'</td>
         <td>'.$row["Date"].'</td>
         <td>'.$row["Mois"].'</td>
         <td>'.$row["Montant"].'</td>
@@ -986,6 +1001,59 @@ function paiement_personnel($reqSql) {
         echo"</table>";
     }else{echo "Pas des donnees dans la base ";}
 }
+
+
+function calcul_du_total_paiement_personnel($reqSql) {
+  include 'connexion.php';
+  
+  $total = 0;
+  //$reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) order by idPersonnelPaie desc");
+  $result= mysqli_query($db, $reqSql);
+  if(mysqli_num_rows($result)>0){
+      
+
+      while($row= mysqli_fetch_assoc($result)){
+          $total += $row["Montant"];
+          $nom = $row["NomP"];
+              
+      }
+      echo "<h5 class='mt-0 mb-2 text-center'> Nom du travailleur : ".$nom."</h5>";
+      return $total;
+  }else{ return 0;}
+}
+
+function en_tete () {
+  echo '<h2 class="mt-0 mb-2 text-center">Paiements du personnel</h2>';
+  echo '<h2 class="mt-0 mb-2 text-center">Paiements du personnel</h2>';
+}
+
+function personnel_avec_salaire_de_base($mois, $annee, $unique_all) {
+  include 'connexion.php';
+  if($user !== "") { 
+    if ($unique_all == "tt") {
+      $reqSql0= ("SELECT * FROM DataPersonnel order by NomP asc");
+    } else {
+      $reqSql0= ("SELECT * FROM DataPersonnel WHERE DataPersonnel.idDataPersonnel = ".$unique_all." order by NomP asc");
+    }
+    
+    $result= mysqli_query($db, $reqSql0);
+    if(mysqli_num_rows($result)>0){
+                      
+      while($row0= mysqli_fetch_assoc($result)){
+        
+        if ($user !== "") {           
+          $reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel and (Annee = ".$annee." and Mois = '".$mois."')) and (PersonnelPaie.idDataPersonnel = '".$row0["idDataPersonnel"]."')  order by idPersonnelPaie desc");
+          $somme = calcul_du_total_paiement_personnel($reqSql); 
+          echo '<h5 class="mt-0 mb-2 text-center"> Salaire de base : '.$row0["SalaireDeBase"].' $</h5>';
+          echo '<h5 class="mt-0 mb-2 text-center"> Reste a lui payer : '.$row0["SalaireDeBase"] - $somme.' $</h5>';
+          paiement_personnel($reqSql);                   
+        }
+      }
+                      
+    }else{echo "Pas des donnees dans la base ";}
+  }
+}
+
 
 function perte_occasionnee($reqSql) {
   include 'connexion.php';
@@ -1057,7 +1125,7 @@ function perte_occasionnee($reqSql) {
       }
 
       if($cache == 'toute_vente_facture') {
-        $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') GROUP BY Operation order by Operation desc");
+        $reqSq= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') GROUP BY Operation order by Operation desc");
         ventes_affichage_facture($reqSq);
       }
 
@@ -1073,7 +1141,7 @@ function perte_occasionnee($reqSql) {
       }
 
       if($cache == 'toute_vente2_facture') {
-        $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
+        $reqSq= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
         ventes_affichage_facture($reqSq);
       }
 
@@ -1089,7 +1157,7 @@ function perte_occasionnee($reqSql) {
       }
 
       if($cache == 'paye_cache_facture') {
-        $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') and (Dette = 'Non') GROUP BY Operation order by Operation desc");
+        $reqSq= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') and (Dette = 'Non') GROUP BY Operation order by Operation desc");
         ventes_affichage_facture($reqSq);
       }
 
@@ -1099,7 +1167,7 @@ function perte_occasionnee($reqSql) {
       }
 
       if($cache == 'paye_cache2_facture') {
-        $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') and (Dette = 'Non') GROUP BY Operation order by Operation desc");
+        $reqSq= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') and (Dette = 'Non') GROUP BY Operation order by Operation desc");
         ventes_affichage_facture($reqSq);
       }
 
@@ -1110,7 +1178,7 @@ function perte_occasionnee($reqSql) {
       }
 
       if($cache == 'vente_dette_facture') {
-        $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
+        $reqSq= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and(DatesVente = '".$date1."') and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
         ventes_affichage_facture($reqSq);
       }
 
@@ -1120,7 +1188,7 @@ function perte_occasionnee($reqSql) {
       }
 
       if($cache == 'vente_dette2_facture') {
-        $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
+        $reqSq= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
         ventes_affichage_facture($reqSq);
       }
 
@@ -1134,6 +1202,16 @@ function perte_occasionnee($reqSql) {
         $reqSq1= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
         $reqSq2= ("SELECT * FROM Sortie WHERE(DatesD BETWEEN '".$date1."' AND '".$date2."') order by idSortie desc");
         venteEtsortie($reqSq1, $reqSq2);
+      }
+
+      if($cache == 'vente-personnel') {
+        $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient and idPersonnel = $idP) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
+        ventes($reqSq);
+      }
+
+      if($cache == 'vente-personnel-facture') {
+        $reqSq= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
+        ventes_affichage_facture($reqSq);
       }
 
       if($cache == 'toutes_sortie') {
@@ -1249,15 +1327,27 @@ function perte_occasionnee($reqSql) {
 
       //$reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) order by idPersonnelPaie desc");
       if($cache == 'paiements-par-personnel') {
-        $reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) and (DataPersonnel.idDataPersonnel = $idi) order by idPersonnelPaie desc");
+        en_tete();
+        $reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) and (DataPersonnel.idDataPersonnel = $idP) order by idPersonnelPaie desc");
         paiement_personnel($reqSql);
       }
 
       if($cache == 'paiements-personnel') {
+        en_tete();
         $reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE ((PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) and (`Date` BETWEEN '".$date1."' AND '".$date2."')) order by idPersonnelPaie desc");
         paiement_personnel($reqSql);
       }
 
+      if($cache == 'paiements-par-mois-annee') {
+        en_tete();
+        personnel_avec_salaire_de_base($mois, $annee, "tt");
+      }
+
+      if($cache == 'paiements-par-mois-annee-par-personnel') {
+        en_tete();
+        personnel_avec_salaire_de_base($mois, $annee, $idP);
+      }
+//
       if($cache == 'perte-journaliere') {
         $reqSql= ("SELECT * FROM PerteOccaz WHERE (Dates = '".$date1."')  order by idPerteOccaz desc");
         perte_occasionnee($reqSql);

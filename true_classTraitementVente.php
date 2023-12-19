@@ -56,10 +56,12 @@
         public $pu;
         public $dette; 
         public $message;
+
+        public $idPersonnel;
         public $remote = false;
 
 
-        function __construct($idProduit, $idClient, $quantite, $pu, $date, $operation, $dette, $total_facture, $montant) {
+        function __construct($idProduit, $idClient, $quantite, $pu, $date, $operation, $dette, $total_facture, $montant, $idPersonnel) {
             $this->operation = $operation;
             $this->idProduit = $idProduit;
             $this->quantite = $quantite;
@@ -69,6 +71,7 @@
             $this->total_facture = $total_facture;
             $this->montant = $montant;
             $this->date = $date;
+            $this->idPersonnel = $idPersonnel;
         }
 //This method find first the id of product, and after that put againquantity in product if the operation of vente(sell) is delete
         function findIDProduit($operationA) {
@@ -145,7 +148,7 @@
             } else {
                 include 'connexion.php';
             }
-            $sql = ("INSERT INTO Ventes (idProduit, idClient, QuantiteVendu, PU, PT, DatesVente, Operation, Dette, TotalFacture, MontantPaye) values ($this->idProduit, $this->idClient, $this->quantite, $this->pu, $this->pu * $this->quantite, '".$this->date."', $this->operation, '".$this->dette."', $this->total_facture, $this->montant)");
+            $sql = ("INSERT INTO Ventes (idProduit, idClient, QuantiteVendu, PU, PT, DatesVente, Operation, Dette, TotalFacture, MontantPaye, idPersonnel) values ($this->idProduit, $this->idClient, $this->quantite, $this->pu, $this->pu * $this->quantite, '".$this->date."', $this->operation, '".$this->dette."', $this->total_facture, $this->montant, $this->idPersonnel)");
             if(mysqli_query($db, $sql)){
                 
                 }else{

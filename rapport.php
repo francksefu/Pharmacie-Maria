@@ -48,7 +48,7 @@ function dataDataPersonnel(){
   if(mysqli_num_rows($result)>0){
                       
       while($row= mysqli_fetch_assoc($result)){
-          echo "<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["Nom"].":: Telephone ::".$row["Telephone"].":: Salaire ::".$row["SalaireDeBase"]."'> = ".$row["Nom"]."</option>"; 
+          echo "<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"].":: Telephone ::".$row["Telephone"].":: Salaire ::".$row["SalaireDeBase"]."'> = ".$row["Nom"]."</option>"; 
       }
               
  }else{echo "Une erreur s est produite ";} 
@@ -248,8 +248,8 @@ function dataVente(){
                       </div>
 
                         <div class="input-group  mt-3 mb-3" id="cont-input5">
-                          <label class="input-group-text" for="type">Mois</label>
-                          <select class="form-select" id="type">
+                          <label class="input-group-text" for="mois">Mois</label>
+                          <select class="form-select" id="mois" name = "Mois">
                               <option selected value="Janvier">Janvier</option>
                               <option value="Fevrier">Fevrier</option>
                               <option value="Mars">Mars</option>
@@ -266,7 +266,7 @@ function dataVente(){
                         </div>
                         <div class="input-group mb-3" id="cont-input4">
                           <span class="input-group-text w-50" id="dates">Annee *</span>
-                          <input required type="year"  name="Year" id="year" class="form-control w-50" placeholder="mettre la date" aria-label="Username" aria-describedby="nom" value="<?php $d = strtotime("today"); echo date('Y',$d); ?>">
+                          <input required type="year"  name="Annee" id="year" class="form-control w-50" placeholder="mettre la date" aria-label="Username" aria-describedby="nom" value="<?php $d = strtotime("today"); echo date('Y',$d); ?>">
                         </div>
                       
 
@@ -286,6 +286,7 @@ function dataVente(){
                       <li id="paye-cache2"><a class="dropdown-item" href="#">ventes payé cache</a></li>
                       <li id="vente-dette2"><a class="dropdown-item" href="#">ventes accordé en dette</a></li>
                       <li id="vente-sortie2"><a class="dropdown-item" href="#">ventes et sortie</a></li>
+                      <li id="vente-personnel"><a class="dropdown-item" href="#">ventes effectuer par un personnel</a></li>
                     </ul>
                 </div>
                 <div class="dropdown mt-3">
@@ -296,6 +297,7 @@ function dataVente(){
                       <li id="toute-vente2-facture"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
                       <li id="paye-cache2-facture"><a class="dropdown-item" href="#">ventes payé cache</a></li>
                       <li id="vente-dette2-facture"><a class="dropdown-item" href="#">ventes accordé en dette</a></li>
+                      <li id="vente-personnel-facture"><a class="dropdown-item" href="#">ventes effectuer par un personnel</a></li>
                     </ul>
                 </div>
                 <div class="dropdown mt-3">

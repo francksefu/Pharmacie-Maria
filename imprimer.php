@@ -43,7 +43,7 @@ if($tabFacture[0] != '') {
 
 function dataVente($operation){
     include 'connexion.php';
-    $sql= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and (Operation = $operation)");
+    $sql= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and (Operation = $operation)");
     $result = mysqli_query($db, $sql);
     $valeur = '';  
     if(mysqli_num_rows($result)>0){
@@ -77,6 +77,7 @@ function dataVente($operation){
 
             $op = $row["Operation"];
             $nomClient = $row["NomClient"];
+            $personnel = $row["NomP"];
             $date = $row["DatesVente"];
             $total += $row["PT"];
             $valeur .= '
@@ -89,11 +90,12 @@ function dataVente($operation){
                     <td>'.$row["PT"].'</td>
                 </tr>';
         }
-       
+      
         $valeur .= '</tbody>
         <h5 class=" mb-3 mt-3 ms-3"> numero : '.$op.'</h5>
         <h5 class=" mb-3 mt-3 ms-3"> date : '.$date.'</h5>
         <h3 class=" mb-3 mt-3 ms-3"> client : '.$nomClient.'</h3>
+        <h6 class=" mb-3 mt-3 ms-3"> nom du vendeur : '.$personnel.'</h6>
         <br />
         <div class="mb-2">'.$status.'<div>
         <br />

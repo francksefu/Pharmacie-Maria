@@ -49,7 +49,7 @@ function dataPersonnel(){
     if(mysqli_num_rows($result)>0){
                         
         while($row= mysqli_fetch_assoc($result)){
-            echo"<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["Nom"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]."</option>"; 
+            echo"<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]."</option>"; 
         }
                 
    }else{echo "Une erreur s est produite ";}  
@@ -63,7 +63,7 @@ function dataPersoPaie(){
     if(mysqli_num_rows($result)>0){
                         
         while($row= mysqli_fetch_assoc($result)){
-            echo "<option value='ID ::".$row["idPersonnelPaie"].":: dates  ::".$row["Date"].":: Nom ::".$row["Nom"].":: Montant ::".$row["Montant"].":: Mois ::".$row["Mois"].":: iDPerso ::".$row["idDataPersonnel"].":: Observation ::".$row["Observation"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"].":".$row["Montant"]." $ mois:".$row["Mois"]."</option>"; 
+            echo "<option value='ID ::".$row["idPersonnelPaie"].":: dates  ::".$row["Date"].":: Nom ::".$row["NomP"].":: Montant ::".$row["Montant"].":: Mois ::".$row["Mois"].":: iDPerso ::".$row["idDataPersonnel"].":: Observation ::".$row["Observation"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"].":".$row["Montant"]." $ mois:".$row["Mois"]."</option>"; 
         }
                 
    }else{echo "Une erreur s est produite ";} 

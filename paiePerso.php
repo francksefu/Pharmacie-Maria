@@ -137,7 +137,7 @@
                             echo'
                             <tr>
                     <td>'.$row["idPersonnelPaie"].'</td>
-                    <td>'.$row["Nom"].'</td>
+                    <td>'.$row["NomP"].'</td>
                     <td>'.$row["Date"].'</td>
                     <td>'.$row["Mois"].'</td>
                     <td>'.$row["Annee"].'</td>
