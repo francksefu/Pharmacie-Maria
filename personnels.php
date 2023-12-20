@@ -55,7 +55,11 @@
                 
                 <div class="col-md-3 bg-transparent pt-5">
                     <p class="text-center">
-                        <a href="addPersonnels.php" class="btn btn-primary p-2">&plus; Add clients</a>
+                    <?php 
+                        if ($user != 'Responsable') {
+                            echo '<a href="addPersonnels.php" class="btn btn-primary p-2">&plus; Add clients</a>';
+                        }
+                    ?>   
                     </p>
                 </div>
     
@@ -113,8 +117,9 @@
                             <tr>
                     <td>'.$row["idClient"].'</td>
                     <td>'.$row["NomClient"].'</td>
-                    <td>'.$row["Telephone"].'</td>
-                    <td >
+                    <td>'.$row["Telephone"].'</td>';
+                    if ($user != 'Responsable') {
+                        echo '<td >
                         <div class="d-flex flex-row justify-content-center">
                             
                             <div class="p-2 m-2 bg-danger text-white rounded-3" id="del">
@@ -133,7 +138,9 @@
                                 </a>
                             </div>  
                         </div>
-                    </td>
+                    </td>';
+                    }
+                    echo '
                   </tr>
                   <tr>
                             ';

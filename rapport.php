@@ -114,18 +114,20 @@ function dataVente(){
            <div class="row">
             <!--Button left-->
             <div class="col-md-2">
-                <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      ventes affichage synthetique
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li id="toute-vente"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
-                      <li id="paye-cache"><a class="dropdown-item" href="#">ventes payé cache</a></li>
-                      <li id="vente-dette"><a class="dropdown-item" href="#">ventes accordé en dette</a></li>
-                      <li id="vente-sortie"><a class="dropdown-item" href="#">ventes et sortie</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown mt-3">
+              <?php
+               if ($user != 'Approvisionneur') {
+                echo '<div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  ventes affichage synthetique
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li id="toute-vente"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
+                  <li id="paye-cache"><a class="dropdown-item" href="#">ventes payé cache</a></li>
+                  <li id="vente-dette"><a class="dropdown-item" href="#">ventes accordé en dette</a></li>
+                  <li id="vente-sortie"><a class="dropdown-item" href="#">ventes et sortie</a></li>
+                </ul>
+            </div>
+            <div class="dropdown mt-3">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1F" data-bs-toggle="dropdown" aria-expanded="false">
                       ventes affichage factures
                     </button>
@@ -136,58 +138,69 @@ function dataVente(){
                     </ul>
                 </div>
                 
-                <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      Sortie
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li id="toutes-sortie"><a class="dropdown-item" href="#">Toutes les sorties</a></li>
-                      <li id="trie-dette"><a class="dropdown-item" href="#">Trie par dette</a></li>
-                      <li id="trie-depenses"><a class="dropdown-item" href="#">Trie par depenses</a></li>
-                      <li id="trie-charge"><a class="dropdown-item" href="#">Trie par charge</a></li>
-                      <li id="trie-inutile"><a class="dropdown-item" href="#">Trie par inutile</a></li>
-                    </ul>
-                </div>
-                <button id="bonusOuPerte" class="btn btn-secondary  mt-3">Bonus ou perte</button>
-                <button id="approv" class="btn btn-secondary  mt-3">Approvisionnement</button>
-                <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      Paiements
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li id="paiements"><a class="dropdown-item" href="#">Tous les paiements</a></li>
-                      <li id="paiements-client"><a class="dropdown-item" href="#">Paiements par clients</a></li>
-                      <li id="paiements-facture"><a class="dropdown-item" href="#">Paiements par factures</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuBres1" data-bs-toggle="dropdown" aria-expanded="false">
-                      Perte Occasionnées
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonres1">
-                      <li id="perte-journaliere"><a class="dropdown-item" href="#">Journaliere</a></li>
-                      <li id="perte-periode"><a class="dropdown-item" href="#">entre 2 dates</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuBres" data-bs-toggle="dropdown" aria-expanded="false">
-                      Resume
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonres1">
-                      <li id="resume-journaliere"><a class="dropdown-item" href="#">Journaliere</a></li>
-                      <li id="resume-periode"><a class="dropdown-item" href="#">entre 2 dates</a></li>
-                    </ul>
-                </div>
+            ';
+               }
+
+               if ($user == 'Responsable' || $user == 'franck' || $user == 'Administrateur') {
+                echo '<div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  Sortie
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li id="toutes-sortie"><a class="dropdown-item" href="#">Toutes les sorties</a></li>
+                  <li id="trie-dette"><a class="dropdown-item" href="#">Trie par dette</a></li>
+                  <li id="trie-depenses"><a class="dropdown-item" href="#">Trie par depenses</a></li>
+                  <li id="trie-charge"><a class="dropdown-item" href="#">Trie par charge</a></li>
+                  <li id="trie-inutile"><a class="dropdown-item" href="#">Trie par inutile</a></li>
+                </ul>
+            </div>
+            <button id="bonusOuPerte" class="btn btn-secondary  mt-3">Bonus ou perte</button>
+            <button id="approv" class="btn btn-secondary  mt-3">Approvisionnement</button>';
                
-                <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuBresk" data-bs-toggle="dropdown" aria-expanded="false">
-                      Prediction
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonres1k">
-                      
-                      <li id="prediction-periode"><a class="dropdown-item" href="#">Tendance des données</a></li>
-                    </ul>
-                </div>
+                  echo'<div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  Paiements
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li id="paiements"><a class="dropdown-item" href="#">Tous les paiements</a></li>
+                  <li id="paiements-client"><a class="dropdown-item" href="#">Paiements par clients</a></li>
+                  <li id="paiements-facture"><a class="dropdown-item" href="#">Paiements par factures</a></li>
+                </ul>
+            </div>
+            <div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuBres1" data-bs-toggle="dropdown" aria-expanded="false">
+                  Perte Occasionnées
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonres1">
+                  <li id="perte-journaliere"><a class="dropdown-item" href="#">Journaliere</a></li>
+                  <li id="perte-periode"><a class="dropdown-item" href="#">entre 2 dates</a></li>
+                </ul>
+            </div>
+            <div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuBres" data-bs-toggle="dropdown" aria-expanded="false">
+                  Resume
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonres1">
+                  <li id="resume-journaliere"><a class="dropdown-item" href="#">Journaliere</a></li>
+                  <li id="resume-periode"><a class="dropdown-item" href="#">entre 2 dates</a></li>
+                </ul>
+            </div>
+           
+            <div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuBresk" data-bs-toggle="dropdown" aria-expanded="false">
+                  Prediction
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonres1k">
+                  
+                  <li id="prediction-periode"><a class="dropdown-item" href="#">Tendance des données</a></li>
+                </ul>
+            </div>';
+               }
+              ?>
+                
+                
+                
+                
             </div>
 
             <!--Form between-->
@@ -208,7 +221,9 @@ function dataVente(){
                           <input type="text" name="Personnel" id="input-1" list="dataPersonnel" class="form-control" placeholder="entrer le nom du client ou une information sur le produit, ensuite choisissez" >
                             <datalist id="dataPersonnel">
                               <?php 
+                              if ($user != 'Approvisionneur'){
                                 dataPersonnel();
+                              }
                               ?>
                             </datalist>
                           <span class="input-group-text pointe" id="cross">&cross;</span>
@@ -239,7 +254,10 @@ function dataVente(){
                           <input type="text" name="PersonnelSalaire" id="input-6" list="datadataPerso" class="form-control" placeholder="entrer le personnel" >
                             <datalist id="datadataPerso">
                               <?php 
-                                 dataDataPersonnel();
+                              if ($user != 'Commercial' || $user != 'Approvisionneur'){
+                                dataDataPersonnel();
+                              }
+                                
                               ?>
                             </datalist>
                           <span class="input-group-text pointe" id="crss">&cross;</span>
@@ -275,83 +293,91 @@ function dataVente(){
             </div>
             <!--Button right-->
             <div class="col-md-2">
-                <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      ventes affichage synthetique
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li id="toute-vente2"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
-                      <li id="paye-cache2"><a class="dropdown-item" href="#">ventes payé cache</a></li>
-                      <li id="vente-dette2"><a class="dropdown-item" href="#">ventes accordé en dette</a></li>
-                      <li id="vente-sortie2"><a class="dropdown-item" href="#">ventes et sortie</a></li>
-                      <li id="vente-personnel"><a class="dropdown-item" href="#">ventes effectuer par un personnel</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      ventes affichage factures
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li id="toute-vente2-facture"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
-                      <li id="paye-cache2-facture"><a class="dropdown-item" href="#">ventes payé cache</a></li>
-                      <li id="vente-dette2-facture"><a class="dropdown-item" href="#">ventes accordé en dette</a></li>
-                      <li id="vente-personnel-facture"><a class="dropdown-item" href="#">ventes effectuer par un personnel</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      ventes affichage tableaux
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li id="toute-vente2-tableau"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      Sortie
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li id="toutes-sortie2"><a class="dropdown-item" href="#">Toutes les sorties</a></li>
-                      <li id="trie-dette2"><a class="dropdown-item" href="#">Trie par dette</a></li>
-                      <li id="trie-depenses2"><a class="dropdown-item" href="#">Trie par depenses</a></li>
-                      <li id="trie-charge2"><a class="dropdown-item" href="#">Trie par charge</a></li>
-                      <li id="trie-inutile2"><a class="dropdown-item" href="#">Trie par inutile</a></li>
-                    </ul>
-                </div>
-                <button id="bonusOuPerte2" class="btn btn-secondary  mt-3">Bonus ou perte</button>
-               
-                <button id="approvisionnement2" class="btn btn-secondary  mt-3">Approvisionnement</button>
-                <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      Clients
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li id="toutes-facture"><a class="dropdown-item" href="#">Toutes les factures du client</a></li>
-                      <li id="facture-2-dates"><a class="dropdown-item" href="#">factures du clients entre 2 dates</a></li>
-                      <li id="facture-dette"><a class="dropdown-item" href="#">factures non reglé du client</a></li>
-                    </ul>
-                </div>
-                <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      Paiements
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li id="paiements2"><a class="dropdown-item" href="#">Tous les paiements</a></li>
-                      <li id="paiements-client2"><a class="dropdown-item" href="#">Paiements par clients</a></li>
-                      
-                    </ul>
-                </div>
-                <div class="dropdown mt-3 mb-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      Paiements du personnel
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li id="paiements-personnel"><a class="dropdown-item" href="#">Tous les paiements du personnel</a></li>
-                      <li id="paiements-par-personnel"><a class="dropdown-item" href="#">Paiements par personnel</a></li>
-                      <li id="paiements-par-mois-annee"><a class="dropdown-item" href="#">Paiements par mois specifique de tous les personnels</a></li>
-                      <li id="paiements-par-mois-annee-par-personnel"><a class="dropdown-item" href="#">Paiements par mois specifique d un personnel</a></li>
-                    </ul>
-                </div>
+              <?php 
+              if($user != 'Approvisionneur') {
+                echo '<div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  ventes affichage synthetique
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li id="toute-vente2"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
+                  <li id="paye-cache2"><a class="dropdown-item" href="#">ventes payé cache</a></li>
+                  <li id="vente-dette2"><a class="dropdown-item" href="#">ventes accordé en dette</a></li>
+                  <li id="vente-sortie2"><a class="dropdown-item" href="#">ventes et sortie</a></li>
+                  <li id="vente-personnel"><a class="dropdown-item" href="#">ventes effectuer par un personnel</a></li>
+                </ul>
+            </div>
+            <div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  ventes affichage factures
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li id="toute-vente2-facture"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
+                  <li id="paye-cache2-facture"><a class="dropdown-item" href="#">ventes payé cache</a></li>
+                  <li id="vente-dette2-facture"><a class="dropdown-item" href="#">ventes accordé en dette</a></li>
+                  <li id="vente-personnel-facture"><a class="dropdown-item" href="#">ventes effectuer par un personnel</a></li>
+                </ul>
+            </div>
+            <div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  ventes affichage tableaux
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li id="toute-vente2-tableau"><a class="dropdown-item" href="#">Toutes les ventes</a></li>
+                </ul>
+            </div>';
+              }
+              if ($user == 'Responsable' || $user == 'franck' || $user == 'Administrateur') {
+                echo '<div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  Sortie
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li id="toutes-sortie2"><a class="dropdown-item" href="#">Toutes les sorties</a></li>
+                  <li id="trie-dette2"><a class="dropdown-item" href="#">Trie par dette</a></li>
+                  <li id="trie-depenses2"><a class="dropdown-item" href="#">Trie par depenses</a></li>
+                  <li id="trie-charge2"><a class="dropdown-item" href="#">Trie par charge</a></li>
+                  <li id="trie-inutile2"><a class="dropdown-item" href="#">Trie par inutile</a></li>
+                </ul>
+            </div>
+            <button id="bonusOuPerte2" class="btn btn-secondary  mt-3">Bonus ou perte</button>
+           
+            <button id="approvisionnement2" class="btn btn-secondary  mt-3">Approvisionnement</button>
+            <div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  Clients
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li id="toutes-facture"><a class="dropdown-item" href="#">Toutes les factures du client</a></li>
+                  <li id="facture-2-dates"><a class="dropdown-item" href="#">factures du clients entre 2 dates</a></li>
+                  <li id="facture-dette"><a class="dropdown-item" href="#">factures non reglé du client</a></li>
+                </ul>
+            </div>
+            <div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  Paiements
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li id="paiements2"><a class="dropdown-item" href="#">Tous les paiements</a></li>
+                  <li id="paiements-client2"><a class="dropdown-item" href="#">Paiements par clients</a></li>
+                  
+                </ul>
+            </div>
+            <div class="dropdown mt-3 mb-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  Paiements du personnel
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li id="paiements-personnel"><a class="dropdown-item" href="#">Tous les paiements du personnel</a></li>
+                  <li id="paiements-par-personnel"><a class="dropdown-item" href="#">Paiements par personnel</a></li>
+                  <li id="paiements-par-mois-annee"><a class="dropdown-item" href="#">Paiements par mois specifique de tous les personnels</a></li>
+                  <li id="paiements-par-mois-annee-par-personnel"><a class="dropdown-item" href="#">Paiements par mois specifique d un personnel</a></li>
+                </ul>
+            </div>';
+              }
+              ?>
+                
+                
             </div>
 
            </div>

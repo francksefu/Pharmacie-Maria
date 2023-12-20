@@ -43,7 +43,7 @@ function dataProduct(){
 
 }
 
-function render($reqSql) {
+function render($reqSql, $user) {
     include 'connexion.php';
     //$reqSql= ("SELECT * FROM Produit order by idProduit asc");
     $result= mysqli_query($db, $reqSql);
@@ -77,8 +77,9 @@ function render($reqSql) {
         <td>'.$row["PrixVente"].'</td>
         <td>'.$row["PrixVmin"].'</td>
         <td>'.$row["QuantiteStock"].'</td>
-        <td>'.$row["QuantiteStockMin"].'</td>
-        <td >
+        <td>'.$row["QuantiteStockMin"].'</td>';
+        if($user != 'Responsable') {
+            echo '<td >
             <div class="d-flex flex-row justify-content-center">
                
                 <div class="p-2 m-2 bg-danger text-white rounded-3" id="del">
@@ -98,7 +99,9 @@ function render($reqSql) {
                 </div>  
             </div>
             
-        </td>
+        </td>';
+        }
+        echo'
       </tr>
       <tr>
                ';
@@ -129,7 +132,12 @@ function render($reqSql) {
                 </div>
                 <div class="col-md-2 bg-transparent pt-5">
                     <p class="text-center">
-                        <a href="addProduct.php" class="btn btn-primary p-2">&plus; Add product</a>
+                    <?php 
+                        if ($user != 'Responsable') {
+                            echo '<a href="addProduct.php" class="btn btn-primary p-2">&plus; Add product</a>';
+                        }
+                    ?> 
+                        
                     </p>
                 </div>
     
@@ -169,14 +177,14 @@ function render($reqSql) {
        <?php
        if ($user !== "") {
           $reqSql0= ("SELECT * FROM Produit order by Nom asc");
-          render($reqSql0);
+          render($reqSql0, $user);
         ?>
         </div>
 
         <div class="container-fluid pt-5 bg-transparent" id="render-alerte">
        <?php
           $reqSql0= ("SELECT * FROM Produit WHERE (QuantiteStock < QuantiteStockMin) order by Nom asc");
-          render($reqSql0);
+          render($reqSql0, $user);
        }
         ?>
         </div>

@@ -40,7 +40,7 @@ function dataPaiements(){
    }else{echo "Une erreur s est produite ";}  
 
 }
-function render($reqSql) {
+function render($reqSql, $user) {
     include 'connexion.php';
     
     $result= mysqli_query($db, $reqSql);
@@ -97,8 +97,9 @@ function render($reqSql) {
                         <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
                     </svg>
                 </a>
-                </div>
-                <div class="p-2 m-2 bg-danger text-white rounded-3" id="del">
+                </div>';
+                if ($user != 'Responsable') {
+                    echo '<div class="p-2 m-2 bg-danger text-white rounded-3" id="del">
                     <a href="#" class="text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
@@ -113,8 +114,10 @@ function render($reqSql) {
                         </svg>
                     </a>
                 </div>  
-            </div>
-            
+            </div>'; 
+                }
+                
+           echo ' 
         </td>
       </tr>
       <tr>';
@@ -140,7 +143,12 @@ function render($reqSql) {
                 
                 <div class="col-md-3 bg-transparent pt-5">
                     <p class="text-center">
-                        <a href="addPaiements.php" class="btn btn-primary p-2">&plus; Add paiement?</a>
+                    <?php 
+                        if ($user != 'Responsable') {
+                            echo '<a href="addPaiements.php" class="btn btn-primary p-2">&plus; Add paiement?</a>';
+                        }
+                    ?>
+                        
                     </p>
                 </div>
     
@@ -189,7 +197,7 @@ function render($reqSql) {
         <?php
         if( $user !== "") {
             $reqSql0= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) GROUP BY idPaiements order by idPaiements desc limit 500");
-            render($reqSql0);
+            render($reqSql0, $user);
         }
           ?>  
         </div>

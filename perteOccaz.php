@@ -55,7 +55,12 @@
                 
                 <div class="col-md-3 bg-transparent pt-5">
                     <p class="text-center">
-                        <a href="addPerteOccaz.php" class="btn btn-primary p-2">&plus; Ajoutez une perte ocaasionnee</a>
+                    <?php 
+                        if ($user != 'Responsable') {
+                            echo '<a href="addPerteOccaz.php" class="btn btn-primary p-2">&plus; Ajoutez une perte ocaasionnee</a>';
+                        }
+                    ?> 
+                        
                     </p>
                 </div>
     
@@ -116,8 +121,9 @@
                     <td>'.$row["Montant"].'</td>
                     <td>'.$row["Commentaire"].'</td>
                     
-                    <td>'.$row["Dates"].'</td>
-                    <td >
+                    <td>'.$row["Dates"].'</td>';
+                    if ($user != 'Responsable') {
+                        echo '<td >
                         <div class="d-flex flex-row justify-content-center">
                             
                             <div class="p-2 m-2 bg-danger text-white rounded-3" id="del">
@@ -136,7 +142,9 @@
                                 </a>
                             </div>  
                         </div>
-                    </td>
+                    </td>';
+                    }
+                    echo '
                   </tr>
                   <tr>
                             ';

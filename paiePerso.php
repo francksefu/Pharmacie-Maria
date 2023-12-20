@@ -56,7 +56,12 @@
                 
                 <div class="col-md-3 bg-transparent pt-5">
                     <p class="text-center">
-                        <a href="addPersoPaie.php" class="btn btn-primary p-2">&plus; Ajoutez un paiement d un personnel</a>
+                    <?php 
+                        if ($user != 'Responsable') {
+                            echo '<a href="addPersoPaie.php" class="btn btn-primary p-2">&plus; Ajoutez un paiement d un personnel</a>';
+                        }
+                    ?>
+                        
                     </p>
                 </div>
     
@@ -122,8 +127,9 @@
                     <td>'.$row["Mois"].'</td>
                     <td>'.$row["Annee"].'</td>
                     <td>'.$row["Montant"].'</td>
-                    <td>'.$row["Observation"].'</td>
-                    <td >
+                    <td>'.$row["Observation"].'</td>';
+                    if ($user != 'Responsable') {
+                        echo '<td >
                         <div class="d-flex flex-row justify-content-center">
                             
                             <div class="p-2 m-2 bg-danger text-white rounded-3" id="del">
@@ -142,7 +148,9 @@
                                 </a>
                             </div>  
                         </div>
-                    </td>
+                    </td>';
+                    }
+                    echo '
                   </tr>
                   <tr>
                             ';
