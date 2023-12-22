@@ -20,6 +20,8 @@ else if($_SESSION['username'] !== ""){
     <?php include 'head.php'; ?>
     <script defer src="./jsfile/takeCaisseout.js"></script>
     <link rel="stylesheet" href="index.css">
+    <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
+    </style>
 </head>
 
 <body class="bg-light">
@@ -57,7 +59,7 @@ else if($_SESSION['username'] !== ""){
                             <div class="input-group ">
                                 <span class="input-group-text">Montant*</span>
                                 <input required type="float" id="montant" name="CM" class="form-control" placeholder="entrer montant sortie" aria-label="Amount (to the nearest cdf)">
-                                <span class="input-group-text">$</span>
+                                <span class="input-group-text">Fc</span>
                             </div>
                             <small id="montantVide"></small>
                         </div>

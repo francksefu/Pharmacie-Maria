@@ -21,6 +21,8 @@
     <script defer src="./jsfile/takeProduit.js"></script>
     <link rel="stylesheet" href="index.css">
     <script defer src="./jsfile/datalist.js"></script>
+    <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
+    </style>
 </head>
 <?php
 function dataProduct(){

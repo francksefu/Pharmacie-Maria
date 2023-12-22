@@ -1,9 +1,26 @@
+<?php 
+    $user = "";
+    session_start();
+    if(isset($_GET['deconnexion']))
+    { 
+    if($_GET['deconnexion']==true)
+    {  
+        session_destroy();
+        header("location:index.php");
+    }
+    }
+    else if($_SESSION['username'] !== ""){
+        $user = $_SESSION['username'];
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <?php include 'head.php'; ?>
     <script defer src="./jsfile/taux.js"></script>
     <link rel="stylesheet" href="index.css">
+    <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
+    </style>
 </head>
 <?php
   function data(){

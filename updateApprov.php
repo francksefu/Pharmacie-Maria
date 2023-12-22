@@ -20,6 +20,8 @@
 <?php include 'head.php'; ?>
     <link rel="stylesheet" href="index.css">
     <script defer src="jsfile/takeApprov.js"></script>
+    <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
+    </style>
 </head>
 <?php
 //find id for vente to make a nmber of operation
@@ -123,9 +125,9 @@ function dataProduct(){
                       </datalist>
                     <span class="input-group-text border border-success">Quantite</span>
                     <input id="quantite" type="float" class="form-control border border-success" placeholder="Quantite" aria-label="Server">
-                    <span class="input-group-text">PV Unitaire</span>
+                    <span class="input-group-text">PA Unitaire</span>
                     <input id="pvu" type="float" class="form-control" placeholder="prix de vente" aria-label="Server">
-                    <span class="input-group-text">$</span>
+                    <span class="input-group-text">Fc</span>
                     <a id="add" href="#" class="text-decoration-none"><span class="input-group-text bg-success text-white">&plus;</span></a>
                     <a id="M-add" href="#" class="text-decoration-none"><span class="input-group-text bg-primary text-white">&check;</span></a>
                 </div>
@@ -192,11 +194,11 @@ function dataProduct(){
                             <h4 class="text-secondary">Calcul du total</h4>
                             <div class="input-group mb-3">
                                 <input type="float" id="total" readonly class="form-control" placeholder="0.00" aria-label="Recipient's username" aria-describedby="basic-addon0">
-                                <span class="input-group-text" id="basic-addon0">$</span>
+                                <span class="input-group-text" id="basic-addon0">Fc</span>
                             </div>
                             <div class="input-group mb-3">
                                 <input type="float" id="cdf" readonly class="form-control" placeholder="0.00" aria-label="Recipient's username" aria-describedby="basic-addon1">
-                                <span class="input-group-text" id="basic-addon">Fc</span>
+                                <span class="input-group-text" id="basic-addon">$</span>
                             </div>
                             <div class="input-group mb-3">
                                 <input type="float" id="chilling" readonly class="form-control" placeholder="0.00" aria-label="Recipient's username" aria-describedby="basic-addon2">

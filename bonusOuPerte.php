@@ -22,6 +22,8 @@
     <script defer src="./jsfile/supprime.js"></script>
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="modifier.css">
+    <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
+    </style>
 </head>
 <?php
 
@@ -51,7 +53,7 @@ function render($reqSql, $user) {
             <th>ID</th>
             <th>Date</th>
             <th>Produit</th>
-            <th>Quantite gagné</th>
+            <th>Quantite gagné (lors du remplissage)</th>
             <th>Quantite perdu</th>
             <th>Motif</th>
             <th>Valeur</th>
@@ -110,7 +112,7 @@ function render($reqSql, $user) {
         <div class="container bg-transparent pt-5" >
             <div class="row bg-transparent pt-5">
                 <div class="col-md-8 bg-transparent m-2">
-                    <h2>Liste des bonus ou pertes, <?php echo $user; ?></h2>
+                    <h2>Liste des pertes occasionnee et remplissages, <?php echo $user; ?></h2>
                     <p class=" text-secondary pt-3">
                         Cette section de bonus ou perte repertories tous les bonus (par exemple vous avez acheté un carton
                         des lampes tous en sachant que dans ce carton vous trouverez 24 pieces mais par surprise vous en trouvez 26, vous vous

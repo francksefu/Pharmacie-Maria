@@ -20,6 +20,8 @@ else if($_SESSION['username'] !== ""){
     <?php include 'head.php'; ?>
     <script defer src="./jsfile/takeBonusPerte.js"></script>
     <link rel="stylesheet" href="index.css">
+    <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
+    </style>
 </head>
 <?php
 function dataProduct(){
@@ -65,7 +67,7 @@ function dataProduct(){
                       <div class="row">
                         
                         <div class="input-group mb-3 col-md-6">
-                            <span class="input-group-text" id="anne">Quantite gagné*</span>
+                            <span class="input-group-text" id="anne">Quantite remplis(regagne)*</span>
                             <input value="0" id="quantite-gagne" required type="float" placeholder="Entrer quantite gagne" class="form-control" aria-label="Username" aria-describedby="anne"> 
                         </div>
                         <small id="quantiteGVide"></small>

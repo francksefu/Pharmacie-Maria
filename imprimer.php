@@ -29,6 +29,8 @@
     <link rel="stylesheet" href="vente.css">
    
     <script defer src="./jsfile/ventesList.js"></script>
+    <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
+    </style>
 </head>
 <?php
 $facture = $_POST["Facture"];
@@ -72,7 +74,7 @@ function dataVente($operation){
             if($row["TotalFacture"] == $paye) {
                 $status = '<span class="bg-success p-2 rounded-3 text-white">Paid</span>';
             } else {
-                $status = '<span class="bg-danger p-2 rounded-3 text-white">Not paid : '.$row["TotalFacture"] - $paye.' $ </span>';
+                $status = '<span class="bg-danger p-2 rounded-3 text-white">Not paid : '.$row["TotalFacture"] - $paye.' Fc </span>';
             }
 
             $op = $row["Operation"];
@@ -100,7 +102,7 @@ function dataVente($operation){
         <div class="mb-2">'.$status.'<div>
         <br />
         </table>
-        <h3 class="text-center mb-3 mt-3"> total : '.$total.' $</h3></div>';
+        <h3 class="text-center mb-3 mt-3"> total : '.$total.' Fc</h3></div>';
         return $valeur;
 
    }else{return "Une erreur s est produite ";}  
