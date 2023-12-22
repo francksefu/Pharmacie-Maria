@@ -84,7 +84,7 @@ function dataProduct(){
                     <input id="quantite" type="float" class="form-control border border-success" placeholder="Quantite" aria-label="Server">
                     <span class="input-group-text">PA Unitaire</span>
                     <input id="pvu" type="float" class="form-control" placeholder="prix d achat" aria-label="Server">
-                    <span class="input-group-text">Fc</span>
+                    <span class="input-group-text">$</span>
                     <a id="add" href="#" class="text-decoration-none"><span class="input-group-text bg-success text-white">&plus;</span></a>
                     <a id="M-add" href="#" class="text-decoration-none"><span class="input-group-text bg-primary text-white">&check;</span></a>
                 </div>
@@ -150,11 +150,11 @@ function dataProduct(){
                             <h4 class="text-secondary">Calcul du total</h4>
                             <div class="input-group mb-3">
                                 <input type="float" id="total" readonly class="form-control" placeholder="0.00" aria-label="Recipient's username" aria-describedby="basic-addon0">
-                                <span class="input-group-text" id="basic-addon0">Fc</span>
+                                <span class="input-group-text" id="basic-addon0">$</span>
                             </div>
                             <div class="input-group mb-3">
                                 <input type="float" id="cdf" readonly class="form-control" placeholder="0.00" aria-label="Recipient's username" aria-describedby="basic-addon1">
-                                <span class="input-group-text" id="basic-addon">$</span>
+                                <span class="input-group-text" id="basic-addon">Fc</span>
                             </div>
                             <div class="input-group mb-3">
                                 <input type="float" id="chilling" readonly class="form-control" placeholder="0.00" aria-label="Recipient's username" aria-describedby="basic-addon2">

@@ -1,4 +1,4 @@
-<<?php 
+<?php 
 include 'identifiant.php';
 ?>
 
@@ -136,7 +136,7 @@ function dataPersonnel(){
                     <input id="quantite" type="float" class="form-control border border-success" placeholder="Quantite" aria-label="Server">
                     <span class="input-group-text">PV Unitaire</span>
                     <input id="pvu" type="float" class="form-control" placeholder="prix de vente" aria-label="Server">
-                    <span class="input-group-text">Fc</span>
+                    <span class="input-group-text">$</span>
                     <a id="add" href="#" class="text-decoration-none"><span class="input-group-text bg-success text-white">&plus;</span></a>
                     <a id="M-add" href="#" class="text-decoration-none"><span class="input-group-text bg-primary text-white">&check;</span></a>
                 </div>
@@ -202,24 +202,24 @@ function dataPersonnel(){
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Montant</span>
                                 <input type="float" id="montant"  class="form-control" aria-label="Amount (to the nearest dollar)">
-                                <span class="input-group-text">Fc</span>
+                                <span class="input-group-text">$</span>
                             </div>
                             <small id="montantVide"></small>
                             <div class="input-group mb-3 ">
                                 <span class="input-group-text">Reste</span>
                                 <input type="flaot" id="reste" class="form-control"  aria-label="Amount (to the nearest dollar)">
-                                <span class="input-group-text">Fc</span>
+                                <span class="input-group-text">$</span>
                             </div>
                         </div>
                         <div class="border border-1 col-md-3 m-2 bg-warning moinClaire">
                             <h4 class="text-secondary">Calcul du total</h4>
                             <div class="input-group mb-3">
                                 <input type="float" id="total" readonly class="form-control" placeholder="0.00" aria-label="Recipient's username" aria-describedby="basic-addon0">
-                                <span class="input-group-text" id="basic-addon0">Fc</span>
+                                <span class="input-group-text" id="basic-addon0">$</span>
                             </div>
                             <div class="input-group mb-3">
                                 <input type="float" id="cdf" readonly class="form-control" placeholder="0.00" aria-label="Recipient's username" aria-describedby="basic-addon1">
-                                <span class="input-group-text" id="basic-addon">$</span>
+                                <span class="input-group-text" id="basic-addon">Fc</span>
                             </div>
                             <div class="input-group mb-3">
                                 <input type="float" id="chilling" readonly class="form-control" placeholder="0.00" aria-label="Recipient's username" aria-describedby="basic-addon2">

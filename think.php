@@ -1,5 +1,17 @@
 <?php 
-include 'identifiant.php';
+    $user = "";
+    session_start();
+    if(isset($_GET['deconnexion']))
+    { 
+    if($_GET['deconnexion']==true)
+    {  
+        session_destroy();
+        header("location:index.php");
+    }
+    }
+    else if($_SESSION['username'] !== ""){
+        $user = $_SESSION['username'];
+    }
 ?>
 
 <!DOCTYPE html>
@@ -133,12 +145,12 @@ function ventes($reqSql) {
       $total_paye += ($paye);
       $pa += $row["PrixAchat"];
         }
-        echo'<h3 class="mt-4 mb-2 text-center">Total de toutes les factures : '.$total_toute_facture.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center text-success">Total montant deja payé : '.$total_paye.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center text-danger">difference : '.$total_toute_facture - $total_paye.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">total prix d achat : '.$pa.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total factures : '.$total_toute_facture - $pa.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total des montant payé : '.$total_paye - $pa.' Fc</h3>';
+        echo'<h3 class="mt-4 mb-2 text-center">Total de toutes les factures : '.$total_toute_facture.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center text-success">Total montant deja payé : '.$total_paye.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center text-danger">difference : '.$total_toute_facture - $total_paye.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">total prix d achat : '.$pa.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total factures : '.$total_toute_facture - $pa.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total des montant payé : '.$total_paye - $pa.' $</h3>';
         echo"</table>";
     }else{echo "Pas des donnees dans la base ";}
 }
@@ -174,7 +186,7 @@ function dataVente($operation){
             if($row["TotalFacture"] == $paye) {
                 $status = '<span class="bg-success p-2 rounded-3 text-white">Paid</span>';
             } else {
-                $status = '<span class="bg-danger p-2 rounded-3 text-white">Not paid : '.$row["TotalFacture"] - $paye.' Fc </span>';
+                $status = '<span class="bg-danger p-2 rounded-3 text-white">Not paid : '.$row["TotalFacture"] - $paye.' $ </span>';
             }
 
             $op = $row["Operation"];
@@ -202,7 +214,7 @@ function dataVente($operation){
         <div class="mb-2">'.$status.'<div>
         <br />
         </table>
-        <h3 class="text-center mb-3 mt-3"> total : '.$total.' Fc</h3></div>';
+        <h3 class="text-center mb-3 mt-3"> total : '.$total.' $</h3></div>';
         return $valeur;
 
    }else{return "Une erreur s est produite ";}  
@@ -247,7 +259,7 @@ function dataVente_tableau_date($date_tableau){
         $valeur .= '</tbody>
         
         </table>
-        <h3 class="text-center mb-3 mt-3 w-75 border border-success"> total : '.$total.' Fc</h3></div>';
+        <h3 class="text-center mb-3 mt-3 w-75 border border-success"> total : '.$total.' $</h3></div>';
         return $valeur;
 
    }else{return "Pas des donnees ici";}  
@@ -300,12 +312,12 @@ function ventes_affichage_facture($reqSql) {
       $total_paye += $paye;
       $pa += $row["PrixAchat"];
         }
-        echo'<h3 class="mt-4 mb-2 text-center">Total de toutes les factures : '.$total_toute_facture.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center text-success">Total montant deja payé : '.$total_paye.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center text-danger">difference : '.$total_toute_facture - $total_paye.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">total prix d achat : '.$pa.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total factures : '.$total_toute_facture - $pa.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total des montant payé : '.$total_paye - $pa.' Fc</h3>';
+        echo'<h3 class="mt-4 mb-2 text-center">Total de toutes les factures : '.$total_toute_facture.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center text-success">Total montant deja payé : '.$total_paye.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center text-danger">difference : '.$total_toute_facture - $total_paye.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">total prix d achat : '.$pa.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total factures : '.$total_toute_facture - $pa.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total des montant payé : '.$total_paye - $pa.' $</h3>';
         echo"</table>";
     }else{echo "Pas des donnees dans la base ";}
 }
@@ -412,7 +424,7 @@ function sortie($reqSql) {
                ';
         $total_paye += $row["Montant"];
         }
-        echo'<h3 class="mt-2 mb-2 text-center">Total : '.$total_paye.' Fc</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">Total : '.$total_paye.' $</h3>';
         echo"</table>";
     }else{echo "Pas des donnees dans la base ";}
 }
@@ -479,9 +491,9 @@ function bonusPerte ($reqSql) {
         $quantiteG += $row["PrixVente"] * ($row["QuantiteGagne"]);
         $quantiteP += $row["PrixVente"] * ($row["QuantitePerdu"]);
         }
-        echo'<h3 class="mt-4 mb-2 text-center">Total des valeurs gagné : '.$quantiteG.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">Total des valeurs perdu : '.$quantiteP.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">difference : '.$quantiteG - $quantiteP.' Fc</h3>';
+        echo'<h3 class="mt-4 mb-2 text-center">Total des valeurs gagné : '.$quantiteG.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">Total des valeurs perdu : '.$quantiteP.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">difference : '.$quantiteG - $quantiteP.' $</h3>';
        
         echo"</table>";
     }else{echo "Pas des donnees dans la base ";}
@@ -542,7 +554,7 @@ function venteEtsortie($reqSql, $req) {
              ';
       $total_sortie += $row["Montant"];
       }
-      echo'<h3 class="mt-2 mb-2 text-center">Total : '.$total_sortie.' Fc</h3>';
+      echo'<h3 class="mt-2 mb-2 text-center">Total : '.$total_sortie.' $</h3>';
       echo"</table>";
   }else{echo "Pas des donnees dans la base ";}
   //
@@ -618,13 +630,13 @@ function venteEtsortie($reqSql, $req) {
       $total_paye += ($paye);
       $pa += $row["PrixAchat"];
         }
-        echo'<h3 class="mt-4 mb-2 text-center">Total de toutes les factures : '.$total_toute_facture.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center text-succes">Total montant deja payé : '.$total_paye.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center text-danger">difference : '.$total_toute_facture - $total_paye.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">total prix d achat : '.$pa.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total factures : '.$total_toute_facture - $pa.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total des montant payé : '.$total_paye - $pa.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">Difference entre les sorties et les ventes : '.$total_toute_facture - $total_sortie.' Fc</h3>';
+        echo'<h3 class="mt-4 mb-2 text-center">Total de toutes les factures : '.$total_toute_facture.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center text-succes">Total montant deja payé : '.$total_paye.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center text-danger">difference : '.$total_toute_facture - $total_paye.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">total prix d achat : '.$pa.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total factures : '.$total_toute_facture - $pa.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">total benefice avec total des montant payé : '.$total_paye - $pa.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">Difference entre les sorties et les ventes : '.$total_toute_facture - $total_sortie.' $</h3>';
         echo"</table>";
     }else{echo "Pas des donnees dans la base ";}
 }
@@ -684,7 +696,7 @@ function approvisionnement($reqSql) {
       <tr>';
     $total += $row["TotalFacture"];
         }
-        echo'<h3 class="mt-4 mb-2 text-center">Total : '.$total.' Fc</h3>';
+        echo'<h3 class="mt-4 mb-2 text-center">Total : '.$total.' $</h3>';
         echo"</table>";
     }else{echo "Pas des donnees dans la base ";}
 }
@@ -721,7 +733,7 @@ function dataPaiementAffichageSynthetique($operation){
             if($row["TotalFacture"] == $paye) {
                 $status = '<span class="bg-success p-2 rounded-3 text-white">Paid</span>';
             } else {
-                $status = '<span class="bg-danger p-2 rounded-3 text-white">Not paid : '.$row["TotalFacture"] - $paye.' Fc </span>';
+                $status = '<span class="bg-danger p-2 rounded-3 text-white">Not paid : '.$row["TotalFacture"] - $paye.' $ </span>';
             }
            $reste = $row["TotalFacture"] - $paye;
             $op = $row["Operation"];
@@ -747,7 +759,7 @@ function dataPaiementAffichageSynthetique($operation){
         <div class="mb-2">'.$status.'<div>
         <br />
         </table>
-        <h3 class="text-center mb-3 mt-3"> total : '.$total.' Fc</h3></div>';
+        <h3 class="text-center mb-3 mt-3"> total : '.$total.' $</h3></div>';
 
    }else{return "Une erreur s est produite ";} 
    $sqlP= ("SELECT * FROM Paiements WHERE (Operation = $operation)");
@@ -769,13 +781,13 @@ function dataPaiementAffichageSynthetique($operation){
             <tr>
                 <td>'.$rowP["DatesPaie"].'</td>
                 <td>
-                    '.$rowP["Montant"].' Fc
+                    '.$rowP["Montant"].' $
                 </td>
             </tr>';
           }
           $valeur .= '</tbody>
           </table>
-          <h2 class="text-center text-danger">Reste : '.$reste.' Fc</h2></div>';
+          <h2 class="text-center text-danger">Reste : '.$reste.' $</h2></div>';
         } else { return "Pas des donnee";}
 
         return $valeur;
@@ -805,9 +817,9 @@ function paiements_affichage_facture($reqSql) {
       $total_paye += $paye;
       
         }
-        echo'<h3 class="mt-4 mb-2 text-center">Total de toutes les factures : '.$total_toute_facture.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center text-success">Total montant deja payé : '.$total_paye.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center text-danger">difference : '.$total_toute_facture - $total_paye.' Fc</h3>';
+        echo'<h3 class="mt-4 mb-2 text-center">Total de toutes les factures : '.$total_toute_facture.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center text-success">Total montant deja payé : '.$total_paye.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center text-danger">difference : '.$total_toute_facture - $total_paye.' $</h3>';
         
     }else{echo "Pas des donnees dans la base ";}
 }
@@ -903,10 +915,10 @@ function paiements($reqSql, $req) {
       <tr>';
       
         }
-        echo'<h3 class="mt-2 mb-2 text-center text-success">Sommes du montant payé ce jour la : '.$somme_montant.' Fc</h3>';
-        echo'<h3 class="mt-4 mb-2 text-center">Total des factures : '.$total_facture.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">Total des montants deja payé : '.$montant.' Fc</h3>';
-        echo'<h3 class="mt-2 mb-2 text-center">difference : '.$total_facture - $montant.' Fc</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center text-success">Sommes du montant payé ce jour la : '.$somme_montant.' $</h3>';
+        echo'<h3 class="mt-4 mb-2 text-center">Total des factures : '.$total_facture.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">Total des montants deja payé : '.$montant.' $</h3>';
+        echo'<h3 class="mt-2 mb-2 text-center">difference : '.$total_facture - $montant.' $</h3>';
         
         echo"</table>";
     }else{echo "Pas des donnees dans la base ";}
@@ -967,7 +979,7 @@ function paiement_personnel($reqSql) {
       <tr>
                ';
         }
-        echo'<h3 class="mt-4 mb-2 text-center text-success">Total des montants payés : '.$total.' Fc</h3>';
+        echo'<h3 class="mt-4 mb-2 text-center text-success">Total des montants payés : '.$total.' $</h3>';
         echo"</table>";
     }else{echo "Pas des donnees dans la base ";}
 }
@@ -1014,7 +1026,7 @@ function personnel_avec_salaire_de_base($mois, $annee, $unique_all) {
         if ($user !== "") {           
           $reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel and (Annee = ".$annee." and Mois = '".$mois."')) and (PersonnelPaie.idDataPersonnel = '".$row0["idDataPersonnel"]."')  order by idPersonnelPaie desc");
           $somme = calcul_du_total_paiement_personnel($reqSql); 
-          echo '<h5 class="mt-0 mb-2 text-center"> Salaire de base : '.$row0["SalaireDeBase"].' Fc</h5>';
+          echo '<h5 class="mt-0 mb-2 text-center"> Salaire de base : '.$row0["SalaireDeBase"].' $</h5>';
           echo '<h5 class="mt-0 mb-2 text-center"> Reste a lui payer : '.$row0["SalaireDeBase"] - $somme.' $</h5>';
           paiement_personnel($reqSql);                   
         }
@@ -1077,7 +1089,7 @@ function perte_occasionnee($reqSql) {
     <tr>
               ';
       }
-      echo '<h2 class = "text-center w-75 ms-5 text-success">'.$total.' Fc</h2>';
+      echo '<h2 class = "text-center w-75 ms-5 text-success">'.$total.' $</h2>';
       echo"</table>";
   }else{echo "Pas des donnees dans la base ";}
 

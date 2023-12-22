@@ -201,9 +201,9 @@ function rendertable() {
     }
     total.value = somme;
     let tabChange = changer.value.split('::');
-    chilling.value = tabChange[3] * somme /tabChange[7];
-    rwandais.value = tabChange[5] * somme /tabChange[7];
-    cdf.value =  somme/tabChange[7];
+    chilling.value = tabChange[3] * somme  ;
+    rwandais.value = tabChange[5] * somme  ;
+    cdf.value =  somme * tabChange[7];
   }
 
   render();
@@ -217,9 +217,9 @@ function rendertable() {
 function render () {
     total.value = somme;
     let tabChange = changer.value.split('::');
-    chilling.value = tabChange[3] * somme/tabChange[7];
-    rwandais.value = tabChange[5] * somme/tabChange[7];
-    cdf.value = somme/tabChange[7];
+    chilling.value = tabChange[3] * somme ;
+    rwandais.value = tabChange[5] * somme ;
+    cdf.value = somme * tabChange[7];
   }
 
 window.addEventListener('click', () => {
@@ -278,9 +278,9 @@ window.addEventListener('click', () => {
           };
           total.value = somme;
         let tabChange = changer.value.split('::');
-        chilling.value = tabChange[3] * somme/tabChange[7];
-        rwandais.value = tabChange[5] * somme/tabChange[7];
-        cdf.value = somme/tabChange[7];
+        chilling.value = tabChange[3] * somme ;
+        rwandais.value = tabChange[5] * somme ;
+        cdf.value = somme * tabChange[7];
           });
         }
         
@@ -373,9 +373,9 @@ ajoutons.addEventListener('keydown', (event) => {
         };
         total.value = somme;
         let tabChange = changer.value.split('::');
-        chilling.value = tabChange[3] * somme / tabChange[7];
-        rwandais.value = tabChange[5] * somme / tabChange[7];
-        cdf.value = somme / tabChange[7];
+        chilling.value = tabChange[3] * somme  ;
+        rwandais.value = tabChange[5] * somme  ;
+        cdf.value = somme  * tabChange[7];
         document.querySelector('#produit').value = "";
         quantite.value = "";
         pvu.value = "";
@@ -476,7 +476,7 @@ function rendons() {
   };
   total.value = somme;
   let tabChange = changer.value.split('::');
-  chilling.value = tabChange[3] * somme / tabChange[7];
-  rwandais.value = tabChange[5] * somme / tabChange[7];
-  cdf.value = somme / tabChange[7];
+  chilling.value = tabChange[3] * somme  ;
+  rwandais.value = tabChange[5] * somme  ;
+  cdf.value = somme * tabChange[7];
 }

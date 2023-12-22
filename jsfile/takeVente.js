@@ -221,7 +221,7 @@ function rendertable() {
     let tabChange = changer.value.split('::');
     chilling.value = tabChange[3] * somme;
     rwandais.value = tabChange[5] * somme;
-    cdf.value = somme / tabChange[7];
+    cdf.value =  somme * tabChange[7];
     montant.value = total.value;
     reste.value = total.value - montant.value;
   }
@@ -239,7 +239,7 @@ function render () {
     let tabChange = changer.value.split('::');
     chilling.value = tabChange[3] * somme;
     rwandais.value = tabChange[5] * somme;
-    cdf.value = somme / tabChange[7];
+    cdf.value =  somme *tabChange[7];
     montant.value = total.value;
     reste.value = total.value - montant.value;
   }
@@ -302,7 +302,7 @@ window.addEventListener('click', () => {
         let tabChange = changer.value.split('::');
         chilling.value = tabChange[3] * somme;
         rwandais.value = tabChange[5] * somme;
-        cdf.value =  somme / tabChange[7];
+        cdf.value =   somme *tabChange[7];
         montant.value = total.value;
         reste.value = total.value - montant.value;
           });
@@ -399,7 +399,7 @@ ajoutons.addEventListener('keydown', (event) => {
         let tabChange = changer.value.split('::');
         chilling.value = tabChange[3] * somme;
         rwandais.value = tabChange[5] * somme;
-        cdf.value = somme / tabChange[7];
+        cdf.value = somme * tabChange[7];
         montant.value = total.value;
         reste.value = total.value - montant.value;
         document.querySelector('#produit').value = "";
@@ -547,7 +547,7 @@ function rendons() {
   let tabChange = changer.value.split('::');
   chilling.value = tabChange[3] * somme;
   rwandais.value = tabChange[5] * somme;
-  cdf.value = somme / tabChange[7];
+  cdf.value = somme * tabChange[7];
   montant.value = total.value;
   reste.value = total.value - montant.value;
 }

@@ -223,24 +223,24 @@ function dataPersonnel(){
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Montant</span>
                                 <input type="float" id="montant"  class="form-control" aria-label="Amount (to the nearest dollar)">
-                                <span class="input-group-text">Fc</span>
+                                <span class="input-group-text">$</span>
                             </div>
                             <small id="montantVide"></small>
                             <div class="input-group mb-3 ">
                                 <span class="input-group-text">Reste</span>
                                 <input type="flaot" id="reste" class="form-control"  aria-label="Amount (to the nearest dollar)">
-                                <span class="input-group-text">Fc</span>
+                                <span class="input-group-text">$</span>
                             </div>
                         </div>
                         <div class="border border-1 col-md-3 m-2 bg-warning moinClaire">
                             <h4 class="text-secondary">Calcul du total</h4>
                             <div class="input-group mb-3">
                                 <input type="float" id="total" readonly class="form-control" placeholder="0.00" aria-label="Recipient's username" aria-describedby="basic-addon0">
-                                <span class="input-group-text" id="basic-addon0">Fc</span>
+                                <span class="input-group-text" id="basic-addon0">$</span>
                             </div>
                             <div class="input-group mb-3">
                                 <input type="float" id="cdf" readonly class="form-control" placeholder="0.00" aria-label="Recipient's username" aria-describedby="basic-addon1">
-                                <span class="input-group-text" id="basic-addon">$</span>
+                                <span class="input-group-text" id="basic-addon">Fc</span>
                             </div>
                             <div class="input-group mb-3">
                                 <input type="float" id="chilling" readonly class="form-control" placeholder="0.00" aria-label="Recipient's username" aria-describedby="basic-addon2">
