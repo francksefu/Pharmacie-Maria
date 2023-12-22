@@ -186,11 +186,9 @@ function dataPersonnel(){
                     <div class="border border-1 p-4 col-md-4 m-2">
                         <div class="input-group mb-3 ">
                             <span class="input-group-text">Nom du vendeur</span>
-                            <input type="text" id="personnel" list="dataPersonnel_" class="form-control"  >
+                            <input type="text" readonly id="personnel" list="dataPersonnel_" class="form-control" value="<?php echo $place_vente; ?>">
                             <datalist id="dataPersonnel_">
-                            <?php
-                            dataDataPersonnel();
-                            ?>
+                            
                         </datalist>
                         <small id="personnelVide"></small>
                         </div>

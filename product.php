@@ -1,4 +1,4 @@
-<<?php 
+<?php 
 include 'identifiant.php';
 ?>
 <!DOCTYPE html>

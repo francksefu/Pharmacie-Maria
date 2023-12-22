@@ -67,7 +67,7 @@ function dataProduct(){
         <div class="container bg-transparent pt-5">
             <div class="row bg-transparent pt-5">
                 <div class="col-md-5 bg-transparent m-2">
-                    <h2>Hi <?php echo $user; ?>, Good Morning</h2>
+                    <h2>Bonjour <?php echo $post_user; ?>, Tout va bien </h2>
                     <p class=" text-secondary pt-3">
                         Votre dashboard vous donne une vues sur vos performances ou l evolution
                          de votre busness
@@ -117,7 +117,7 @@ function dataProduct(){
 
     <footer>
         <hr class="w-100">
-        <p class="text-secondary text-center p-3">&copy; copyright Maria</p>
+        <p class="text-secondary text-center p-3">&copy; copyright francksf</p>
     </footer>
     <?php } ?>
     <!--<script  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>-->

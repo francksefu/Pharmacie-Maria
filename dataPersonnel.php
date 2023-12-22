@@ -99,9 +99,12 @@ include 'identifiant.php';
                         <th>Nom</th>
                         <th>phone number</th>
                         <th> Salaire de base </th>
-                        <th> Poste </th>
-                        <th> Password </th>
-                        <th>Action</th>
+                        <th> Poste </th>';
+                        if($user == 'Administrateur') {
+                            echo '<th> Password </th>';
+                        }
+                        
+                       echo' <th>Action</th>
                     </tr>
                     </thead>';
               
@@ -112,9 +115,12 @@ include 'identifiant.php';
                     <td>'.$row["NomP"].'</td>
                     <td>'.$row["Telephone"].'</td>
                     <td>'.$row["SalaireDeBase"].'</td>
-                    <td>'.$row["Poste"].'</td>
-                    <td>'.$row["PasswordP"].'</td>
-                    ';
+                    <td>'.$row["Poste"].'</td>';
+                    if($user == 'Administrateur') {
+                        echo '<td>'.$row["PasswordP"].'</td>';
+                    }
+                    
+                    
                     if ($user != 'Responsable') {
                         echo '<td ><div class="d-flex flex-row justify-content-center">
                             

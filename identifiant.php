@@ -1,5 +1,6 @@
 <?php 
 $user = "";
+$post_user = "";
 session_start();
 if(isset($_GET['deconnexion']))
 { 
@@ -10,6 +11,9 @@ if(isset($_GET['deconnexion']))
    }
 }
 else if($_SESSION['username'] !== ""){
-    $user = $_SESSION['username'];
+    $post_user = $_SESSION['username'];
 }
+
+
+  
 ?>

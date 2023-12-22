@@ -20,6 +20,46 @@ echo '<meta charset="UTF-8">
 <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
 ';
 
+function dataChercheurPersonnel($use){
+    include 'connexion.php';
+    $take = '';
+    $sql = ("SELECT * FROM DataPersonnel WHERE (NomP = '".$use."') order by idDataPersonnel desc");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+                        
+        while($row= mysqli_fetch_assoc($result)){
+            $take .= $row["Poste"];
+        }
+               
+   }else{$take = "Une erreur s est produite ";} 
+   return $take;
+  
+  }
+
+  if ($post_user != "") {
+    $user = dataChercheurPersonnel($post_user);
+  }
+
+  function dataDataPlaceVentePersonnel($use){
+    include 'connexion.php';
+    $take = '';
+    $sql = ("SELECT * FROM DataPersonnel WHERE (NomP = '".$use."') order by idDataPersonnel desc");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+                        
+        while($row= mysqli_fetch_assoc($result)){
+            $take .= "ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"].":: Telephone ::".$row["Telephone"].""; 
+        }
+                
+   }else{$take = "";} 
+   return $take;
+  
+  }
+
+  $place_vente = dataDataPlaceVentePersonnel($post_user);
+
 switch ($user) {
     case "Approvisionneur" :
       echo '<script defer src="navbarApprov.js"></script>';
@@ -39,9 +79,6 @@ switch ($user) {
 
     case "Administrateur" :
         echo '<script defer src="navbar.js"></script>';
-    break;
-
-    
-    
+    break; 
 }
 ?>

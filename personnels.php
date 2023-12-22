@@ -108,7 +108,7 @@ include 'identifiant.php';
                     <td>'.$row["idClient"].'</td>
                     <td>'.$row["NomClient"].'</td>
                     <td>'.$row["Telephone"].'</td>';
-                    if ($user != 'Responsable') {
+                    if ($post_user != 'Responsable') {
                         echo '<td >
                         <div class="d-flex flex-row justify-content-center">
                             

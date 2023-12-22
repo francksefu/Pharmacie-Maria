@@ -14,12 +14,6 @@ function navbar() {
   <div class="collapse navbar-collapse" id="mynavbar">
     <ul class="navbar-nav me-auto">
       
-     
-      
-      
-
-      
-
       <li class="nav-item pe-3 dropdown" >
         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-emoji-heart-eyes-fill" viewBox="0 0 16 16">

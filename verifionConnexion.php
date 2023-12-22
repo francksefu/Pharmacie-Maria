@@ -11,7 +11,7 @@ if(isset($_POST['username']) && isset($_POST['password']))
     
     if($username !== "" && $password !== "")
     {
-        $requete = "SELECT count(*) FROM Personnel where 
+        $requete = "SELECT count(*) FROM DataPersonnel where 
               NomP = '".$username."' and PasswordP = '".$password."' ";
          
          
