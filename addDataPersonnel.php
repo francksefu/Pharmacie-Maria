@@ -1,17 +1,5 @@
 <?php 
-$user = "";
-session_start();
-if(isset($_GET['deconnexion']))
-{ 
-   if($_GET['deconnexion']==true)
-   {  
-      session_destroy();
-      header("location:index.php");
-   }
-}
-else if($_SESSION['username'] !== ""){
-    $user = $_SESSION['username'];
-}
+include 'identifiant.php';
 ?>
 
 <!DOCTYPE html>
@@ -73,6 +61,16 @@ else if($_SESSION['username'] !== ""){
                                 </div>
                             </div>
                             <small id="PosteVide"></small>
+                        </div>
+
+                        <div class="col-md-7 mb-3">
+                            <div class="input-group ">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="nom">Mot de passe*</span>
+                                    <input type="text"  name="nom" id="password" class="form-control" placeholder="Entrer le mot de passe pour cet agent" aria-label="Username" aria-describedby="nom" >
+                                </div>
+                            </div>
+                            <small id="PasswordVide"></small>
                         </div>
                         
                     </div>

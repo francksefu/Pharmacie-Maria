@@ -6,6 +6,7 @@
         private $telephone;
         private $salaire;
         public $poste;
+        private $password;
         
         //table for contain json 
 
@@ -16,12 +17,13 @@
         public $message;
         public $remote = false;
 
-        function __construct($nom, $telephone, $salaire, $poste) {
+        function __construct($nom, $telephone, $salaire, $poste, $password) {
            
             $this->nom = $nom;
             $this->telephone = $telephone;
             $this->salaire = $salaire;
             $this->poste = $poste;
+            $this->password = $password;
             //$this->read();
         }
 
@@ -54,7 +56,7 @@
             } else {
                 include 'connexion.php';
             }
-            $sql = ("INSERT INTO DataPersonnel ( NomP, Telephone, SalaireDeBase, Poste) values ('".$this->nom."','".$this->telephone."','".$this->salaire."', '".$this->poste."')");
+            $sql = ("INSERT INTO DataPersonnel ( NomP, Telephone, SalaireDeBase, Poste, `PasswordP`) values ('".$this->nom."','".$this->telephone."','".$this->salaire."', '".$this->poste."', '".$this->password."')");
             if(mysqli_query($db, $sql)){
                 //echo"<small style='color: green'>insertion fait</small>";
                 }else{
@@ -89,6 +91,12 @@
 
             $updC4= ("UPDATE `DataPersonnel` SET `Poste` = '".$this->poste."' WHERE idDataPersonnel =$this->idClient");
             if(mysqli_query($db,$updC4)){echo"";}else{
+                $this->message = mysqli_error($db);
+                return;
+            }
+
+            $updC5= ("UPDATE `DataPersonnel` SET `PasswordP` = '".$this->password."' WHERE idDataPersonnel =$this->idClient");
+            if(mysqli_query($db,$updC5)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
             }

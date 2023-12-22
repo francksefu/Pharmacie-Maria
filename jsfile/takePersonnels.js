@@ -5,10 +5,13 @@ const telephone = document.querySelector('#telephone');
 const titre = document.querySelector('#titre');
 const salaire = document.querySelector('#salaire');
 const poste = document.querySelector('#poste');
+const password = document.querySelector('#password');
 
 const btn = document.querySelector('#envoie');
 
 const nomVide = document.querySelector('#nomVide');
+const passwordVide = document.querySelector('#PasswordVide');
+const posteVide = document.querySelector('#PosteVide');
 const telephoneVide = document.querySelector('#telephoneVide');
 
 
@@ -26,6 +29,7 @@ if (type.value === 'update') {
       idPersonnel = tabValeur[1];
       salaire.value = tabValeur[7];
       poste.value = tabValeur[9];
+      password.value = tabValeur[11];
     })
     
   }
@@ -73,13 +77,25 @@ btn.addEventListener('click', () => {
     enleveMessage(nomVide);
   }
 
-  
+  if(poste.value == ''){
+    messageComplete(posteVide);
+    return;
+  } else {
+    enleveMessage(posteVide);
+  }
+
+  if(password.value == ''){
+    messageComplete(passwordVide);
+    return;
+  } else {
+    enleveMessage(passwordVide);
+  }
 
   let prend;
   if (type.value == 'update') {
-    prend = nomPersonnel.value+"::"+telephone.value+"::"+salaire.value+"::"+idPersonnel+"::"+poste.value+"::update";
+    prend = nomPersonnel.value+"::"+telephone.value+"::"+salaire.value+"::"+poste.value+"::"+password.value+"::"+idPersonnel+"::update";
   } else {
-    prend =nomPersonnel.value+"::"+telephone.value+"::"+salaire.value+"::"+poste.value+"::add";
+    prend =nomPersonnel.value+"::"+telephone.value+"::"+salaire.value+"::"+poste.value+"::"+password.value+"::add";
   }
 
   showHint(prend);
@@ -88,6 +104,7 @@ btn.addEventListener('click', () => {
     telephone.value = "";
     salaire.value = "";
     poste.value = "";
+    password.value = "";
    identifiantM.value = "";
     
 });

@@ -1,17 +1,5 @@
 <?php 
-    $user = "";
-    session_start();
-    if(isset($_GET['deconnexion']))
-    { 
-    if($_GET['deconnexion']==true)
-    {  
-        session_destroy();
-        header("location:index.php");
-    }
-    }
-    else if($_SESSION['username'] !== ""){
-        $user = $_SESSION['username'];
-    }
+include 'identifiant.php';
 ?>
 
 <!DOCTYPE html>
@@ -112,10 +100,11 @@
                         <th>phone number</th>
                         <th> Salaire de base </th>
                         <th> Poste </th>
+                        <th> Password </th>
                         <th>Action</th>
                     </tr>
                     </thead>';
-                
+              
                     while($row= mysqli_fetch_assoc($result)){
                             echo'
                             <tr>
@@ -124,6 +113,7 @@
                     <td>'.$row["Telephone"].'</td>
                     <td>'.$row["SalaireDeBase"].'</td>
                     <td>'.$row["Poste"].'</td>
+                    <td>'.$row["PasswordP"].'</td>
                     ';
                     if ($user != 'Responsable') {
                         echo '<td ><div class="d-flex flex-row justify-content-center">
