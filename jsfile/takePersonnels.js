@@ -4,6 +4,7 @@ const nomPersonnel = document.querySelector('#nomPersonnel');
 const telephone = document.querySelector('#telephone');
 const titre = document.querySelector('#titre');
 const salaire = document.querySelector('#salaire');
+const poste = document.querySelector('#poste');
 
 const btn = document.querySelector('#envoie');
 
@@ -24,6 +25,7 @@ if (type.value === 'update') {
       telephone.value = tabValeur[5];
       idPersonnel = tabValeur[1];
       salaire.value = tabValeur[7];
+      poste.value = tabValeur[9];
     })
     
   }
@@ -75,9 +77,9 @@ btn.addEventListener('click', () => {
 
   let prend;
   if (type.value == 'update') {
-    prend = nomPersonnel.value+"::"+telephone.value+"::"+salaire.value+"::"+idPersonnel+"::update";
+    prend = nomPersonnel.value+"::"+telephone.value+"::"+salaire.value+"::"+idPersonnel+"::"+poste.value+"::update";
   } else {
-    prend =nomPersonnel.value+"::"+telephone.value+"::"+salaire.value+"::add";
+    prend =nomPersonnel.value+"::"+telephone.value+"::"+salaire.value+"::"+poste.value+"::add";
   }
 
   showHint(prend);
@@ -85,6 +87,7 @@ btn.addEventListener('click', () => {
     nomPersonnel.value =""; 
     telephone.value = "";
     salaire.value = "";
+    poste.value = "";
    identifiantM.value = "";
     
 });

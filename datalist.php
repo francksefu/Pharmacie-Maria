@@ -74,7 +74,7 @@ function dataDataPersonnel(){
   if(mysqli_num_rows($result)>0){
                       
       while($row= mysqli_fetch_assoc($result)){
-          $take .= "<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"].":: Telephone ::".$row["Telephone"].":: Salaire ::".$row["SalaireDeBase"]."'> = ".$row["Nom"]."</option>"; 
+          $take .= "<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"].":: Telephone ::".$row["Telephone"].":: Salaire ::".$row["SalaireDeBase"].":: Poste ::".$row["Poste"]."'> = ".$row["Nom"]."</option>"; 
       }
               
  }else{$take = "Une erreur s est produite ";} 

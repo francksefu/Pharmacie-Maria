@@ -111,10 +111,11 @@
                         <th>Nom</th>
                         <th>phone number</th>
                         <th> Salaire de base </th>
+                        <th> Poste </th>
                         <th>Action</th>
                     </tr>
                     </thead>';
-                  
+                
                     while($row= mysqli_fetch_assoc($result)){
                             echo'
                             <tr>
@@ -122,6 +123,7 @@
                     <td>'.$row["NomP"].'</td>
                     <td>'.$row["Telephone"].'</td>
                     <td>'.$row["SalaireDeBase"].'</td>
+                    <td>'.$row["Poste"].'</td>
                     ';
                     if ($user != 'Responsable') {
                         echo '<td ><div class="d-flex flex-row justify-content-center">

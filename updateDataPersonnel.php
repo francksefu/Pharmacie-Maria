@@ -71,8 +71,18 @@
                             </div>
                             <small id="SalaireVide"></small>
                         </div>
+
+                        <div class="col-md-7 mb-3">
+                            <div class="input-group ">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="nom">Poste*</span>
+                                    <input type="text"  name="nom" id="poste" class="form-control" placeholder="Entrer le poste du personnel" aria-label="Username" aria-describedby="nom" >
+                                </div>
+                            </div>
+                            <small id="PosteVide"></small>
+                        </div>
                     </div>
-                   
+                  
                     <p id="txtHint"></p>
                     <input type="hidden" value="update" id="typeFormulaire">
                     <button id='envoie' class="btn btn-primary p-3 fs-4 mt-4 w-25">Modifier</button>
