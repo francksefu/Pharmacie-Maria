@@ -21,7 +21,7 @@ include 'identifiant.php';
             }
            
         }
-   
+
             $sucess = '<div class="alert alert-success" role="alert">
             Insertion fait avec success
         </div>';
