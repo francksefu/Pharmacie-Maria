@@ -13,7 +13,7 @@ include 'identifiant.php';
 <?php
 function dataPaiements(){
     include 'connexion.php';
-    $sql= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) order by idPaiements desc");
+    $sql= ("SELECT * FROM Paiements2, Ventes2, Client WHERE (Paiements2.Operation = Ventes2.Operation) and (Client.idClient = Ventes2.idClient) order by idPaiements desc");
     $result = mysqli_query($db, $sql);
            
     if(mysqli_num_rows($result)>0){
@@ -25,7 +25,7 @@ function dataPaiements(){
 }
 function dataVentes(){
     include 'connexion.php';
-    $sql = ("SELECT * FROM Ventes, Client WHERE (Ventes.idClient = Client.idClient) and (Dette = 'Oui')GROUP BY Operation order by Operation desc");
+    $sql = ("SELECT * FROM Ventes2, Client WHERE (Ventes2.idClient = Client.idClient) and (Dette = 'Oui')GROUP BY Operation order by Operation desc");
     $result = mysqli_query($db, $sql);
             
     if(mysqli_num_rows($result)>0){
@@ -81,7 +81,7 @@ function dataVentes(){
                         <small id="montantVide"></small>
                         
                       <p id="txtHint"></p>
-                      <input type="hidden" value="stock1" id="stock">
+                      <input type="hidden" value="stock2" id="stock">
                       <input type="hidden" value="update" id="typeFormulaire">
                       <button id="envoi" type="button" class="btn btn-primary p-2 mt-4 w-25">Modifier paiements</button>
                     
@@ -94,7 +94,7 @@ function dataVentes(){
 
     <footer>
         <hr class="w-100">
-        <p class="text-secondary text-center p-3">&copy; copyright Maria</p>
+        <p class="text-secondary text-center p-3">&copy; copyright francksf</p>
     </footer>
     
     <!--<script  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>-->

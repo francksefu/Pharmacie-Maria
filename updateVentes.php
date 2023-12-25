@@ -260,6 +260,7 @@ function dataPersonnel(){
                 <input type="hidden" id="state" >
                 <input type="hidden" id="operation" value="<?php echo findIDVente(); ?>" />
                 <input type="hidden" id="typeForm" value="update" />
+                <input type="hidden" id="stock" value="stock1" />
     </form>
         </div>
     </main>

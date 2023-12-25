@@ -71,7 +71,7 @@ include 'identifiant.php';
                 if( $tracteur->message) {
                     $hint = $autre;
                     echo '<div class="alert alert-danger" role="alert">
-                    Erreur fran '.$hint.'
+                    Erreur fran jk'.$hint.'
                   </div>';
                     return;
                 }
@@ -95,7 +95,7 @@ include 'identifiant.php';
                 if( $tracteur->message) {
                     $hint = $autre;
                     echo '<div class="alert alert-danger" role="alert">
-                    Erreur fran '.$hint.'
+                    Erreur fran jj'.$hint.'
                   </div>';
                     return;
                 }
@@ -111,7 +111,7 @@ include 'identifiant.php';
       </div>';
     
       $error = '<div class="alert alert-danger" role="alert">
-      Erreur '.$autre.'
+      Erreur 00 '.$autre.'
     </div>';
         echo $hint == $autre ? $error : $sucess;
     }
@@ -120,7 +120,7 @@ include 'identifiant.php';
         if ($q !== "") {
             $hint = $q;
             
-            $tracteur = new Approvisionnement(0, 1, 2, 3, 4, 5, 6,7);
+            $tracteur = new Approvisionnement(0, 1, 2, 3, 4, 5, 6, 'stock1');
             $tracteur->operation = $tabObj[0];
             $tracteur->deleteVentes();
             array_push($delete_table, $tracteur);
@@ -147,5 +147,38 @@ include 'identifiant.php';
         </div>';
         echo $hint == $autre ? $error : $sucess;
         } 
+
+
+        if (end($tabObj) == "delete2" && $user != "") {
+            if ($q !== "") {
+                $hint = $q;
+                
+                $tracteur = new Approvisionnement(0, 1, 2, 3, 4, 5, 6, 'stock2');
+                $tracteur->operation = $tabObj[0];
+                $tracteur->deleteVentes2();
+                array_push($delete_table, $tracteur);
+                $autre = $tracteur->message;
+                if( $tracteur->message) {
+                    $hint = $autre;
+                    echo '<div class="alert alert-danger" role="alert">
+                    Erreur '.$hint.'
+                  </div>';
+                    return;
+                }
+                
+            }
+            
+            $take_approv_tojson = new TakeApprov($delete_table);
+            $take_approv_tojson->write_delete();
+            
+                $sucess = '<div class="alert alert-success" role="alert">
+                Suppression fait avec success
+              </div>';
+            
+              $error = '<div class="alert alert-danger" role="alert">
+              Erreur '.$autre.'
+            </div>';
+            echo $hint == $autre ? $error : $sucess;
+            } 
 
 ?>

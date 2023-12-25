@@ -120,7 +120,13 @@
             } else {
                 include 'connexion.php';
             }
-            $sql = ("SELECT * FROM Approvisionnement WHERE (Operation = $operationA)");
+
+            if ($this->destination == 'stock1') {
+                $sql = ("SELECT * FROM Approvisionnement WHERE (Operation = $operationA)");
+            } else {
+                $sql = ("SELECT * FROM Approvisionnement2 WHERE (Operation = $operationA)");
+            }
+            
             $result = mysqli_query($db, $sql);
                     
             if(mysqli_num_rows($result)>0){
@@ -139,9 +145,9 @@
                     
                 }
            }else{$this->message = "Une erreur s est produite ici";}
-
-
         }
+
+
         function remettreProduit($idProduitA, $quantiteA) {
             if ($this->remote) {
                 include 'remote_connexion.php';
@@ -244,19 +250,26 @@
             } else {
                 include 'connexion.php';
             }
-            $sql = ("INSERT INTO Approvisionnement (idProduit, QuantiteApprov, PrixA, DatesApprov, Operation, TotalFacture, `Source`, Destination) values ($this->idProduit, $this->quantite, $this->pu, '".$this->date."', $this->operation, $this->total_facture, '".$this->source."', '".$this->destination."')");
-            if(mysqli_query($db, $sql)){
-                
-                }else{
-                $this->message = mysqli_error($db);
-            }
+            
             if ($this->destination == 'stock1') {
+                $sql = ("INSERT INTO Approvisionnement (idProduit, QuantiteApprov, PrixA, DatesApprov, Operation, TotalFacture, `Source`, Destination) values ($this->idProduit, $this->quantite, $this->pu, '".$this->date."', $this->operation, $this->total_facture, '".$this->source."', '".$this->destination."')");
+                if(mysqli_query($db, $sql)){
+                    
+                    }else{
+                    $this->message = mysqli_error($db);
+                }
                 $this->enleveProduit($this->idProduit);
             } else {
-                $this->enleveProduit2($this->idProduit);
+                $sql = ("INSERT INTO Approvisionnement2 (idProduit, QuantiteApprov, PrixA, DatesApprov, Operation, TotalFacture, `Source`, Destination) values ($this->idProduit, $this->quantite, $this->pu, '".$this->date."', $this->operation, $this->total_facture, '".$this->source."', '".$this->destination."')");
+                if(mysqli_query($db, $sql)){
+                    
+                    }else{
+                    $this->message = mysqli_error($db);
+                }
+               $this->enleveProduit2($this->idProduit);
             }
             if ($this->source == 'stock2') {
-                $this->enleveProduitSource($this->idProduit);
+                $this->enleveProduitSource($this->idProduit);// change ceci en nom, la communication entre les 2 stocks
             }
            
         }
@@ -266,13 +279,23 @@
             } else {
                 include 'connexion.php';
             }
-            $delete = ("DELETE FROM Approvisionnement WHERE Operation =$this->operation");
-            if (mysqli_query($db, $delete)){echo"";} else {
-                $this->message = 'delete'.mysqli_error($db);
-                return;
-            }
-        }
 
+            if ($this->destination == 'stock1') {
+                $delete = ("DELETE FROM Approvisionnement WHERE Operation =$this->operation");
+                if (mysqli_query($db, $delete)){echo"";} else {
+                    $this->message = 'delete'.mysqli_error($db);
+                    return;
+                }
+            } else {
+                $delete = ("DELETE FROM Approvisionnement2 WHERE Operation =$this->operation");
+                if (mysqli_query($db, $delete)){echo"";} else {
+                    $this->message = 'delete'.mysqli_error($db);
+                    return;
+                }
+            }
+            
+        }
+// update this routines, because we must have something that have to help us to make difference between stock 1 and 2
         function deleteVentes() {
             if ($this->remote) {
                 include 'remote_connexion.php';
@@ -282,6 +305,21 @@
 
            $this->findIDProduit($this->operation);
             $delete = ("DELETE FROM Approvisionnement WHERE Operation =$this->operation");
+            if (mysqli_query($db, $delete)){echo"";} else {
+                $this->message = 'delete'.mysqli_error($db);
+                return;
+            }
+        }
+
+        function deleteVentes2() {
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
+
+           $this->findIDProduit($this->operation);
+            $delete = ("DELETE FROM Approvisionnement2 WHERE Operation =$this->operation");
             if (mysqli_query($db, $delete)){echo"";} else {
                 $this->message = 'delete'.mysqli_error($db);
                 return;

@@ -4,6 +4,7 @@ const dates = document.querySelector('#date');
 const facture = document.querySelector('#facture');
 const factureVide = document.querySelector('#factureVide');
 const montant = document.querySelector('#montant');
+const stock = document.querySelector('#stock');
 
 const montantVide = document.querySelector('#montantVide')
 
@@ -84,11 +85,11 @@ btn.addEventListener('click', () => {
   let operation = facture.value.split('::')[1];
   let prend;
   if (typeForm.value == 'update') {
-    prend = dates.value+"::"+montant.value+"::"+operation+"::"+idPaiements+"::update";
+    prend = dates.value+"::"+montant.value+"::"+operation+"::"+stock.value+"::"+idPaiements+"::update";
   } else {
-    prend = dates.value+"::"+montant.value+"::"+operation+"::add";
+    prend = dates.value+"::"+montant.value+"::"+operation+"::"+stock.value+"::add";
   }
-  
+ 
   showHint(prend);
     montant.value = "";
     facture.value = "";

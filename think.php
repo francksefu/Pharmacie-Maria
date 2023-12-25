@@ -1,17 +1,5 @@
 <?php 
-    $user = "";
-    session_start();
-    if(isset($_GET['deconnexion']))
-    { 
-    if($_GET['deconnexion']==true)
-    {  
-        session_destroy();
-        header("location:index.php");
-    }
-    }
-    else if($_SESSION['username'] !== ""){
-        $user = $_SESSION['username'];
-    }
+    include 'identifiant.php';
 ?>
 
 <!DOCTYPE html>
@@ -23,8 +11,9 @@
     <script defer src="./jsfile/supprime.js"></script>
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="vente.css">
-   
+  
     <script defer src="./jsfile/ventesList.js"></script>
+    <script defer src="./jsfile/ventesList2.js"></script>
     <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
     </style>
 </head>
@@ -76,7 +65,7 @@ function ventes($reqSql) {
     $total_paye = 0;
     $pa = 0;
     echo '<h2 class="mt-0 mb-2 text-center">Ventes</h2>';
-    echo '<h2 class="mt-3 mb-2 text-center">Ventes</h2>';
+    
    
     //$reqSql= ("SELECT * FROM Produit order by idProduit asc");
     $result= mysqli_query($db, $reqSql);
@@ -155,9 +144,14 @@ function ventes($reqSql) {
     }else{echo "Pas des donnees dans la base ";}
 }
 
-function dataVente($operation){
+function dataVente($operation, $stock){
     include 'connexion.php';
-    $sql= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and (Client.idClient = Ventes.idClient) and (Operation = $operation)");
+    if ($stock == '1') {
+      $sql= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and (Client.idClient = Ventes.idClient) and (Operation = $operation)");
+    } else {
+      $sql= ("SELECT * FROM Ventes2, Produit2, Client, DataPersonnel WHERE (Ventes2.idProduit = Produit2.idProduit and (DataPersonnel.idDataPersonnel = Ventes2.idPersonnel)) and (Client.idClient = Ventes2.idClient) and (Operation = $operation)");
+    }
+    
     $result = mysqli_query($db, $sql);
     $valeur = '';  
     if(mysqli_num_rows($result)>0){
@@ -287,20 +281,19 @@ function dataVente_tableau_produit($idProduit_tableau, $dateV,$dateV2 = 10){
 
 }
 
-function ventes_affichage_facture($reqSql) {
+function ventes_affichage_facture($reqSql, $stock) {
     include 'connexion.php';
     $total_toute_facture = 0;
     $total_paye = 0;
     $pa = 0;
     echo '<h2 class="mt-0 mb-2 text-center">Ventes</h2>';
-    echo '<h2 class="mt-3 mb-2 text-center">Ventes</h2>';
    
     //$reqSql= ("SELECT * FROM Produit order by idProduit asc");
     $result= mysqli_query($db, $reqSql);
     if(mysqli_num_rows($result)>0){
         
         while($row= mysqli_fetch_assoc($result)){
-          echo dataVente($row["Operation"]);
+          echo dataVente($row["Operation"], $stock);
           $paye = 0;
 
             if($row["Dette"] == 'Oui') {
@@ -326,7 +319,6 @@ function ventes_affichage_tableau($reqSqlDate, $reqProduit, $dat1 = 10, $dat2 = 
     include 'connexion.php';
     
     echo '<h2 class="mt-0 mb-2 text-center">Ventes</h2>';
-    echo '<h2 class="mt-3 mb-2 text-center">Ventes</h2>';
 
     $result= mysqli_query($db, $reqSqlDate);
     if(mysqli_num_rows($result)>0){
@@ -375,8 +367,6 @@ function sortie($reqSql) {
     include 'connexion.php';
     $total_paye = 0;
     echo '<h2 class="mt-0 mb-2 text-center">Sortie</h2>';
-    echo '<h2 class="mt-3 mb-2 text-center">Sorties</h2>';
-
     $result= mysqli_query($db, $reqSql);
     if(mysqli_num_rows($result)>0){
         echo '<table class="table border border-1">
@@ -434,7 +424,6 @@ function bonusPerte ($reqSql) {
     $quantiteG = 0;
     $quantiteP = 0;
     echo '<h2 class="mt-0 mb-2 text-center">Bonus et perte</h2>';
-    echo '<h2 class="mt-3 mb-2 text-center">Bonus et pertes</h2>';
     
     $result= mysqli_query($db, $reqSql);
     if(mysqli_num_rows($result)>0){
@@ -504,7 +493,6 @@ function venteEtsortie($reqSql, $req) {
   include 'connexion.php';
   $total_sortie = 0;
   echo '<h2 class="mt-0 mb-2 text-center">Sortie</h2>';
-  echo '<h2 class="mt-3 mb-2 text-center">Sorties</h2>';
                      
   //$reqSql= ("SELECT * FROM Sortie order by idSortie desc");
   $result= mysqli_query($db, $req);
@@ -646,7 +634,6 @@ function approvisionnement($reqSql) {
 
     $total = 0;
     echo '<h2 class="mt-0 mb-2 text-center">Approvisionnement</h2>';
-    echo '<h2 class="mt-3 mb-2 text-center">Approvisionnement</h2>';
    
     $result= mysqli_query($db, $reqSql);
     if(mysqli_num_rows($result)>0){
@@ -798,7 +785,6 @@ function paiements_affichage_facture($reqSql) {
     $total_toute_facture = 0;
     $total_paye = 0;
     echo '<h2 class="mt-0 mb-2 text-center">Paiements factures</h2>';
-    echo '<h2 class="mt-3 mb-2 text-center">Paiements factures</h2>';
    
     //$reqSql= ("SELECT * FROM Produit order by idProduit asc");
     $result= mysqli_query($db, $reqSql);
@@ -830,7 +816,7 @@ function paiements($reqSql, $req) {
     $total_facture = 0;
     $montant = 0;
     echo '<h2 class="mt-0 mb-2 text-center">Paiements</h2>';
-    echo '<h2 class="mt-4 mb-2 text-center">Paiements</h2>';
+
     $res = mysqli_query($db, $req);
     if(mysqli_num_rows($res)>0) {
         while($rowT= mysqli_fetch_assoc($res)) {
@@ -1005,8 +991,8 @@ function calcul_du_total_paiement_personnel($reqSql) {
 }
 
 function en_tete () {
-  echo '<h2 class="mt-0 mb-2 text-center">Paiements du personnel</h2>';
-  echo '<h2 class="mt-0 mb-2 text-center">Paiements du personnel</h2>';
+  echo '<h2 class="mt-0 mb-2 text-center">Votre rapport</h2>';
+  echo '<h2 class="mt-0 mb-2 text-center">Votre rapport</h2>';
 }
 
 function personnel_avec_salaire_de_base($mois, $annee, $unique_all) {
@@ -1040,7 +1026,7 @@ function personnel_avec_salaire_de_base($mois, $annee, $unique_all) {
 function perte_occasionnee($reqSql) {
   include 'connexion.php';
   echo '<h2 class="mt-0 mb-2 text-center">Perte occasionnee</h2>';
-    echo '<h2 class="mt-4 mb-2 text-center">Pertes occasionnée</h2>';
+   
     $total = 0;     
   //$reqSql= ("SELECT * FROM PerteOccaz order by idPerteOccaz desc limit 500");
   $result= mysqli_query($db, $reqSql);
@@ -1102,209 +1088,357 @@ function perte_occasionnee($reqSql) {
     <?php 
     if ($user !== "") {
       if($cache == 'toute_vente') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') GROUP BY Operation order by Operation desc");
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2, Client WHERE (Ventes2.idProduit = Produit2.idProduit) and (Client.idClient = Ventes2.idClient) and(DatesVente = '".$date1."') GROUP BY Operation order by Operation desc");
         ventes($reqSq);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        ventes($reqSq2);
       }
 
       if($cache == 'toute_vente_facture') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') GROUP BY Operation order by Operation desc");
-        ventes_affichage_facture($reqSq);
+        ventes_affichage_facture($reqSq, 1);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2_= ("SELECT * FROM Ventes2, Produit2, Client, DataPersonnel WHERE (Ventes2.idProduit = Produit2.idProduit and (DataPersonnel.idDataPersonnel = Ventes2.idPersonnel)) and (Client.idClient = Ventes2.idClient) and(DatesVente = '".$date1."') GROUP BY Operation order by Operation desc");
+        ventes_affichage_facture($reqSq2_, 2);
       }
 
       if($cache == 'toute_vente_tableau') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit WHERE (Ventes.idProduit = Produit.idProduit) and(DatesVente = '".$date1."') GROUP BY DatesVente order by DatesVente desc");
         $reqSqP= ("SELECT * FROM Ventes, Produit WHERE (Ventes.idProduit = Produit.idProduit) and(DatesVente = '".$date1."') GROUP BY Produit.idProduit order by DatesVente desc");
         ventes_affichage_tableau($reqSq, $reqSqP);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2 WHERE (Ventes2.idProduit = Produit2.idProduit) and(DatesVente = '".$date1."') GROUP BY DatesVente order by DatesVente desc");
+        $reqSqP2= ("SELECT * FROM Ventes2, Produit2 WHERE (Ventes2.idProduit = Produit2.idProduit) and(DatesVente = '".$date1."') GROUP BY Produit.idProduit order by DatesVente desc");
+        ventes_affichage_tableau($reqSq2, $reqSqP2);
       }
 
       if($cache == 'toute_vente2') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
         ventes($reqSq);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2, Client WHERE (Ventes2.idProduit = Produit2.idProduit) and (Client.idClient = Ventes2.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
+        ventes($reqSq2);
       }
 
       if($cache == 'toute_vente2_facture') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
-        ventes_affichage_facture($reqSq);
+        ventes_affichage_facture($reqSq, 1);
+
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2, Client, DataPersonnel WHERE (Ventes2.idProduit = Produit2.idProduit) and (Client.idClient = Ventes2.idClient and (DataPersonnel.idDataPersonnel = Ventes2.idPersonnel)) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
+        ventes_affichage_facture($reqSq2, 2);
       }
 
       if($cache == 'toute_vente2_tableau') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY DatesVente order by DatesVente desc");
         $reqSqP= ("SELECT * FROM Ventes, Produit WHERE (Ventes.idProduit = Produit.idProduit) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Produit.idProduit order by DatesVente desc");
         ventes_affichage_tableau($reqSq, $reqSqP, $date1, $date2);
+
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2, Client WHERE (Ventes2.idProduit = Produit2.idProduit) and (Client.idClient = Ventes2.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY DatesVente order by DatesVente desc");
+        $reqSqP2= ("SELECT * FROM Ventes2, Produit2 WHERE (Ventes2.idProduit = Produit2.idProduit) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Produit2.idProduit order by DatesVente desc");
+        ventes_affichage_tableau($reqSq2, $reqSqP2, $date1, $date2);
       }
 
       if($cache == 'paye_cache') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') and (Dette = 'Non') GROUP BY Operation order by Operation desc");
         ventes($reqSq);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2, Client WHERE (Ventes2.idProduit = Produit2.idProduit) and (Client.idClient = Ventes2.idClient) and(DatesVente = '".$date1."') and (Dette = 'Non') GROUP BY Operation order by Operation desc");
+        ventes($reqSq2);
       }
 
       if($cache == 'paye_cache_facture') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') and (Dette = 'Non') GROUP BY Operation order by Operation desc");
-        ventes_affichage_facture($reqSq);
+        ventes_affichage_facture($reqSq, 1);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2, Client, DataPersonnel WHERE (Ventes2.idProduit = Produit2.idProduit and (DataPersonnel.idDataPersonnel = Ventes2.idPersonnel)) and (Client.idClient = Ventes2.idClient) and(DatesVente = '".$date1."') and (Dette = 'Non') GROUP BY Operation order by Operation desc");
+        ventes_affichage_facture($reqSq2, 2);
       }
 
       if($cache == 'paye_cache2') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') and (Dette = 'Non') GROUP BY Operation order by Operation desc");
         ventes($reqSq);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2, Client WHERE (Ventes2.idProduit = Produit2.idProduit) and (Client.idClient = Ventes2.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') and (Dette = 'Non') GROUP BY Operation order by Operation desc");
+        ventes($reqSq2);
       }
 
       if($cache == 'paye_cache2_facture') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') and (Dette = 'Non') GROUP BY Operation order by Operation desc");
-        ventes_affichage_facture($reqSq);
+        ventes_affichage_facture($reqSq, 1);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2, Client, DataPersonnel WHERE (Ventes2.idProduit = Produit2.idProduit) and (Client.idClient = Ventes2.idClient and (DataPersonnel.idDataPersonnel = Ventes2.idPersonnel)) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') and (Dette = 'Non') GROUP BY Operation order by Operation desc");
+        ventes_affichage_facture($reqSq2, 2);
+
       }
 
 
       if($cache == 'vente_dette') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
         ventes($reqSq);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2, Client WHERE (Ventes2.idProduit = Produit2.idProduit) and (Client.idClient = Ventes2.idClient) and(DatesVente = '".$date1."') and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
+        ventes($reqSq2);
       }
 
       if($cache == 'vente_dette_facture') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and(DatesVente = '".$date1."') and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
-        ventes_affichage_facture($reqSq);
+        ventes_affichage_facture($reqSq, 1);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2, Client, DataPersonnel WHERE (Ventes2.idProduit = Produit2.idProduit) and (Client.idClient = Ventes2.idClient and (DataPersonnel.idDataPersonnel = Ventes2.idPersonnel)) and(DatesVente = '".$date1."') and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
+        ventes_affichage_facture($reqSq2, 2);
       }
 
       if($cache == 'vente_dette2') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
         ventes($reqSq);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2, Client WHERE (Ventes2.idProduit = Produit2.idProduit) and (Client.idClient = Ventes2.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
+        ventes($reqSq2);
       }
 
       if($cache == 'vente_dette2_facture') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
-        ventes_affichage_facture($reqSq);
+        ventes_affichage_facture($reqSq, 1);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2, Client, DataPersonnel WHERE (Ventes2.idProduit = Produit2.idProduit) and (Client.idClient = Ventes2.idClient and (DataPersonnel.idDataPersonnel = Ventes2.idPersonnel)) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
+        ventes_affichage_facture($reqSq2, 2);
       }
 
       if($cache == 'vente_sortie') {
+        en_tete();
         $reqSq1= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente = '".$date1."') GROUP BY Operation order by Operation desc");
         $reqSq2= ("SELECT * FROM Sortie WHERE(DatesD = '".$date1."') order by idSortie desc");
         venteEtsortie($reqSq1, $reqSq2);
       }
 
       if($cache == 'vente_sortie2') {
+        en_tete();
         $reqSq1= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
         $reqSq2= ("SELECT * FROM Sortie WHERE(DatesD BETWEEN '".$date1."' AND '".$date2."') order by idSortie desc");
         venteEtsortie($reqSq1, $reqSq2);
       }
 
       if($cache == 'vente-personnel') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient and idPersonnel = $idP) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
         ventes($reqSq);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2, Client WHERE (Ventes2.idProduit = Produit2.idProduit) and (Client.idClient = Ventes2.idClient and idPersonnel = $idP) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
+        ventes($reqSq2);
       }
 
       if($cache == 'vente-personnel-facture') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
-        ventes_affichage_facture($reqSq);
+        ventes_affichage_facture($reqSq, 1);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2, Client, DataPersonnel WHERE (Ventes2.idProduit = Produit2.idProduit) and (Client.idClient = Ventes2.idClient and (DataPersonnel.idDataPersonnel = Ventes2.idPersonnel)) and(DatesVente BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
+        ventes_affichage_facture($reqSq2, 2);
       }
 
       if($cache == 'toutes_sortie') {
+        en_tete();
         $reqSq= ("SELECT * FROM Sortie WHERE(DatesD = '".$date1."') order by idSortie desc");
         sortie($reqSq);
       }
 
       if($cache == 'toutes_sortie2') {
+        en_tete();
         $reqSq= ("SELECT * FROM Sortie WHERE(DatesD BETWEEN '".$date1."' AND '".$date2."') order by idSortie desc");
         sortie($reqSq);
       }
 
       if($cache == 'trie_dette') {
+        en_tete();
         $reqSq= ("SELECT * FROM Sortie WHERE(DatesD = '".$date1."') and (TypeD = 'Dette') order by idSortie desc");
         sortie($reqSq);
       }
 
       if($cache == 'trie_dette2') {
+        en_tete();
         $reqSq= ("SELECT * FROM Sortie WHERE(DatesD BETWEEN '".$date1."' AND '".$date2."') and (TypeD = 'Charge') order by idSortie desc");
         sortie($reqSq);
       }
 
       if($cache == 'trie_charge') {
+        en_tete();
         $reqSq= ("SELECT * FROM Sortie WHERE(DatesD = '".$date1."') and (TypeD = 'Dette') order by idSortie desc");
         sortie($reqSq);
       }
 
       if($cache == 'trie_charge2') {
+        en_tete();
         $reqSq= ("SELECT * FROM Sortie WHERE(DatesD BETWEEN '".$date1."' AND '".$date2."') and (TypeD = 'Charge') order by idSortie desc");
         sortie($reqSq);
       }
 
       if($cache == 'trie_depenses') {
+        en_tete();
         $reqSq= ("SELECT * FROM Sortie WHERE(DatesD = '".$date1."') and (TypeD = 'Depense') order by idSortie desc");
         sortie($reqSq);
       }
 
       if($cache == 'trie_depenses2') {
+        en_tete();
         $reqSq= ("SELECT * FROM Sortie WHERE(DatesD BETWEEN '".$date1."' AND '".$date2."') and (TypeD = 'Depense') order by idSortie desc");
         sortie($reqSq);
       }
 
       if($cache == 'trie_inutile') {
+        en_tete();
         $reqSq= ("SELECT * FROM Sortie WHERE(DatesD = '".$date1."') and (TypeD = 'Aucun') order by idSortie desc");
         sortie($reqSq);
       }
 
       if($cache == 'trie_inutile2') {
+        en_tete();
         $reqSq= ("SELECT * FROM Sortie WHERE(DatesD BETWEEN '".$date1."' AND '".$date2."') and (TypeD = 'Aucun') order by idSortie desc");
         sortie($reqSq);
       }
 
       if($cache == 'bonus_perte') {
+        en_tete();
         $reqSq=  ("SELECT * FROM BonusPerte, Produit WHERE (DatesD = '".$date1."') and (BonusPerte.idProduit = Produit.idProduit) order by idBonusPerte desc");
         bonusPerte($reqSq);
       }
 
       if($cache == 'bonus_perte2') {
+        en_tete();
         $reqSq=  ("SELECT * FROM BonusPerte, Produit WHERE (DatesD BETWEEN '".$date1."' AND '".$date2."') and (BonusPerte.idProduit = Produit.idProduit) order by idBonusPerte desc");
         bonusPerte($reqSq);
       }
 
       if($cache == 'approvisionnements') {
+        en_tete();
         $reqSql0= ("SELECT * FROM Approvisionnement, Produit WHERE (Approvisionnement.idProduit = Produit.idProduit) and (DatesApprov = '".$date1."') GROUP BY Operation order by Operation desc limit 1000");
         approvisionnement($reqSql0);
+
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSql02= ("SELECT * FROM Approvisionnement2, Produit2 WHERE (Approvisionnement2.idProduit = Produit2.idProduit) and (DatesApprov = '".$date1."') GROUP BY Operation order by Operation desc limit 1000");
+        approvisionnement($reqSql02);
       }
 
       if($cache == 'approvisionnements2') {
+        en_tete();
         $reqSql0= ("SELECT * FROM Approvisionnement, Produit WHERE (Approvisionnement.idProduit = Produit.idProduit) and (DatesApprov BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc limit 1000");
         approvisionnement($reqSql0);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSql02= ("SELECT * FROM Approvisionnement2, Produit2 WHERE (Approvisionnement2.idProduit = Produit2.idProduit) and (DatesApprov BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc limit 1000");
+        approvisionnement($reqSql02);
       }
 
       if($cache == 'paiements') {
+        en_tete();
         $reqSql0= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (DatesPaie = '".$date1."') GROUP BY idPaiements order by idPaiements desc");
         $reqSq= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (DatesPaie = '".$date1."') GROUP BY Ventes.Operation order by idPaiements desc");
         paiements($reqSql0, $reqSq);
+
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSql02= ("SELECT * FROM Paiements2, Ventes2, Client WHERE (Paiements2.Operation = Ventes2.Operation) and (Client.idClient = Ventes2.idClient) and (DatesPaie = '".$date1."') GROUP BY idPaiements order by idPaiements desc");
+        $reqSq2= ("SELECT * FROM Paiements2, Ventes2, Client WHERE (Paiements2.Operation = Ventes2.Operation) and (Client.idClient = Ventes2.idClient) and (DatesPaie = '".$date1."') GROUP BY Ventes2.Operation order by idPaiements desc");
+        paiements($reqSql02, $reqSq2);
       }
 
       if($cache == 'paiements2') {
+        en_tete();
         $reqSql0= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (DatesPaie BETWEEN '".$date1."' AND '".$date2."') GROUP BY idPaiements order by idPaiements desc");
         $reqSq= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (DatesPaie BETWEEN '".$date1."' AND '".$date2."') GROUP BY Ventes.Operation order by idPaiements desc");
         paiements($reqSql0, $reqSq);
-        //$reqSql0= ("SELECT * FROM Paiements, Ventes WHERE (Paiements.Operation = Ventes.Operation) and (DatesPaie BETWEEN '".$date1."' AND '".$date2."') GROUP BY Ventes.Operation ");
-        //paiements_affichage_facture($reqSql0);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSql02= ("SELECT * FROM Paiements2, Ventes2, Client WHERE (Paiements2.Operation = Ventes2.Operation) and (Client.idClient = Ventes2.idClient) and (DatesPaie BETWEEN '".$date1."' AND '".$date2."') GROUP BY idPaiements order by idPaiements desc");
+        $reqSq2= ("SELECT * FROM Paiements2, Ventes2, Client WHERE (Paiements2.Operation = Ventes2.Operation) and (Client.idClient = Ventes2.idClient) and (DatesPaie BETWEEN '".$date1."' AND '".$date2."') GROUP BY Ventes2.Operation order by idPaiements desc");
+        paiements($reqSql02, $reqSq2);
       }
 
       if($cache == 'paiements_facture') {
+        en_tete();
         $reqSql0= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (Paiements.Operation = $operation) GROUP BY idPaiements order by idPaiements desc");
         $reqSq= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (Paiements.Operation = $operation) GROUP BY Ventes.Operation order by idPaiements desc");
         paiements($reqSql0, $reqSq);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSql02= ("SELECT * FROM Paiements2, Ventes2, Client WHERE (Paiements2.Operation = Ventes2.Operation) and (Client.idClient = Ventes2.idClient) and (Paiements2.Operation = $operation) GROUP BY idPaiements order by idPaiements desc");
+        $reqSq2= ("SELECT * FROM Paiements2, Ventes2, Client WHERE (Paiements2.Operation = Ventes2.Operation) and (Client.idClient = Ventes2.idClient) and (Paiements2.Operation = $operation) GROUP BY Ventes2.Operation order by idPaiements desc");
+        paiements($reqSql02, $reqSq2);
       }
 
       if($cache == 'paiements_client') {
+        en_tete();
         $reqSql0= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (Ventes.idClient = $id) GROUP BY idPaiements order by idPaiements desc");
         $reqSq= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) and (Ventes.idClient = $id) GROUP BY Paiements.Operation order by idPaiements desc");
         paiements($reqSql0, $reqSq);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSql02= ("SELECT * FROM Paiements2, Ventes2, Client WHERE (Paiements2.Operation = Ventes2.Operation) and (Client.idClient = Ventes2.idClient) and (Ventes2.idClient = $id) GROUP BY idPaiements order by idPaiements desc");
+        $reqSq2= ("SELECT * FROM Paiements2, Ventes2, Client WHERE (Paiements2.Operation = Ventes2.Operation) and (Client.idClient = Ventes2.idClient) and (Ventes2.idClient = $id) GROUP BY Paiements2.Operation order by idPaiements desc");
+        paiements($reqSql02, $reqSq2);
       }
 
       if($cache == 'clients_facture') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(Client.idClient = $id) GROUP BY Operation order by Operation desc");
         ventes($reqSq);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2, Client WHERE (Ventes2.idProduit = Produit2.idProduit) and (Client.idClient = Ventes2.idClient) and(Client.idClient = $id) GROUP BY Operation order by Operation desc");
+        ventes($reqSq2);
       }
 
       if($cache == 'clients_facture_dette') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(Client.idClient = $id) and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
         ventes($reqSq);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2, Client WHERE (Ventes2.idProduit = Produit2.idProduit) and (Client.idClient = Ventes2.idClient) and(Client.idClient = $id) and (Dette = 'Oui') GROUP BY Operation order by Operation desc");
+        ventes($reqSq2);
       }
 
       if($cache == 'clients_facture_2dates') {
+        en_tete();
         $reqSq= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) and(Client.idClient = $id) and (DatesPaie BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
         ventes($reqSq);
+        echo ' <hr class="w-100">';
+        echo '<h2 class="mt-0 mb-2 text-center">Stock 2</h2>';
+        $reqSq2= ("SELECT * FROM Ventes2, Produit2, Client WHERE (Ventes2.idProduit = Produit2.idProduit) and (Client.idClient = Ventes2.idClient) and(Client.idClient = $id) and (DatesPaie BETWEEN '".$date1."' AND '".$date2."') GROUP BY Operation order by Operation desc");
+        ventes($reqSq2);
       }
 
       //$reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) order by idPersonnelPaie desc");
@@ -1331,11 +1465,13 @@ function perte_occasionnee($reqSql) {
       }
 //
       if($cache == 'perte-journaliere') {
+        en_tete();
         $reqSql= ("SELECT * FROM PerteOccaz WHERE (Dates = '".$date1."')  order by idPerteOccaz desc");
         perte_occasionnee($reqSql);
       } 
 
       if($cache == 'perte-periode') {
+        en_tete();
         $reqSql= ("SELECT * FROM PerteOccaz WHERE (`Dates` BETWEEN '".$date1."' AND '".$date2."')  order by idPerteOccaz desc");
         perte_occasionnee($reqSql);
       } 

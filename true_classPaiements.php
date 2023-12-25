@@ -5,6 +5,7 @@ include 'write_read_json.php';
         private $dates;
         private $montant;
         private $operation;
+        private $stock;
         
         //table for contain json 
 
@@ -14,11 +15,12 @@ include 'write_read_json.php';
 
         public $message;
 
-        function __construct($dates, $montant, $operation) {
+        function __construct($dates, $montant, $operation, $stock) {
        
             $this->dates = $dates;
             $this->montant = $montant;
             $this->operation = $operation;
+            $this->stock = $stock;
             //$this->read();
         }
 
@@ -47,7 +49,12 @@ include 'write_read_json.php';
 
         function updateDette($operation) {
             include 'connexion.php';
-            $sql = ("SELECT * FROM Ventes WHERE (Operation = $operation) GROUP BY Operation  limit 1");
+            if ($this->stock == 'stock1') {
+                $sql = ("SELECT * FROM Ventes WHERE (Operation = $operation) GROUP BY Operation  limit 1");
+            } else {
+                $sql = ("SELECT * FROM Ventes2 WHERE (Operation = $operation) GROUP BY Operation  limit 1");
+            }
+            
             $result = mysqli_query($db, $sql);
             $montant = 0;
             $total_facture = 1;
@@ -59,27 +66,50 @@ include 'write_read_json.php';
                 }
 
                 if ($montant == $total_facture) {
-                    $updC6= ("UPDATE `Ventes` SET Dette = 'Non' WHERE Operation = $operation");
-                    if(mysqli_query($db,$updC6)){echo"";}else{
-                        $this->message = mysqli_error($db);
-                        return;
-                    } 
+                    if ($this->stock == 'stock1') {
+                        $updC6= ("UPDATE `Ventes` SET Dette = 'Non' WHERE Operation = $operation");
+                        if(mysqli_query($db,$updC6)){echo"";}else{
+                            $this->message = mysqli_error($db);
+                            return;
+                        } 
+                    } else {
+                        $updC6= ("UPDATE `Ventes2` SET Dette = 'Non' WHERE Operation = $operation");
+                        if(mysqli_query($db,$updC6)){echo"";}else{
+                            $this->message = mysqli_error($db);
+                            return;
+                        } 
+                    }
+                    
                 } else {
-                    $updC6= ("UPDATE `Ventes` SET Dette = 'Oui' WHERE Operation = $operation");
-                    if(mysqli_query($db,$updC6)){echo"";}else{
-                        $this->message = mysqli_error($db);
-                        return;
-                    } 
+                    if ($this->stock == 'stock1') {
+                        $updC6= ("UPDATE `Ventes` SET Dette = 'Oui' WHERE Operation = $operation");
+                        if(mysqli_query($db,$updC6)){echo"";}else{
+                            $this->message = mysqli_error($db);
+                            return;
+                        }
+                    } else {
+                        $updC6= ("UPDATE `Ventes2` SET Dette = 'Oui' WHERE Operation = $operation");
+                        if(mysqli_query($db,$updC6)){echo"";}else{
+                            $this->message = mysqli_error($db);
+                            return;
+                        }
+                    }
+                     
                 }
                       
-           }else{echo "Une erreur s est produite ";}
+           }else{echo "Une erreur s est produite 1 ";}
 
         }
         function enleveVentes($idPaiements) {
             include 'connexion.php';
             $operationA = 0;
             $montantA = 0;
-            $sql1 = ("SELECT * FROM Paiements WHERE (idPaiements = $idPaiements)");
+            if ($this->stock == 'stock1'){
+                $sql1 = ("SELECT * FROM Paiements WHERE (idPaiements = $idPaiements)");
+            } else {
+                $sql1 = ("SELECT * FROM Paiements2 WHERE (idPaiements = $idPaiements)");
+            }
+            
             $result1 = mysqli_query($db, $sql1);
                     
             if(mysqli_num_rows($result1)>0){
@@ -90,8 +120,12 @@ include 'write_read_json.php';
                 }
  
            }else{$this->message = "Une erreur s est produite ";}
-
-            $sql = ("SELECT * FROM Ventes WHERE (Operation = $operationA) GROUP BY Operation  limit 1");
+            if ($this->stock == 'stock1') {
+                $sql = ("SELECT * FROM Ventes WHERE (Operation = $operationA) GROUP BY Operation  limit 1");
+            } else {
+                $sql = ("SELECT * FROM Ventes2 WHERE (Operation = $operationA) GROUP BY Operation  limit 1");
+            }
+            
             $result = mysqli_query($db, $sql);
             $valeur = 0;
             if(mysqli_num_rows($result)>0){
@@ -99,17 +133,31 @@ include 'write_read_json.php';
                 while($row= mysqli_fetch_assoc($result)){
                     $valeur = $row["MontantPaye"];
                 }
-                $updC6= ("UPDATE `Ventes` SET MontantPaye = $valeur - $montantA WHERE (Operation = $operationA)");
-                if(mysqli_query($db,$updC6)){echo"";}else{
-                    $this->message = mysqli_error($db);
-                    return;
-                }       
-           }else{$this->message = "Une erreur s est produite ";}
+                if ($this->stock == 'stock1') {
+                    $updC6= ("UPDATE `Ventes` SET MontantPaye = $valeur - $montantA WHERE (Operation = $operationA)");
+                    if(mysqli_query($db,$updC6)){echo"";}else{
+                        $this->message = mysqli_error($db);
+                        return;
+                    }
+                } else {
+                    $updC6= ("UPDATE `Ventes2` SET MontantPaye = $valeur - $montantA WHERE (Operation = $operationA)");
+                    if(mysqli_query($db,$updC6)){echo"";}else{
+                        $this->message = mysqli_error($db);
+                        return;
+                    }
+                }
+                       
+           }else{$this->message = "Une erreur s est produite 2";}
 
         }
         function ventes($operation) {
             include 'connexion.php';
-            $sql = ("SELECT * FROM Ventes WHERE (Operation = $operation) GROUP BY Operation  limit 1");
+            if ($this->stock == 'stock1') {
+                $sql = ("SELECT * FROM Ventes WHERE (Operation = $operation) GROUP BY Operation  limit 1");
+            } else {
+                $sql = ("SELECT * FROM Ventes2 WHERE (Operation = $operation) GROUP BY Operation  limit 1");
+            }
+            
             $result = mysqli_query($db, $sql);
             $valeur = 0;
             if(mysqli_num_rows($result)>0){
@@ -117,17 +165,31 @@ include 'write_read_json.php';
                 while($row= mysqli_fetch_assoc($result)){
                     $valeur = $row["MontantPaye"];
                 }
-                $updC6= ("UPDATE `Ventes` SET MontantPaye = $valeur + $this->montant WHERE Operation = $operation");
-                if(mysqli_query($db,$updC6)){echo"";}else{
-                    $this->message = mysqli_error($db);
-                    return;
-                }       
-           }else{echo "Une erreur s est produite ";}
+                if ($this->stock == 'stock1') {
+                    $updC6= ("UPDATE `Ventes` SET MontantPaye = $valeur + $this->montant WHERE Operation = $operation");
+                    if(mysqli_query($db,$updC6)){echo"";}else{
+                        $this->message = mysqli_error($db);
+                        return;
+                    } 
+                } else {
+                    $updC6= ("UPDATE `Ventes2` SET MontantPaye = $valeur + $this->montant WHERE Operation = $operation");
+                    if(mysqli_query($db,$updC6)){echo"";}else{
+                        $this->message = mysqli_error($db);
+                        return;
+                    } 
+                }
+                      
+           }else{echo "Une erreur s est produite 3";}
 
         }
         function insererPaiements() {
             include 'connexion.php';
-            $sql = ("INSERT INTO Paiements ( DatesPaie, Montant, Operation) values ('".$this->dates."', $this->montant, $this->operation)");
+            if ($this->stock == 'stock1') {
+                $sql = ("INSERT INTO Paiements ( DatesPaie, Montant, Operation) values ('".$this->dates."', $this->montant, $this->operation)");
+            } else {
+                $sql = ("INSERT INTO Paiements2 ( DatesPaie, Montant, Operation) values ('".$this->dates."', $this->montant, $this->operation)");
+            }
+            
             if(mysqli_query($db, $sql)){
                 }else{
                 $this->message = mysqli_error($db);
@@ -139,21 +201,40 @@ include 'write_read_json.php';
             include 'connexion.php';
             $this->enleveVentes($this->idPaiements);
 
-            $updC1= ("UPDATE `Paiements` SET `DatesPaie` ='".$this->dates."' WHERE idPaiements =$this->idPaiements");
-            if(mysqli_query($db,$updC1)){echo"";}else{
-                $this->message = mysqli_error($db);
-                return;
+            if ($this->stock == 'stock1') {
+                $updC1= ("UPDATE `Paiements` SET `DatesPaie` ='".$this->dates."' WHERE idPaiements =$this->idPaiements");
+                if(mysqli_query($db,$updC1)){echo"";}else{
+                    $this->message = mysqli_error($db);
+                    return;
+                }
+                $updC2= ("UPDATE `Paiements` SET `Operation` = $this->operation WHERE idPaiements =$this->idPaiements");
+                if(mysqli_query($db,$updC2)){echo"";}else{
+                    $this->message = mysqli_error($db);
+                    return;
+                }
+                $updC3= ("UPDATE `Paiements` SET `Montant` = $this->montant WHERE idPaiements =$this->idPaiements");
+                if(mysqli_query($db,$updC3)){echo"";}else{
+                    $this->message = mysqli_error($db);
+                    return;
+                }
+            } else {
+                $updC1= ("UPDATE `Paiements2` SET `DatesPaie` ='".$this->dates."' WHERE idPaiements =$this->idPaiements");
+                if(mysqli_query($db,$updC1)){echo"";}else{
+                    $this->message = mysqli_error($db);
+                    return;
+                }
+                $updC2= ("UPDATE `Paiements2` SET `Operation` = $this->operation WHERE idPaiements =$this->idPaiements");
+                if(mysqli_query($db,$updC2)){echo"";}else{
+                    $this->message = mysqli_error($db);
+                    return;
+                }
+                $updC3= ("UPDATE `Paiements2` SET `Montant` = $this->montant WHERE idPaiements =$this->idPaiements");
+                if(mysqli_query($db,$updC3)){echo"";}else{
+                    $this->message = mysqli_error($db);
+                    return;
+                }
             }
-            $updC2= ("UPDATE `Paiements` SET `Operation` = $this->operation WHERE idPaiements =$this->idPaiements");
-            if(mysqli_query($db,$updC2)){echo"";}else{
-                $this->message = mysqli_error($db);
-                return;
-            }
-            $updC3= ("UPDATE `Paiements` SET `Montant` = $this->montant WHERE idPaiements =$this->idPaiements");
-            if(mysqli_query($db,$updC3)){echo"";}else{
-                $this->message = mysqli_error($db);
-                return;
-            }
+            
             $this->ventes($this->operation);
             $this->updateDette($this->operation);
         }
@@ -162,6 +243,16 @@ include 'write_read_json.php';
             include 'connexion.php';
             $this->enleveVentes($this->idPaiements);
             $delete = ("DELETE FROM Paiements WHERE idPaiements =$this->idPaiements");
+            if (mysqli_query($db, $delete)){echo"";} else {
+                $this->message = mysqli_error($db) .'ici';
+                return;
+            }
+        }
+
+        function deletePaiements2() {
+            include 'connexion.php';
+            $this->enleveVentes($this->idPaiements);
+            $delete = ("DELETE FROM Paiements2 WHERE idPaiements =$this->idPaiements");
             if (mysqli_query($db, $delete)){echo"";} else {
                 $this->message = mysqli_error($db);
                 return;

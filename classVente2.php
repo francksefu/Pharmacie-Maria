@@ -1,18 +1,13 @@
 <?php
-function dataOperation($stock){
+function dataProduit($idProduit){
     include 'connexion.php';
-    if ($stock == 'stock1') {
-        $sql= ("SELECT idVentes FROM Ventes order by idVentes desc limit 1");
-    } else {
-        $sql= ("SELECT idVentes FROM Ventes2 order by idVentes desc limit 1");
-    }
-    //$sql= ("SELECT idVentes FROM Ventes order by idVentes desc limit 1");
+    $sql= ("SELECT * FROM Produit2 WHERE idProduit = $idProduit");
     $result = mysqli_query($db, $sql);
             
     if(mysqli_num_rows($result)>0){
       $valeur = 0;
         while($row= mysqli_fetch_assoc($result)){
-            $valeur = $row["idVentes"];
+            $valeur = $row["QuantiteStock"];
         }
         
         return $valeur;
@@ -26,7 +21,7 @@ $q = $_REQUEST["q"];
 $autre = '';
 
     if ($q !== "") {
-        $hint = dataOperation($q);
+        $hint = dataProduit($q);
     } else {
         $hint = 'erreur';
     }

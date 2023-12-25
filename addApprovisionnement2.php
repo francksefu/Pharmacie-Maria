@@ -5,38 +5,26 @@ include 'identifiant.php';
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php include 'head.php'; ?>
+    <?php
+      include 'head.php';
+    ?>
     <link rel="stylesheet" href="index.css">
-    <script defer src="jsfile/takeVente.js"></script>
-    <script defer src="jsfile/imprime.js"></script>
+    <script defer src="jsfile/takeApprov2.js"></script>
     <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
     </style>
     
 </head>
 <?php
-//Pour imprimer une facture quelconque
-function dataVente(){
-    include 'connexion.php';
-    $sql= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) GROUP BY Operation order by Operation desc");
-    $result = mysqli_query($db, $sql);
-            
-    if(mysqli_num_rows($result)>0){
-        while($row= mysqli_fetch_assoc($result)){
-            echo"<option value='ID ::".$row["Operation"].":: date ::".$row["DatesVente"].":: client  ::".$row["NomClient"].":: Total facture ::".$row["TotalFacture"]."'>client = ".$row["NomClient"]." dette : ".$row["Dette"]."</option>"; 
-        }
-   }else{echo "Une erreur s est produite ";}  
-
-}
 //find id for vente to make a nmber of operation
 function findIDVente(){
     include 'connexion.php';
-    $sql= ("SELECT idVentes FROM Ventes order by idVentes desc limit 1");
+    $sql= ("SELECT idApprov FROM Approvisionnement2 order by idApprov desc limit 1");
     $result = mysqli_query($db, $sql);
             
     if(mysqli_num_rows($result)>0){
       $valeur = 0;
         while($row= mysqli_fetch_assoc($result)){
-            $valeur = $row["idVentes"];
+            $valeur = $row["idApprov"];
         }
         
         return $valeur;
@@ -56,25 +44,9 @@ function data(){
         }       
    }  
 }
-
-function dataDataPersonnel(){
-    include 'connexion.php';
-    $sql = ("SELECT * FROM DataPersonnel order by idDataPersonnel desc");
-    $result = mysqli_query($db, $sql);
-            
-    if(mysqli_num_rows($result)>0){
-                        
-        while($row= mysqli_fetch_assoc($result)){
-            echo "<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]."</option>"; 
-        }
-                
-   }else{echo "Une erreur s est produite ";} 
-  
-  }
-
 function dataProduct(){
     include 'connexion.php';
-    $sql = ("SELECT * FROM Produit order by Nom asc");
+    $sql = ("SELECT * FROM Produit2 order by Nom asc");
     $result = mysqli_query($db, $sql);
             
     if(mysqli_num_rows($result)>0){
@@ -87,40 +59,16 @@ function dataProduct(){
 
 }
 
-function dataPersonnel(){
-    include 'connexion.php';
-    $sql = ("SELECT * FROM Client order by idClient desc");
-    $result = mysqli_query($db, $sql);
-            
-    if(mysqli_num_rows($result)>0){
-                        
-        while($row= mysqli_fetch_assoc($result)){
-            echo"<option value='ID ::".$row["idClient"].":: Nom  ::".$row["NomClient"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]."</option>"; 
-        }
-                
-   }else{echo "Une erreur s est produite ";}  
 
-}
 ?>
-<body class="bg-light">
+<body class="b2ck">
     <main>
         <div class="container bg-transparent pt-5">
-            <h1 class="p-2">Ajouter ventes</h1>
+            <h1 class="p-2">Ajouter Approvisionnement (stock maison)</h1>
             <hr class="w-auto">
             <form action="">
             <div class="row border border-1 mt-3 pt-3 w-75 d-block mx-auto">
-                    <div class="input-group mb-3" >
-                        <div class="input-group mb-3" id="ancien-client">
-                            <span class="input-group-text" id="basic-addon1">Nom*</span>
-                            <input required type="text" list="dataPersonnel" id="nomClient" class="form-control" placeholder="Nom du client" aria-label="Username" aria-describedby="basic-addon1">
-                            <datalist id="dataPersonnel">
-                              <?php
-                                dataPersonnel();
-                               ?>
-                            </datalist>
-                        </div>
-                        <small id="clientVide"></small>
-                    </div>
+                    <!-- -->
                     
                 </div>
                 <div class="input-group mb-3 pt-5 pb-4" id="ajoutons">
@@ -134,8 +82,8 @@ function dataPersonnel(){
                       </datalist>
                     <span class="input-group-text border border-success">Quantite</span>
                     <input id="quantite" type="float" class="form-control border border-success" placeholder="Quantite" aria-label="Server">
-                    <span class="input-group-text">PV Unitaire</span>
-                    <input id="pvu" type="float" class="form-control" placeholder="prix de vente" aria-label="Server">
+                    <span class="input-group-text">PA Unitaire</span>
+                    <input id="pvu" type="float" class="form-control" placeholder="prix d achat" aria-label="Server">
                     <span class="input-group-text">$</span>
                     <a id="add" href="#" class="text-decoration-none"><span class="input-group-text bg-success text-white">&plus;</span></a>
                     <a id="M-add" href="#" class="text-decoration-none"><span class="input-group-text bg-primary text-white">&check;</span></a>
@@ -149,9 +97,9 @@ function dataPersonnel(){
                     <thead class="bg-transparent text-secondary">
                       <tr>
                         <th>Nom du produit</th>
-                        <th>Quantite vendu</th>
-                        <th>Prix de vente unitaire</th>
-                        <th>Prix de vente total</th>
+                        <th>Quantite approvisionné</th>
+                        <th>Prix d achat unitaire</th>
+                        <th>Prix d achat total</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -159,22 +107,13 @@ function dataPersonnel(){
                                               
                     </tbody>
                 </table>
-        
+         
                 <div class="row">
                     <div class="border border-1 p-4 col-md-4 m-2">
-                    <div class="input-group mb-3 ">
-                        <span class="input-group-text">Nom du vendeur</span>
-                        <input type="text" readonly id="personnel" list="dataPersonnel_" class="form-control" value="<?php echo $place_vente; ?>">
-                        <datalist id="dataPersonnel_">
-                        
-                      </datalist>
-                      <small id="personnelVide"></small>
-                    </div>
-
                         <div class="input-group mb-3">
-                            <label class="input-group-text" for="inputGroupSelect01">Choisir stock</label>
+                            <label class="input-group-text" for="inputGroupSelect01">Le stock dans lequel vous travaillez</label>
                             <select class="form-select" id="inputGroupSelect01">
-                              <option selected value="1">Stock 1</option>
+                              <option selected value="1">Stock 2 </option>
                             </select>
                         </div>
                         <div class="input-group mb-3">
@@ -187,29 +126,27 @@ function dataPersonnel(){
                         </div>
                         <small>1 commande en cours ...</small>
                     </div>
-   
+  
                         <div class="border border-1 m-2 col-md-4">
-                            <h4>Status</h4>
+                            <h4>Source</h4>
                             <div class="input-group mb-3">
-                                <label class="input-group-text" for="status">status</label>
-                                <select class="form-select" id="status">
-                                  <option selected>en attente</option>
-                                  <option value="paid">paye</option>
-                                  <option value="dette">dette</option>
+                                <label class="input-group-text" for="status">source</label>
+                                <select class="form-select" id="source">
+                                  <option value="ailleur">ailleurs</option>
+                                  
                                 </select>
                                 <button id="envoi" type="button" class="btn btn-primary">Valider</button>
                             </div>
+                            <h4>Destination</h4>
                             <div class="input-group mb-3">
-                                <span class="input-group-text">Montant</span>
-                                <input type="float" id="montant"  class="form-control" aria-label="Amount (to the nearest dollar)">
-                                <span class="input-group-text">$</span>
+                                <label class="input-group-text" for="status">destination</label>
+                                <select class="form-select" id="destination">
+                                  <option value="stock2">stock2</option>
+                                  <!--<option value="stock2">stock2</option>-->
+                                </select>
+                                
                             </div>
-                            <small id="montantVide"></small>
-                            <div class="input-group mb-3 ">
-                                <span class="input-group-text">Reste</span>
-                                <input type="flaot" id="reste" class="form-control"  aria-label="Amount (to the nearest dollar)">
-                                <span class="input-group-text">$</span>
-                            </div>
+                            
                         </div>
                         <div class="border border-1 col-md-3 m-2 bg-warning moinClaire">
                             <h4 class="text-secondary">Calcul du total</h4>
@@ -231,8 +168,8 @@ function dataPersonnel(){
                             </div>
    
                         </div>
-                       
-                 
+                        
+                  
                 </div>
                 <input type="hidden" id="change" value='<?php echo data(); ?>'>
             <!-- just using to make difference between add, remove, and update -->
@@ -240,23 +177,8 @@ function dataPersonnel(){
                 <input type="hidden" id="identifiantM" value="">
                 <input type="hidden" id="operation"/>
                 <input type="hidden" id="typeForm" value="add" />
-                <input type="hidden" id="stock" value="stock1" />
     </form>
         </div>
-
-        <form class="input-group col-md-10 mt-3 mb-3" action="imprimer.php" method="POST">
-            <span class="input-group-text">choisissez une facture : </span>
-            <input required type="text" id="imprimer" name="Facture" list="dataBesoin" class="form-control" placeholder="metez quelque chose dont vous vous rappeler pour l imprimer" >
-                <datalist id="dataBesoin">
-                    <?php 
-                        dataVente();
-                    ?>
-                </datalist>
-            <span class="input-group-text pointe" id="cross">&cross;</span>
-            <span class="input-group-text pointe" id="btn">
-            <input type="submit" value="Imprimer" />  
-            </span>
-        </form>
     </main>
 </body>
 </html>

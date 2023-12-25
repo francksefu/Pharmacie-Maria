@@ -76,7 +76,7 @@ btn.addEventListener('click', () => {
     }
 
     if (fichier.value === "product2") {
-      showHint(input.value.split('::')[1]+"::delete", "classProduct.php?q=")
+      showHint(input.value.split('::')[1]+"::delete", "classProduct2.php?q=")
     }
 
     if(fichier.value === 'bonusperte') {
@@ -103,6 +103,10 @@ btn.addEventListener('click', () => {
       showPaie(input.value.split('::')[1]+"::delete");
     }
 
+    if(document.querySelector("#type").value == 'paiements2') {
+      showPaie(input.value.split('::')[1]+"::delete2");
+    }
+
     if(fichier.value === 'personnel') {
       showHint(input.value.split('::')[1]+"::delete", "classPersonnels.php?q=")
     }
@@ -115,8 +119,16 @@ btn.addEventListener('click', () => {
       showvente(input.value.split('::')[1]+"__:delete", "classTraitementVente.php?q=")
     }
 
+    if(document.querySelector("#type").value === 'vente2') {
+      showvente(input.value.split('::')[1]+"__:delete2", "classTraitementVente.php?q=")
+    }
+
     if(document.querySelector("#type").value === 'approv1') {
       showvente(input.value.split('::')[1]+"__:delete", "classApprov.php?q=")
+    }
+
+    if(document.querySelector("#type").value === 'approv2') {
+      showvente(input.value.split('::')[1]+"__:delete2", "classApprov.php?q=")
     }
 
     if(fichier.value === 'perte-occaz') {

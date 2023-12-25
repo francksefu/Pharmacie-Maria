@@ -58,10 +58,11 @@
         public $message;
 
         public $idPersonnel;
+        private $stock;
         public $remote = false;
 
 
-        function __construct($idProduit, $idClient, $quantite, $pu, $date, $operation, $dette, $total_facture, $montant, $idPersonnel) {
+        function __construct($idProduit, $idClient, $quantite, $pu, $date, $operation, $dette, $total_facture, $montant, $idPersonnel, $stock) {
             $this->operation = $operation;
             $this->idProduit = $idProduit;
             $this->quantite = $quantite;
@@ -72,6 +73,7 @@
             $this->montant = $montant;
             $this->date = $date;
             $this->idPersonnel = $idPersonnel;
+            $this->stock = $stock;
         }
 //This method find first the id of product, and after that put againquantity in product if the operation of vente(sell) is delete
         function findIDProduit($operationA) {
@@ -80,7 +82,12 @@
             } else {
                 include 'connexion.php';
             }
-            $sql = ("SELECT * FROM Ventes WHERE (Operation = $operationA)");
+            if ($this->stock == 'stock1') {
+                $sql = ("SELECT * FROM Ventes WHERE (Operation = $operationA)");
+            } else {
+                $sql = ("SELECT * FROM Ventes2 WHERE (Operation = $operationA)");
+            }
+            
             $result = mysqli_query($db, $sql);
                     
             if(mysqli_num_rows($result)>0){
@@ -101,7 +108,12 @@
                 include 'connexion.php';
             }
             $quantite_stock = 0;
-            $sql = ("SELECT * FROM Produit WHERE (idProduit = $idProduitA)");
+            if ($this->stock == 'stock1') {
+                $sql = ("SELECT * FROM Produit WHERE (idProduit = $idProduitA)");
+            } else {
+                $sql = ("SELECT * FROM Produit2 WHERE (idProduit = $idProduitA)");
+            }
+            
             $result = mysqli_query($db, $sql);
                     
             if(mysqli_num_rows($result)>0){
@@ -110,12 +122,20 @@
                     $quantite_stock = $row["QuantiteStock"];
                 }
            }else{echo "Une erreur s est produite ";}
-
-           $updC1= ("UPDATE `Produit` SET `QuantiteStock` = $quantite_stock + $quantiteA WHERE idProduit =$idProduitA");
-            if(mysqli_query($db,$updC1)){echo"";}else{
-                $this->message = mysqli_error($db);
-                return;
-            }
+           if ($this->stock == 'stock1') {
+                $updC1= ("UPDATE `Produit` SET `QuantiteStock` = $quantite_stock + $quantiteA WHERE idProduit =$idProduitA");
+                if(mysqli_query($db,$updC1)){echo"";}else{
+                    $this->message = mysqli_error($db);
+                    return;
+                }
+           } else {
+                $updC1= ("UPDATE `Produit2` SET `QuantiteStock` = $quantite_stock + $quantiteA WHERE idProduit =$idProduitA");
+                if(mysqli_query($db,$updC1)){echo"";}else{
+                    $this->message = mysqli_error($db);
+                    return;
+                }
+           }
+           
         }
         function enleveProduit($idProduitA) {
             if ($this->remote) {
@@ -124,7 +144,12 @@
                 include 'connexion.php';
             }
             $quantite_stock = 0;
-            $sql = ("SELECT * FROM Produit WHERE (idProduit = $idProduitA)");
+            if ($this->stock == 'stock1') {
+                $sql = ("SELECT * FROM Produit WHERE (idProduit = $idProduitA)");
+            } else {
+                $sql = ("SELECT * FROM Produit2 WHERE (idProduit = $idProduitA)");
+            }
+            
             $result = mysqli_query($db, $sql);
                     
             if(mysqli_num_rows($result)>0){
@@ -133,12 +158,20 @@
                     $quantite_stock = $row["QuantiteStock"];
                 }
            }else{echo "Une erreur s est produite ";}
-
-           $updC1= ("UPDATE `Produit` SET `QuantiteStock` = $quantite_stock - $this->quantite WHERE idProduit =$idProduitA");
-            if(mysqli_query($db,$updC1)){echo"";}else{
-                $this->message = mysqli_error($db);
-                return;
-            }
+           if ($this->stock == 'stock1') {
+                $updC1= ("UPDATE `Produit` SET `QuantiteStock` = $quantite_stock - $this->quantite WHERE idProduit =$idProduitA");
+                if(mysqli_query($db,$updC1)){echo"";}else{
+                    $this->message = mysqli_error($db);
+                    return;
+                }
+           } else {
+                $updC1= ("UPDATE `Produit2` SET `QuantiteStock` = $quantite_stock - $this->quantite WHERE idProduit =$idProduitA");
+                if(mysqli_query($db,$updC1)){echo"";}else{
+                    $this->message = mysqli_error($db);
+                    return;
+                }
+           }
+           
         }
 
         
@@ -148,7 +181,13 @@
             } else {
                 include 'connexion.php';
             }
-            $sql = ("INSERT INTO Ventes (idProduit, idClient, QuantiteVendu, PU, PT, DatesVente, Operation, Dette, TotalFacture, MontantPaye, idPersonnel) values ($this->idProduit, $this->idClient, $this->quantite, $this->pu, $this->pu * $this->quantite, '".$this->date."', $this->operation, '".$this->dette."', $this->total_facture, $this->montant, $this->idPersonnel)");
+
+            if ($this->stock == 'stock1') {
+                $sql = ("INSERT INTO Ventes (idProduit, idClient, QuantiteVendu, PU, PT, DatesVente, Operation, Dette, TotalFacture, MontantPaye, idPersonnel) values ($this->idProduit, $this->idClient, $this->quantite, $this->pu, $this->pu * $this->quantite, '".$this->date."', $this->operation, '".$this->dette."', $this->total_facture, $this->montant, $this->idPersonnel)");
+            } else {
+                $sql = ("INSERT INTO Ventes2 (idProduit, idClient, QuantiteVendu, PU, PT, DatesVente, Operation, Dette, TotalFacture, MontantPaye, idPersonnel) values ($this->idProduit, $this->idClient, $this->quantite, $this->pu, $this->pu * $this->quantite, '".$this->date."', $this->operation, '".$this->dette."', $this->total_facture, $this->montant, $this->idPersonnel)");
+            }
+            
             if(mysqli_query($db, $sql)){
                 
                 }else{
@@ -163,11 +202,20 @@
                 include 'connexion.php';
             }
 
-            $delete = ("DELETE FROM Ventes WHERE Operation =$this->operation");
-            if (mysqli_query($db, $delete)){echo"";} else {
-                $this->message = 'delete'.mysqli_error($db);
-                return;
+            if ($this->stock == 'stock1') {
+                $delete = ("DELETE FROM Ventes WHERE Operation =$this->operation");
+                if (mysqli_query($db, $delete)){echo"";} else {
+                    $this->message = 'delete'.mysqli_error($db);
+                    return;
+                }
+            } else {
+                $delete = ("DELETE FROM Ventes2 WHERE Operation =$this->operation");
+                if (mysqli_query($db, $delete)){echo"";} else {
+                    $this->message = 'delete'.mysqli_error($db);
+                    return;
+                }
             }
+            
         }
 
         function deleteVentes() {
@@ -178,6 +226,20 @@
             }
            $this->findIDProduit($this->operation);
             $delete = ("DELETE FROM Ventes WHERE Operation =$this->operation");
+            if (mysqli_query($db, $delete)){echo"";} else {
+                $this->message = 'delete'.mysqli_error($db);
+                return;
+            }
+        }
+
+        function deleteVentes2() {
+            if ($this->remote) {
+                include 'remote_connexion.php';
+            } else {
+                include 'connexion.php';
+            }
+           $this->findIDProduit($this->operation);
+            $delete = ("DELETE FROM Ventes2 WHERE Operation =$this->operation");
             if (mysqli_query($db, $delete)){echo"";} else {
                 $this->message = 'delete'.mysqli_error($db);
                 return;

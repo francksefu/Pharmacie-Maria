@@ -13,7 +13,7 @@ include 'identifiant.php';
     if (end($tabC) == 'add' && $user != "") {
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Paiements($tabC[0], $tabC[1], $tabC[2]);
+            $tracteur = new Paiements($tabC[0], $tabC[1], $tabC[2], $tabC[3]);
             $tracteur->insererPaiements();
             $tracteur->write_insert();
             $autre = $tracteur->message;
@@ -35,8 +35,8 @@ include 'identifiant.php';
     if (end($tabC) == 'update' && $user != "") {
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Paiements($tabC[0], $tabC[1], $tabC[2]);
-            $tracteur->idPaiements = $tabC[3];
+            $tracteur = new Paiements($tabC[0], $tabC[1], $tabC[2], $tabC[3]);
+            $tracteur->idPaiements = $tabC[4];
             $tracteur->updatePaiements();
             $tracteur->write_update();
             $autre = $tracteur->message;
@@ -56,10 +56,36 @@ include 'identifiant.php';
         echo $hint == $autre ? $error : $sucess;
     }
 
+    
+
+    if (end($tabC) == 'delete2' && $user != "") {
+        if ($q !== "") {
+            $hint = $q;
+            $tracteur = new Paiements(0, 1,2, 'stock2');
+            $tracteur->idPaiements = $tabC[0];
+            $tracteur->deletePaiements2();
+            $tracteur->write_delete();
+            $autre = $tracteur->message;
+            if( $tracteur->message) {
+                $hint = $autre;
+            }
+            
+        }
+
+        $sucess = '<div class="alert alert-success" role="alert">
+        Suppression fait avec success
+      </div>';
+    
+      $error = '<div class="alert alert-danger" role="alert">
+      Erreur '.$autre.'
+    </div>';
+        echo $hint == $autre ? $error : $sucess;
+    }
+
     if (end($tabC) == 'delete' && $user != "") {
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Paiements(0, 1,2);
+            $tracteur = new Paiements(0, 1,2, 'stock1');
             $tracteur->idPaiements = $tabC[0];
             $tracteur->deletePaiements();
             $tracteur->write_delete();
@@ -69,7 +95,7 @@ include 'identifiant.php';
             }
             
         }
-    
+
         $sucess = '<div class="alert alert-success" role="alert">
         Suppression fait avec success
       </div>';

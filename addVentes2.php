@@ -30,7 +30,7 @@ function dataVente(){
 //find id for vente to make a nmber of operation
 function findIDVente(){
     include 'connexion.php';
-    $sql= ("SELECT idVentes FROM Ventes order by idVentes desc limit 1");
+    $sql= ("SELECT idVentes FROM Ventes2 order by idVentes desc limit 1");
     $result = mysqli_query($db, $sql);
             
     if(mysqli_num_rows($result)>0){
@@ -74,7 +74,7 @@ function dataDataPersonnel(){
 
 function dataProduct(){
     include 'connexion.php';
-    $sql = ("SELECT * FROM Produit order by Nom asc");
+    $sql = ("SELECT * FROM Produit2 order by Nom asc");
     $result = mysqli_query($db, $sql);
             
     if(mysqli_num_rows($result)>0){
@@ -105,7 +105,7 @@ function dataPersonnel(){
 <body class="bg-light">
     <main>
         <div class="container bg-transparent pt-5">
-            <h1 class="p-2">Ajouter ventes</h1>
+            <h1 class="p-2">Ajouter ventes (stock 2)</h1>
             <hr class="w-auto">
             <form action="">
             <div class="row border border-1 mt-3 pt-3 w-75 d-block mx-auto">
@@ -172,9 +172,9 @@ function dataPersonnel(){
                     </div>
 
                         <div class="input-group mb-3">
-                            <label class="input-group-text" for="inputGroupSelect01">Choisir stock</label>
+                            <label class="input-group-text" for="inputGroupSelect01">Vous etes dans :</label>
                             <select class="form-select" id="inputGroupSelect01">
-                              <option selected value="1">Stock 1</option>
+                              <option selected value="1">Stock 2</option>
                             </select>
                         </div>
                         <div class="input-group mb-3">
@@ -231,8 +231,8 @@ function dataPersonnel(){
                             </div>
    
                         </div>
-                       
-                 
+                        
+                  
                 </div>
                 <input type="hidden" id="change" value='<?php echo data(); ?>'>
             <!-- just using to make difference between add, remove, and update -->
@@ -240,7 +240,7 @@ function dataPersonnel(){
                 <input type="hidden" id="identifiantM" value="">
                 <input type="hidden" id="operation"/>
                 <input type="hidden" id="typeForm" value="add" />
-                <input type="hidden" id="stock" value="stock1" />
+                <input type="hidden" id="stock" value="stock2" />
     </form>
         </div>
 

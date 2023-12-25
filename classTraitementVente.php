@@ -22,7 +22,7 @@ include 'identifiant.php';
     
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Ventes($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7], $tabElement[8], $tabElement[9]);
+            $tracteur = new Ventes($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7], $tabElement[8], $tabElement[9], $tabElement[10]);
             $tracteur->insererVentes();
             array_push($insert_table, $tracteur);
             $autre = $tracteur->message;
@@ -61,7 +61,7 @@ include 'identifiant.php';
          */
             if ($q !== "") {
                 $hint = $q;
-                $tracteur = new Ventes($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7], $tabElement[8], $tabElement[9]);
+                $tracteur = new Ventes($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7], $tabElement[8], $tabElement[9], $tabElement[10]);
                 if ($i == 0) {
                     $tracteur->findIDProduit($tabElement[5]);
                 }
@@ -89,7 +89,7 @@ include 'identifiant.php';
          */
             if ($q !== "" && $user != "") {
                 $hint = $q;
-                $tracteur = new Ventes($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7], $tabElement[8], $tabElement[9]);
+                $tracteur = new Ventes($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7], $tabElement[8], $tabElement[9], $tabElement[10]);
                 $tracteur->insererVentes();
                 $autre = $tracteur->message;
                 if( $tracteur->message) {
@@ -120,9 +120,41 @@ include 'identifiant.php';
         if ($q !== "") {
             $hint = $q;
             
-            $tracteur = new Ventes(0, 1, 2, 3, 4, 5, 6,7, 8, 9);
+            $tracteur = new Ventes(0, 1, 2, 3, 4, 5, 6,7, 8, 9, 'stock1');
             $tracteur->operation = $tabObj[0];
             $tracteur->deleteVentes();
+            array_push($delete_table, $tracteur);
+            $autre = $tracteur->message;
+            if( $tracteur->message) {
+                $hint = $autre;
+                echo '<div class="alert alert-danger" role="alert">
+                Erreur '.$hint.'
+              </div>';
+                return;
+            }
+            
+        }
+        
+        $take_vente_tojson = new TakeVente($delete_table);
+        $take_vente_tojson->write_delete();
+        
+            $sucess = '<div class="alert alert-success" role="alert">
+            Suppression fait avec success
+          </div>';
+        
+          $error = '<div class="alert alert-danger" role="alert">
+          Erreur '.$autre.'
+        </div>';
+        echo $hint == $autre ? $error : $sucess;
+    }
+
+    if (end($tabObj) == "delete2") {
+        if ($q !== "") {
+            $hint = $q;
+            
+            $tracteur = new Ventes(0, 1, 2, 3, 4, 5, 6,7, 8, 9, 'stock2');
+            $tracteur->operation = $tabObj[0];
+            $tracteur->deleteVentes2();
             array_push($delete_table, $tracteur);
             $autre = $tracteur->message;
             if( $tracteur->message) {

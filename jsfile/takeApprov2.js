@@ -1,14 +1,8 @@
 const identifiant = document.querySelector('#identifiantM');
-const montant = document.querySelector('#montant');
-const reste = document.querySelector('#reste');
 const total = document.querySelector('#total');
 const cdf = document.querySelector('#cdf');
 const chilling = document.querySelector('#chilling');
 const rwandais = document.querySelector('#rwandais');
-const nomClient = document.querySelector('#nomClient');
-const personnel = document.querySelector('#personnel');
-const newClient = document.querySelector('#newClient');
-const newPhone = document.querySelector('#newPhone');
 const produit = document.querySelector('#produit');
 const quantite = document.querySelector('#quantite');
 const pvu = document.querySelector('#pvu');
@@ -19,9 +13,6 @@ const qstock = document.querySelector('#qstock');
 const produitVide = document.querySelector('#produitVide');
 const quantiteVide = document.querySelector('#quantiteVide');
 const pvuVide = document.querySelector('#pvuVide');
-const clientVide = document.querySelector('#clientVide');
-const montantVide = document.querySelector('#montantVide');
-const personnelVide = document.querySelector('#personnelVide');
 const btn = document.querySelector('#envoi');
 const content = document.querySelector('tbody');
 const changer = document.querySelector('#change');
@@ -32,8 +23,8 @@ container = [];
 const update = document.querySelector('#M-add');
 const add = document.querySelector('#add');
 const typeForm = document.querySelector('#typeForm');
-const stock = document.querySelector('#stock');
-
+const source = document.querySelector('#source');
+const destination = document.querySelector('#destination');
 const messageComplete = (valeur, champs) => {
     valeur.textContent = 'Veuillez remplir le champs '+champs+' svp';
     valeur.style.color = 'red';
@@ -53,7 +44,7 @@ const messageComplete = (valeur, champs) => {
     valeur.textContent = 'Veuillez verifier entre les champs Quantite ou  prixV unitaire, vous avez inserer une voyelle ou un mauvais format';
     valeur.style.color = 'red';
   }
-//
+
   function chercheDernierIdVentes(str) {
     if (str.length == 0) {
       document.getElementById("operation").value = "";
@@ -64,43 +55,36 @@ const messageComplete = (valeur, champs) => {
         feedback = this.responseText;
         document.getElementById("operation").value = this.responseText;
       }
-    xmlhttp.open("GET", "classFindIdVente.php?q=" +str);
+    xmlhttp.open("GET", "classFindIdApprov2.php?q=" +str);
     xmlhttp.send();
     }
   }
-
 
   let operation = 0;
   let operationUpdate = '';
   if (typeForm.value == 'update') {
     identifiant.addEventListener('change', () => {
       const tabObj = identifiant.value.split('__:');
-      let clientUpdate = '';
-      let personnelUpdate = '';
       for (let p = 0; p < tabObj.length - 1; p += 1) {
         const tabElement = tabObj[p].split('::');
-        let detailUpdate = "ID::"+tabElement[3]+"::"+tabElement[4]+"::"+tabElement[5]+"::"+tabElement[6]+"::"+tabElement[7]+"::"+tabElement[8]+"::"+tabElement[9]+"::"+tabElement[10]+"::"+tabElement[11]+"::"+tabElement[12]+"::"+tabElement[13];
+        let detailUpdate = "ID::"+tabElement[2]+"::"+tabElement[3]+"::"+tabElement[4]+"::"+tabElement[5]+"::"+tabElement[6]+"::"+tabElement[7]+"::"+tabElement[8]+"::"+tabElement[9]+"::"+tabElement[10]+"::"+tabElement[11]+"::"+tabElement[12];
          operationUpdate = tabElement[0];
-        clientUpdate = "ID::"+tabElement[1]+"::"+tabElement[2];
-        personnelUpdate = "ID::"+tabElement[20]+"::"+tabElement[21]+"::"+tabElement[22];
         const obj = { 
-          produit: tabElement[5],
-          quantite: tabElement[14],
-          pvu: tabElement[15],
+          produit: tabElement[4],
+          quantite: tabElement[13],
+          pvu: tabElement[14],
           detail: detailUpdate
         };
 
         container.push(obj);
-        dateVente.value = tabElement[16];
-        montant.value = tabElement[18];
-        total.value = tabElement[17];
+        source.value = tabElement[1];
+        dateVente.value = tabElement[15];
+        destination.value = tabElement[17];
       }
-      nomClient.value = clientUpdate;
-      personnel.value = personnelUpdate;
       rendons();
     });
   }
-//
+
   function chercheQuantiteStock(str) {
     if (str.length == 0) {
       document.getElementById("qstock").value = "";
@@ -111,12 +95,7 @@ const messageComplete = (valeur, champs) => {
         feedback = this.responseText;
         document.getElementById("qstock").value = this.responseText;
       }
-    if(stock.value == 'stock1') {
-      xmlhttp.open("GET", "classVente.php?q=" + str);
-    } else {
-      xmlhttp.open("GET", "classVente2.php?q=" + str);
-    }
-    
+    xmlhttp.open("GET", "classVente2.php?q=" + str);
     xmlhttp.send();
     }
   }
@@ -124,7 +103,7 @@ const messageComplete = (valeur, champs) => {
 produit.addEventListener('change', () => {
   let tabValeur = produit.value.split('::');
   chercheQuantiteStock(tabValeur[1]);
-  pvu.value = tabValeur[7];
+  pvu.value = tabValeur[5];
 });
 
 enleve.addEventListener('click', () => {
@@ -134,9 +113,12 @@ enleve.addEventListener('click', () => {
   qstock.value = "";
 });
 
+/**
+ * Update viewer of table
+ */
 function rendertable() {
-  chercheDernierIdVentes(stock.value);
-    let somme = 0;
+  chercheDernierIdVentes('find');
+   let somme = 0;
   if (produit.value == "") {
     messageComplete(produitVide, 'produit');
     return;
@@ -173,12 +155,6 @@ function rendertable() {
   }
 
   const tabValeur = produit.value.split('::');
-  if (qstock.value*1 < quantite.value*1 ) {
-    message(quantiteGrand);
-    return;
-  } else {
-    enleveMessage(quantiteGrand);
-  }
 
   const obj = { 
     produit: tabValeur[3],
@@ -225,11 +201,9 @@ function rendertable() {
     }
     total.value = somme;
     let tabChange = changer.value.split('::');
-    chilling.value = tabChange[3] * somme;
-    rwandais.value = tabChange[5] * somme;
+    chilling.value = tabChange[3] * somme  ;
+    rwandais.value = tabChange[5] * somme  ;
     cdf.value =  somme * tabChange[7];
-    montant.value = total.value;
-    reste.value = total.value - montant.value;
   }
 
   render();
@@ -243,11 +217,9 @@ function rendertable() {
 function render () {
     total.value = somme;
     let tabChange = changer.value.split('::');
-    chilling.value = tabChange[3] * somme;
-    rwandais.value = tabChange[5] * somme;
-    cdf.value =  somme *tabChange[7];
-    montant.value = total.value;
-    reste.value = total.value - montant.value;
+    chilling.value = tabChange[3] * somme ;
+    rwandais.value = tabChange[5] * somme ;
+    cdf.value = somme * tabChange[7];
   }
 
 window.addEventListener('click', () => {
@@ -306,11 +278,9 @@ window.addEventListener('click', () => {
           };
           total.value = somme;
         let tabChange = changer.value.split('::');
-        chilling.value = tabChange[3] * somme;
-        rwandais.value = tabChange[5] * somme;
-        cdf.value =   somme *tabChange[7];
-        montant.value = total.value;
-        reste.value = total.value - montant.value;
+        chilling.value = tabChange[3] * somme ;
+        rwandais.value = tabChange[5] * somme ;
+        cdf.value = somme * tabChange[7];
           });
         }
         
@@ -340,7 +310,7 @@ ajoutons.addEventListener('keydown', (event) => {
           }
             
           if (pvu.value == "") {
-            messageComplete(pvuVide, 'Prix de vente unitaire');
+            messageComplete(pvuVide, 'Prix d achat unitaire');
             return;
           } else {
             enleveMessage(pvuVide);
@@ -359,7 +329,7 @@ ajoutons.addEventListener('keydown', (event) => {
           } else {
             enleveMessage(quantiteVide);
           }
-          chercheDernierIdVentes(stock.value);
+          chercheDernierIdVentes('find');
 
         let j = state.value;
         container[j].detail = document.querySelector('#produit').value;
@@ -403,11 +373,9 @@ ajoutons.addEventListener('keydown', (event) => {
         };
         total.value = somme;
         let tabChange = changer.value.split('::');
-        chilling.value = tabChange[3] * somme;
-        rwandais.value = tabChange[5] * somme;
-        cdf.value = somme * tabChange[7];
-        montant.value = total.value;
-        reste.value = total.value - montant.value;
+        chilling.value = tabChange[3] * somme  ;
+        rwandais.value = tabChange[5] * somme  ;
+        cdf.value = somme  * tabChange[7];
         document.querySelector('#produit').value = "";
         quantite.value = "";
         pvu.value = "";
@@ -415,18 +383,6 @@ ajoutons.addEventListener('keydown', (event) => {
         add.style.display = 'block';
       }
     }
-
-    /*if ((event.isComposing || event.key === 'Enter') && (update.style.display == 'block')) {
-        
-      }*/
-});
-
-montant.addEventListener('change', () => {
-  reste.value = total.value - montant.value;
-});
-
-btn.addEventListener('click', () => {
-  
 
 });
 
@@ -445,52 +401,25 @@ function sendTable(str) {
       feedback = this.responseText;
       document.getElementById("txtHint1").innerHTML = this.responseText;
     }
-  xmlhttp.open("GET", "classTraitementVente.php?q=" + str);
+  xmlhttp.open("GET", "classApprov.php?q=" + str);
   xmlhttp.send();
   }
 }
 
 btn.addEventListener('click', () => {
-  if (nomClient.value == "") {
-    messageComplete(clientVide, ' nom du client');
-    return;
-  } else {
-    enleveMessage(clientVide);
-  }
-
-  if (montant.value == "") {
-    messageComplete(montantVide, 'montant');
-    return;
-  } else {
-    enleveMessage(montantVide);
-  }
-
-  if (personnel.value == "") {
-    messageComplete(personnelVide, 'personnel');
-    return;
-  } else {
-    enleveMessage(personnelVide);
-  }
 
   if (container.length == 0) {
-    messageComplete(clientVide, 'produit et table');
+    messageComplete(produitVide, 'produit et table');
     return;
   } else {
-    enleveMessage(clientVide);
-  }
-
-  let dette = '';
-  if (montant.value == total.value) {
-    dette = 'Non';
-  } else {
-    dette = 'Oui';
+    enleveMessage(produitVide);
   }
 
   let etatFormulaire = '';
   if (identifiant.value == '') {
     etatFormulaire = 'add';
-    chercheDernierIdVentes(stock.value);
-    operation = document.querySelector('#operation').value * 1 + 100000;
+    chercheDernierIdVentes('find');
+    operation = document.querySelector('#operation').value * 1 + 200000;
   } else {
     etatFormulaire = 'update';
     operation = operationUpdate;
@@ -498,17 +427,13 @@ btn.addEventListener('click', () => {
   let table = '';
   for (let k = 0; k < container.length; k += 1) {
     let idProduit = container[k].detail.split('::')[1];
-    let idClient = nomClient.value.split('::')[1];
-    let idPersonnel = personnel.value.split('::')[1];
-    table += idProduit + '::' + idClient + '::'+container[k].quantite +'::'+container[k].pvu+'::'+dateVente.value+'::'+operation+'::'+dette+'::'+total.value+'::'+montant.value+'::'+idPersonnel+'::'+stock.value+'::___:';
+    table += idProduit + '::'+container[k].quantite +'::'+container[k].pvu+'::'+dateVente.value+'::'+operation+'::'+total.value+'::' + source.value + '::' + destination.value + '::___:';
   }
 
   table += etatFormulaire;
   sendTable(table);
   container.splice(0, container.length);
   rendons();
-  nomClient.value = "";
-  //personnel.value = "";
   identifiant.value = "";
 });
 
@@ -551,9 +476,7 @@ function rendons() {
   };
   total.value = somme;
   let tabChange = changer.value.split('::');
-  chilling.value = tabChange[3] * somme;
-  rwandais.value = tabChange[5] * somme;
+  chilling.value = tabChange[3] * somme  ;
+  rwandais.value = tabChange[5] * somme  ;
   cdf.value = somme * tabChange[7];
-  montant.value = total.value;
-  reste.value = total.value - montant.value;
 }

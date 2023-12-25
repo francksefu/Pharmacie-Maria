@@ -63,8 +63,9 @@ function dataVentes(){
                       <p id="txtHint"></p>
                       <input type="hidden" id="identifiantM" value="">
                       <input type="hidden" value="add" id="typeFormulaire">
+                      <input type="hidden" value="stock1" id="stock">
                       <button id="envoi" type="button" class="btn btn-primary p-2 mt-4 w-25">Ajouter paiements</button>
-                    
+                  
                 </form>
             </div>
             
@@ -74,7 +75,7 @@ function dataVentes(){
 
     <footer>
         <hr class="w-100">
-        <p class="text-secondary text-center p-3">&copy; copyright Maria</p>
+        <p class="text-secondary text-center p-3">&copy; copyright francksf</p>
     </footer>
     
     <!--<script  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>-->
