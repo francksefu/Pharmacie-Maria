@@ -502,7 +502,7 @@ btn.addEventListener('click', () => {
   container.splice(0, container.length);
   rendons();
   nomClient.value = "";
-  personnel.value = "";
+  
   identifiant.value = "";
 });
 
