@@ -121,7 +121,7 @@ include 'identifiant.php';
                     }
                     
                     
-                    if ($user != 'Responsable') {
+                    if ($user == 'Administrateur') {
                         echo '<td ><div class="d-flex flex-row justify-content-center">
                             
                         <div class="p-2 m-2 bg-danger text-white rounded-3" id="del">

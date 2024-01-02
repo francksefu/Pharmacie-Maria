@@ -81,7 +81,7 @@ function render($reqSql, $user) {
                     </svg>
                 </a>
                 </div>';
-                if ($user != 'Responsable') {
+                if ($user == 'Administrateur') {
                     echo '<div class="p-2 m-2 bg-danger text-white rounded-3" id="del">
                     <a href="#" class="text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">

@@ -43,7 +43,7 @@
     </div>';
         echo $hint == $autre ? $error : $sucess;
     } 
-    if (end($tabC) == 'update' && $user != "") {
+    if (end($tabC) == 'update' && $user == "Administrateur") {
         if ($q !== "") {
             $hint = $q;
             $tracteur = new Personnel($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4]);

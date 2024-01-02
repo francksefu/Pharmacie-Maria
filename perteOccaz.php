@@ -112,7 +112,7 @@ include 'identifiant.php';
                     <td>'.$row["Commentaire"].'</td>
                     
                     <td>'.$row["Dates"].'</td>';
-                    if ($user != 'Responsable') {
+                    if ($user == 'Administrateur') {
                         echo '<td >
                         <div class="d-flex flex-row justify-content-center">
                             

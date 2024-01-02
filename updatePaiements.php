@@ -52,8 +52,10 @@ function dataVentes(){
                         <span class="input-group-text " id="id">Identifiant*</span>
                         <input required type="text" list="data" id="identifiantM" class="form-control w-50" placeholder="entrer identifiant" aria-label="Username" aria-describedby="nom" >
                             <datalist id="data">
-                                <?php 
+                                <?php
+                                if ($user == 'Administrateur') {
                                     dataPaiements();
+                                } 
                                 ?>
                             </datalist>
                     </div>

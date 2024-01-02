@@ -62,7 +62,7 @@ function render($reqSql, $user) {
         <td>'.$row["PrixVente"] * ($row["QuantiteGagne"] - $row["QuantitePerdu"]).'</td>
         <td>'.$row["QuantiteStock"].'</td>
         <td >';
-        if($user != "Responsable") {
+        if($user == "Administrateur") {
             echo '<div class="d-flex flex-row justify-content-center">
                 
             <div class="p-2 m-2 bg-danger text-white rounded-3" id="del">

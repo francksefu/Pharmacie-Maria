@@ -72,7 +72,10 @@ function dataPersoPaie(){
                          </div>
                         <datalist id="dataPersonnel">
                          <?php 
+                         if ($user == 'Administrateur') {
                             dataPersonnel();
+                         }
+                            
 
                         ?>
                         </datalist>

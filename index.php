@@ -5,7 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="login.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="login.css" media="screen" type="text/css"/>
+    <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
+    </style>
 </head>
 
 <body style="background: url(imageAlim.png) no-repeat center fixed; background-size:cover">

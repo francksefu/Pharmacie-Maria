@@ -55,7 +55,7 @@ function render($reqSql, $user) {
         <td>'.$row["Source"].'</td>
         <td>'.$row["Destination"].'</td>
         <td>'.$row["TotalFacture"].'</td> <td >';
-        if($user !== 'Responsable') {
+        if($user == 'Administrateur') {
             echo '
             
                 <div class="d-flex flex-row justify-content-center">

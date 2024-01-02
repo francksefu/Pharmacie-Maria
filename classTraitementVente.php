@@ -50,7 +50,7 @@ include 'identifiant.php';
     echo $hint == $autre ? $error : $sucess;
     }
 
-    if (end($tabObj) == "update" && $user != "") {
+    if (end($tabObj) == "update" && $user == "Administrateur") {
         for ($i = 0; $i < count($tabObj) - 1; $i += 1) {
             $tabElement = explode("::", $tabObj[$i]);
             $autre = '';

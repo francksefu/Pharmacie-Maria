@@ -118,7 +118,7 @@ include 'identifiant.php';
                     <td>'.$row["Annee"].'</td>
                     <td>'.$row["Montant"].'</td>
                     <td>'.$row["Observation"].'</td>';
-                    if ($user != 'Responsable') {
+                    if ($user == 'Administrateur') {
                         echo '<td >
                         <div class="d-flex flex-row justify-content-center">
                             

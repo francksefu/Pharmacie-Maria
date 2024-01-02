@@ -56,8 +56,11 @@ function dataBonusPerte(){
                         <span class="input-group-text " id="id">Identifiant*</span>
                         <input required type="text" list="dataBesoin" id="identifiantM" class="form-control w-50" placeholder="entrer identifiant" aria-label="Username" aria-describedby="nom" >
                             <datalist id="dataBesoin">
-                                <?php 
+                                <?php
+                                if ($user == 'Administrateur') {
                                     dataBonusPerte();
+                                }
+                                    
 
                                 ?>
                             </datalist>

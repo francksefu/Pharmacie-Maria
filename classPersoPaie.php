@@ -32,7 +32,7 @@ include 'identifiant.php';
         echo $hint == $autre ? $error : $sucess;
         
     }
-    if(end($tabC) == 'update' && $user != "") {
+    if(end($tabC) == 'update' && $user == "Administrateur") {
         $idCaisse = $tabC[6];
         if ($q !== "") {
             $hint = $q;
