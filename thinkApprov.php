@@ -79,7 +79,7 @@ function approvisionnement($reqSql) {
       <tr>';
     $total += $row["TotalFacture"];
         }
-        echo'<h3 class="mt-4 mb-2 text-center">Total : '.$total.' $</h3>';
+        echo'<h3 class="mt-4 mb-2 text-center">Total : '.$total.'  Fc</h3>';
         echo"</table>";
     }else{echo "Pas des donnees dans la base ";}
 }
@@ -306,55 +306,55 @@ function resume ($vente, $sortie, $paiement_personnel, $bonus_perte, $paiements,
         <tr>
             <td>TOTAL VENTE (cash + credit)</td>
             <td>
-                '.$total_vente.' $
+                '.$total_vente.'  Fc
             </td>
         </tr>
         <tr>
             <td>VENTE CASH</td>
             <td>
-                '.$total_vente_cash.' $
+                '.$total_vente_cash.'  Fc
             </td>
         </tr>
         <tr>
             <td>VENTE CREDIT</td>
             <td>
-               '.$credit.' $
+               '.$credit.'  Fc
             </td>
         </tr>
         <tr>
             <td>DEPENSES (les sorties depenses et les paiements du personnels)</td>
             <td>
-                '.$total_sortie.'$ + '.$total_paie_personnel.' $ = '.$total_depenses.' $
+                '.$total_sortie.' Fc + '.$total_paie_personnel.'  Fc = '.$total_depenses.'  Fc
             </td>
         </tr>
         <tr>
             <td>RESTE (Balances)</td>
             <td>
-                '.$reste_balances.' $
+                '.$reste_balances.'  Fc
             </td>
         </tr>
         <tr>
             <td>PERTES OCCASIONNEES (bons perte + perte occasionnees)</td>
             <td>
-                '.$pertes_occasionne.' $ + '.$perte_occaz.' $ = '.$pertes_occasionne + $perte_occaz.' $
+                '.$pertes_occasionne.'  Fc + '.$perte_occaz.'  Fc = '.$pertes_occasionne + $perte_occaz.'  Fc
             </td>
         </tr>
         <tr>
             <td>RESTE / CASH DISPONIBLES</td>
             <td>
-                '.$restes_cash_disponible.' $
+                '.$restes_cash_disponible.'  Fc
             </td>
         </tr>
         <tr>
             <td>DETTE RECOUVREES</td>
             <td>
-                '.$dette_recouverte.' $
+                '.$dette_recouverte.'  Fc
             </td>
         </tr>
         <tr>
             <td>TOTAL NET PUR VERSEMENT (Cash encaisser)</td>
             <td>
-                '.$total_net_pur_versement.' $
+                '.$total_net_pur_versement.'  Fc
             </td>
         </tr></tbody></table></div>
     ';
