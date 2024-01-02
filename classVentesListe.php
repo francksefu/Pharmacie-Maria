@@ -39,7 +39,7 @@ function dataVente($operation){
         <h3 class=" mb-3 mt-3 ms-3"> client : '.$nomClient.'</h3>
         <h6 class=" mb-3 mt-3 ms-3"> nom du vendeur : '.$personnel.'</h6>
         </table>
-        <h3 class="text-center mb-3 mt-3"> total : '.$total.' $</h3>';
+        <h3 class="text-center mb-3 mt-3"> total : '.$total.' Fc</h3>';
         return $valeur;
 
    }else{return "Une erreur s est produite ";}  

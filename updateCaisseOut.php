@@ -69,7 +69,7 @@ include 'identifiant.php';
                             <div class="input-group ">
                                 <span class="input-group-text">Montant*</span>
                                 <input required type="float" id="montant" name="CM" class="form-control" placeholder="entrer montant sortie" aria-label="Amount (to the nearest cdf)">
-                                <span class="input-group-text">$</span>
+                                <span class="input-group-text">Fc</span>
                             </div>
                             <small id="montantVide"></small>
                         </div>

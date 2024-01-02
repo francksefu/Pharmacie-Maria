@@ -219,9 +219,9 @@ function rendertable() {
     }
     total.value = somme;
     let tabChange = changer.value.split('::');
-    chilling.value = tabChange[3] * somme;
-    rwandais.value = tabChange[5] * somme;
-    cdf.value =  somme * tabChange[7];
+    chilling.value = tabChange[3] * somme / tabChange[7];
+    rwandais.value = tabChange[5] * somme / tabChange[7];
+    cdf.value =  somme / tabChange[7];
     montant.value = total.value;
     reste.value = total.value - montant.value;
   }
@@ -237,9 +237,9 @@ function rendertable() {
 function render () {
     total.value = somme;
     let tabChange = changer.value.split('::');
-    chilling.value = tabChange[3] * somme;
-    rwandais.value = tabChange[5] * somme;
-    cdf.value =  somme *tabChange[7];
+    chilling.value = tabChange[3] * somme / tabChange[7];
+    rwandais.value = tabChange[5] * somme / tabChange[7];
+    cdf.value =  somme / tabChange[7];
     montant.value = total.value;
     reste.value = total.value - montant.value;
   }
@@ -300,9 +300,9 @@ window.addEventListener('click', () => {
           };
           total.value = somme;
         let tabChange = changer.value.split('::');
-        chilling.value = tabChange[3] * somme;
-        rwandais.value = tabChange[5] * somme;
-        cdf.value =   somme *tabChange[7];
+        chilling.value = tabChange[3] * somme / tabChange[7];
+        rwandais.value = tabChange[5] * somme / tabChange[7];
+        cdf.value =   somme / tabChange[7];
         montant.value = total.value;
         reste.value = total.value - montant.value;
           });
@@ -397,9 +397,9 @@ ajoutons.addEventListener('keydown', (event) => {
         };
         total.value = somme;
         let tabChange = changer.value.split('::');
-        chilling.value = tabChange[3] * somme;
-        rwandais.value = tabChange[5] * somme;
-        cdf.value = somme * tabChange[7];
+        chilling.value = tabChange[3] * somme / tabChange[7];
+        rwandais.value = tabChange[5] * somme / tabChange[7];
+        cdf.value = somme / tabChange[7];
         montant.value = total.value;
         reste.value = total.value - montant.value;
         document.querySelector('#produit').value = "";
@@ -545,9 +545,9 @@ function rendons() {
   };
   total.value = somme;
   let tabChange = changer.value.split('::');
-  chilling.value = tabChange[3] * somme;
-  rwandais.value = tabChange[5] * somme;
-  cdf.value = somme * tabChange[7];
+  chilling.value = tabChange[3] * somme / tabChange[7];
+  rwandais.value = tabChange[5] * somme / tabChange[7];
+  cdf.value = somme / tabChange[7];
   montant.value = total.value;
   reste.value = total.value - montant.value;
 }

@@ -52,7 +52,7 @@
                         <div class="input-group mb-3 col-md-6">
                             <span class="input-group-text">Prix d achat*</span>
                             <input id="pa" required type="float" class="form-control" placeholder="entrer prix d achat" aria-label="Amount (to the nearest dollar)">
-                            <span class="input-group-text">$</span>
+                            <span class="input-group-text">Fc</span>
                         </div>
                         <small id="paVide"></small>
                         
@@ -62,7 +62,7 @@
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Prix de vente*</span>
                                 <input id="pv" required type="float" class="form-control" placeholder="entrer prix de vente" aria-label="Amount (to the nearest dollar)">
-                                <span class="input-group-text">$</span>
+                                <span class="input-group-text">Fc</span>
                             </div>
                             <small id="pvVide"></small>
                         </div>
@@ -70,7 +70,7 @@
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Prix de vente minimum*</span>
                                 <input id="pvmin" required type="float" class="form-control" placeholder="entrer prix de vente a ne pas depasser" aria-label="Amount (to the nearest dollar)">
-                                <span class="input-group-text">$</span>
+                                <span class="input-group-text">Fc</span>
                             </div>
                             <small id="pvminVide"></small>  
                         </div>
