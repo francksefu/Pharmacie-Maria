@@ -145,9 +145,9 @@ function dataProduct(){
                 <div class="row">
                     <div class="border border-1 p-4 col-md-4 m-2">
                         <div class="input-group mb-3">
-                            <label class="input-group-text" for="inputGroupSelect01">Choisir stock</label>
+                            <label class="input-group-text" for="inputGroupSelect01">Entreprise</label>
                             <select class="form-select" id="inputGroupSelect01">
-                              <option selected value="1">Stock 1</option>
+                              <option selected value="1">Iriba</option>
                             </select>
                         </div>
                         <div class="input-group mb-3">
@@ -166,17 +166,17 @@ function dataProduct(){
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="status">source</label>
                                 <select class="form-select" id="source">
-                                  <option value="ailleur">ailleur</option>
-                                  <option value="stock2">stock2</option>
+                                  <option value="ailleur">Iriba</option>
+                                  <option value="stock2">none</option>
                                 </select>
                                 <button id="envoi" type="button" class="btn btn-primary">Valider</button>
                             </div>
                             <h4>Destination</h4>
                             <div class="input-group mb-3">
-                                <label class="input-group-text" for="status">source</label>
+                                <label class="input-group-text" for="status">destination</label>
                                 <select class="form-select" id="destination">
-                                  <option value="stock1">stock1</option>
-                                  <option value="stock2">stock2</option>
+                                  <option value="stock1">clients</option>
+                                  <option value="stock2">none</option>
                                 </select>
                                 
                             </div>
