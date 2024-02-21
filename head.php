@@ -41,7 +41,7 @@ echo '<meta charset="UTF-8">
 
   $place_vente = dataDataPlaceVentePersonnel($post_user);
 
-switch ($user) {
+switch (trim($user)) {
     case "Approvisionneur" :
       echo '<script defer src="navbarApprov.js"></script>';
     break;
@@ -61,5 +61,9 @@ switch ($user) {
     case "Administrateur" :
         echo '<script defer src="navbar.js"></script>';
     break; 
+    
+    case "Sous-Commercial" :
+        echo '<script defer src="navSousVendeur.js"></script>';
+    break;
 }
 ?>

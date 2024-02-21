@@ -1234,6 +1234,17 @@ function perte_occasionnee($reqSql) {
         sortie($reqSq);
       }
 
+      if($cache == 'taxes') {
+        $reqSq= ("SELECT * FROM Sortie WHERE(DatesD = '".$date1."') and (TypeD = 'Taxes et impots') order by idSortie desc");
+        sortie($reqSq);
+      }
+
+      if($cache == 'taxes2') {
+        $reqSq= ("SELECT * FROM Sortie WHERE(DatesD BETWEEN '".$date1."' AND '".$date2."') and (TypeD = 'Taxes et impots') order by idSortie desc");
+        sortie($reqSq);
+      }
+
+
       if($cache == 'bonus_perte') {
         $reqSq=  ("SELECT * FROM BonusPerte, Produit WHERE (DatesD = '".$date1."') and (BonusPerte.idProduit = Produit.idProduit) order by idBonusPerte desc");
         bonusPerte($reqSq);

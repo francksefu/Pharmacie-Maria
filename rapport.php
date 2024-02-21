@@ -142,6 +142,7 @@ function dataVente(){
                   <li id="trie-depenses"><a class="dropdown-item" href="#">Trie par depenses</a></li>
                   <li id="trie-charge"><a class="dropdown-item" href="#">Trie par charge</a></li>
                   <li id="trie-inutile"><a class="dropdown-item" href="#">Trie par inutile</a></li>
+                  <li id="taxes"><a class="dropdown-item" href="#">Taxes et impots</a></li>
                 </ul>
             </div>
             <button id="bonusOuPerte" class="btn btn-secondary  mt-3">Bonus ou perte</button>
@@ -328,6 +329,7 @@ function dataVente(){
                   <li id="trie-depenses2"><a class="dropdown-item" href="#">Trie par depenses</a></li>
                   <li id="trie-charge2"><a class="dropdown-item" href="#">Trie par charge</a></li>
                   <li id="trie-inutile2"><a class="dropdown-item" href="#">Trie par inutile</a></li>
+                  <li id="taxes2"><a class="dropdown-item" href="#">Taxes et impots</a></li>
                 </ul>
             </div>
             <button id="bonusOuPerte2" class="btn btn-secondary  mt-3">Bonus ou perte</button>

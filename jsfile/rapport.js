@@ -14,6 +14,7 @@ const trie_dette = document.querySelector('#trie-dette');
 const trie_charge = document.querySelector('#trie-charge');
 const trie_depenses = document.querySelector('#trie-depenses');
 const trie_inutile = document.querySelector('#trie-inutile');
+const taxes = document.querySelector('#taxes');
 const bonus_perte = document.querySelector('#bonusOuPerte');
 const approvisionnement = document.querySelector('#approv');
 const paiements = document.querySelector('#paiements');
@@ -41,6 +42,7 @@ const trie_charge2 = document.querySelector('#trie-charge2');
 const trie_dette2 = document.querySelector('#trie-dette2');
 const trie_depenses2 = document.querySelector('#trie-depenses2');
 const trie_inutile2 = document.querySelector('#trie-inutile2');
+const taxes2 = document.querySelector('#taxes2');
 const bonus_perte2 = document.querySelector('#bonusOuPerte2');
 const approvisionnement2 = document.querySelector('#approvisionnement2');
 const paiements2 = document.querySelector('#paiements2');
@@ -363,6 +365,14 @@ trie_inutile.addEventListener('click', () => {
 
   trie_inutile2.addEventListener('click', () => {
     deuxDate('toutes les sortie inutile sur une date', 'trie_inutile2');
+  });
+
+  taxes.addEventListener('click', () => {
+    uneDate('toutes les depenses en taxes et impots sur une date', 'taxes');
+  });
+
+  taxes2.addEventListener('click', () => {
+    deuxDate('toutes les depenses en taxes et impots sur une periode', 'taxes2');
   });
 
 bonus_perte.addEventListener('click', () => {

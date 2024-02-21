@@ -61,10 +61,11 @@ include 'identifiant.php';
                             <option selected value="Aucun">Aucun</option>
                               <option value="Charge">Charge</option>
                               <option value="Depense">Depense</option>
+                              <option value="Taxes et impots">Taxes et impots</option>
                               <option value="Autres">Autres</option>
                             </select>
                         </div>
-                            
+                           
                           
 
                           <div class="col-md-7 mt-5 mb-4">

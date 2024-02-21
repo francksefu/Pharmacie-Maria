@@ -29,7 +29,7 @@ include 'identifiant.php';
                         <input required type="date"  name="dates" id="datesout" class="form-control w-50" placeholder="mettre la date" aria-label="Username" aria-describedby="nom" value="<?php $d = strtotime("today"); echo date('Y-m-d',$d); ?>">
                     </div>
                     <div class="row">
-                   
+                  
                         <div class="input-group mb-3 col-md-6">
                             <label class="input-group-text" for="type">Type de sorties</label>
                             <select class="form-select" id="type">
@@ -37,6 +37,7 @@ include 'identifiant.php';
                               <option value="Charge">Charge</option>
                               <option value="Depense">Depense</option>
                               <option value="Dette">Dette</option>
+                              <option value="Taxes et impots">Taxes et impots</option>
                               <option value="Autres">Autres</option>
                             </select>
                         </div>

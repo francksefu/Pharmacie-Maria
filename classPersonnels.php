@@ -32,7 +32,7 @@ include 'identifiant.php';
     </div>';
         echo $hint == $autre ? $error : $sucess;
     } 
-    if (end($tabC) == 'update' && $user == "Administrateur") {
+    if (end($tabC) == 'update') {
         if ($q !== "") {
             $hint = $q;
             $tracteur = new Clients($tabC[0], $tabC[1]);
