@@ -52,8 +52,8 @@ function render($reqSql, $user) {
         <tr>
         <td>'.$row["Operation"].'</td>
         <td>'.$row["DatesApprov"].'</td>
-        <td>'.$row["Source"].'</td>
-        <td>'.$row["Destination"].'</td>
+        <td> Iriba </td>
+        <td> clients </td>
         <td>'.$row["TotalFacture"].'</td> <td >';
         if($user == 'Administrateur') {
             echo '

@@ -51,8 +51,8 @@ function approvisionnement($reqSql) {
         <tr>
         <td>'.$row["Operation"].'</td>
         <td>'.$row["DatesApprov"].'</td>
-        <td>'.$row["Source"].'</td>
-        <td>'.$row["Destination"].'</td>
+        <td> Iriba </td>
+        <td> Clients </td>
         <td>'.$row["TotalFacture"].'</td>
         <td >
             <div class="d-flex flex-row justify-content-center">
