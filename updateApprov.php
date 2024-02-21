@@ -1,29 +1,15 @@
+<?php 
+include 'identifiant.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion</title>
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.min.css">
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
-    <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
-    <script defer src="navbar.js"></script>
+<?php include 'head.php'; ?>
     <link rel="stylesheet" href="index.css">
     <script defer src="jsfile/takeApprov.js"></script>
-    
+    <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
+    </style>
 </head>
 <?php
 //find id for vente to make a nmber of operation
@@ -127,7 +113,7 @@ function dataProduct(){
                       </datalist>
                     <span class="input-group-text border border-success">Quantite</span>
                     <input id="quantite" type="float" class="form-control border border-success" placeholder="Quantite" aria-label="Server">
-                    <span class="input-group-text">PV Unitaire</span>
+                    <span class="input-group-text">PA Unitaire</span>
                     <input id="pvu" type="float" class="form-control" placeholder="prix de vente" aria-label="Server">
                     <span class="input-group-text">$</span>
                     <a id="add" href="#" class="text-decoration-none"><span class="input-group-text bg-success text-white">&plus;</span></a>

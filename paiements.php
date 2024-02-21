@@ -1,36 +1,23 @@
+<?php 
+include 'identifiant.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ventes</title>
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.min.css">
-  
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
-    <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
-    <script defer src="./navbar.js"></script>
+<?php include 'head.php'; ?>
     <script defer src="./jsfile/jquery-3.6.1.min.js"></script>
     <script defer src="./jsfile/produit.js"></script>
     <script defer src="./jsfile/supprime.js"></script>
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="vente.css">
     <script defer src="./jsfile/ventesList.js"></script>
+    <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
+    </style>
 </head>
 <?php
 
+// session
 function dataPaiements(){
     include 'connexion.php';
     $sql= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) order by idPaiements desc");
@@ -43,9 +30,9 @@ function dataPaiements(){
    }else{echo "Une erreur s est produite ";}  
 
 }
-function render($reqSql) {
+function render($reqSql, $user) {
     include 'connexion.php';
-    //$reqSql= ("SELECT * FROM Produit order by idProduit asc");
+    
     $result= mysqli_query($db, $reqSql);
     if(mysqli_num_rows($result)>0){
         echo '<table class="table border border-1">
@@ -100,8 +87,9 @@ function render($reqSql) {
                         <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
                     </svg>
                 </a>
-                </div>
-                <div class="p-2 m-2 bg-danger text-white rounded-3" id="del">
+                </div>';
+                if ($user != 'Responsable') {
+                    echo '<div class="p-2 m-2 bg-danger text-white rounded-3" id="del">
                     <a href="#" class="text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
@@ -116,8 +104,10 @@ function render($reqSql) {
                         </svg>
                     </a>
                 </div>  
-            </div>
-            
+            </div>'; 
+                }
+                
+           echo ' 
         </td>
       </tr>
       <tr>';
@@ -143,7 +133,12 @@ function render($reqSql) {
                 
                 <div class="col-md-3 bg-transparent pt-5">
                     <p class="text-center">
-                        <a href="addPaiements.php" class="btn btn-primary p-2">&plus; Add paiement?</a>
+                    <?php 
+                        if ($user != 'Responsable') {
+                            echo '<a href="addPaiements.php" class="btn btn-primary p-2">&plus; Add paiement?</a>';
+                        }
+                    ?>
+                        
                     </p>
                 </div>
     
@@ -170,8 +165,9 @@ function render($reqSql) {
                     <input type="text" id="supprimons" list="dataBesoin" class="form-control" placeholder="metez quelque chose dont vous vous rappeler pour le supprimer" >
                       <datalist id="dataBesoin">
                          <?php 
+                         if($user !== "") {
                             dataPaiements();
-
+                         }
                         ?>
                       </datalist>
                     <span class="input-group-text pointe" id="cross">&cross;</span>
@@ -189,8 +185,10 @@ function render($reqSql) {
     
         <div class="container-fluid pt-5 bg-transparent">
         <?php
+        if( $user !== "") {
             $reqSql0= ("SELECT * FROM Paiements, Ventes, Client WHERE (Paiements.Operation = Ventes.Operation) and (Client.idClient = Ventes.idClient) GROUP BY idPaiements order by idPaiements desc limit 500");
-            render($reqSql0);
+            render($reqSql0, $user);
+        }
           ?>  
         </div>
         

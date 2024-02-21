@@ -1,29 +1,16 @@
+<?php 
+include 'identifiant.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion</title>
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.min.css">
-    
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
-    <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
-    <script defer src="./navbar.js"></script>
+    <?php include 'head.php'; ?>
     <script defer src="./jsfile/takePersonnels.js"></script>
     <link rel="stylesheet" href="index.css">
+    <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
+    </style>
 </head>
-
 <body class="bg-light">
 
     <main>
@@ -56,7 +43,36 @@
                             <small id="telephoneVide"></small>
                         </div>
 
-                         
+                        <div class="col-md-7 mb-3">
+                            <div class="input-group ">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="nom">Salaire de base*</span>
+                                    <input type="float"  name="nom" id="salaire" class="form-control" placeholder="Entrer le salaire" aria-label="Username" aria-describedby="nom" >
+                                </div>
+                            </div>
+                            <small id="SalaireVide"></small>
+                        </div>
+
+                        <div class="col-md-7 mb-3">
+                            <div class="input-group ">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="nom">Poste*</span>
+                                    <input type="text"  name="nom" id="poste" class="form-control" placeholder="Entrer le poste du personnel" aria-label="Username" aria-describedby="nom" >
+                                </div>
+                            </div>
+                            <small id="PosteVide"></small>
+                        </div>
+
+                        <div class="col-md-7 mb-3">
+                            <div class="input-group ">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="nom">Mot de passe*</span>
+                                    <input type="text"  name="nom" id="password" class="form-control" placeholder="Entrer le mot de passe pour cet agent" aria-label="Username" aria-describedby="nom" >
+                                </div>
+                            </div>
+                            <small id="PasswordVide"></small>
+                        </div>
+                        
                     </div>
                    
                     <p id="txtHint"></p>

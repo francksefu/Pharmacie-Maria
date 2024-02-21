@@ -1,3 +1,6 @@
+
+
+
 const identifiantM = document.querySelector('#identifiantM');
 const nom = document.querySelector('#nom');
 const pa = document.querySelector('#pa');
@@ -119,3 +122,12 @@ const messageComplete = valeur => {
     description.value = "";
     identifiantM.value = "";
   })
+
+
+
+
+
+
+
+
+

@@ -1,27 +1,10 @@
+<?php 
+include 'identifiant.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion</title>
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.min.css">
-  
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
-    <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
-    <script defer src="./navbar.js"></script>
+<?php include 'head.php'; ?>
     <script defer src="./jsfile/jquery-3.6.1.min.js"></script>
     <script defer src="./jsfile/produit.js"></script>
     <script defer src="./jsfile/supprime.js"></script>
@@ -29,8 +12,11 @@
     <link rel="stylesheet" href="modifier.css">
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="vente.css">
+    <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
+    </style>
 </head>
 <?php
+
 function dataProduct(){
     include 'connexion.php';
     $sql = ("SELECT * FROM Produit order by Nom asc");
@@ -46,7 +32,7 @@ function dataProduct(){
 
 }
 
-function render($reqSql) {
+function render($reqSql, $user) {
     include 'connexion.php';
     //$reqSql= ("SELECT * FROM Produit order by idProduit asc");
     $result= mysqli_query($db, $reqSql);
@@ -80,8 +66,9 @@ function render($reqSql) {
         <td>'.$row["PrixVente"].'</td>
         <td>'.$row["PrixVmin"].'</td>
         <td>'.$row["QuantiteStock"].'</td>
-        <td>'.$row["QuantiteStockMin"].'</td>
-        <td >
+        <td>'.$row["QuantiteStockMin"].'</td>';
+        if($user != 'Responsable') {
+            echo '<td >
             <div class="d-flex flex-row justify-content-center">
                
                 <div class="p-2 m-2 bg-danger text-white rounded-3" id="del">
@@ -101,7 +88,9 @@ function render($reqSql) {
                 </div>  
             </div>
             
-        </td>
+        </td>';
+        }
+        echo'
       </tr>
       <tr>
                ';
@@ -132,7 +121,12 @@ function render($reqSql) {
                 </div>
                 <div class="col-md-2 bg-transparent pt-5">
                     <p class="text-center">
-                        <a href="addProduct.php" class="btn btn-primary p-2">&plus; Add product</a>
+                    <?php 
+                        if ($user != 'Responsable') {
+                            echo '<a href="addProduct.php" class="btn btn-primary p-2">&plus; Add product</a>';
+                        }
+                    ?> 
+                        
                     </p>
                 </div>
     
@@ -150,8 +144,9 @@ function render($reqSql) {
                     <input type="text" id="supprimons" list="dataBesoin" class="form-control" placeholder="metez quelque chose dont vous vous rappeler pour le supprimer" >
                       <datalist id="dataBesoin">
                          <?php 
+                         if($user !== "") {
                             dataProduct();
-
+                         }
                         ?>
                       </datalist>
                     <span class="input-group-text pointe" id="cross">&cross;</span>
@@ -169,15 +164,17 @@ function render($reqSql) {
    
         <div class="container-fluid pt-5 bg-transparent" id="render">
        <?php
+       if ($user !== "") {
           $reqSql0= ("SELECT * FROM Produit order by Nom asc");
-          render($reqSql0);
+          render($reqSql0, $user);
         ?>
         </div>
 
         <div class="container-fluid pt-5 bg-transparent" id="render-alerte">
        <?php
           $reqSql0= ("SELECT * FROM Produit WHERE (QuantiteStock < QuantiteStockMin) order by Nom asc");
-          render($reqSql0);
+          render($reqSql0, $user);
+       }
         ?>
         </div>
        

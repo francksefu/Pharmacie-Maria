@@ -3,15 +3,15 @@ function dataVente($operation){
     include 'connexion.php';
     $sql= ("SELECT * FROM Approvisionnement, Produit WHERE (Approvisionnement.idProduit = Produit.idProduit)  and (Operation = $operation)");
     $result = mysqli_query($db, $sql);
-            
+    $valeur = '';
     if(mysqli_num_rows($result)>0){
       $valeur .= '<table class="table border border-1">
       <thead class="bg-transparent text-secondary">
       <tr>
                 <th>Nom du produit</th>
-                <th>Quantite vendu</th>
-                <th>Prix de vente unitaire</th>
-                <th>Prix de vente total</th>
+                <th>Quantite achete</th>
+                <th>Prix d achat unitaire</th>
+                <th>Prix d achat total</th>
               </tr>
             </thead>
             <tbody>';

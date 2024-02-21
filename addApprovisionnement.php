@@ -1,28 +1,17 @@
+<?php 
+include 'identifiant.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion</title>
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.min.css">
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
-    <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
-    <script defer src="navbar.js"></script>
+    <?php
+      include 'head.php';
+    ?>
     <link rel="stylesheet" href="index.css">
     <script defer src="jsfile/takeApprov.js"></script>
+    <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
+    </style>
     
 </head>
 <?php
@@ -93,8 +82,8 @@ function dataProduct(){
                       </datalist>
                     <span class="input-group-text border border-success">Quantite</span>
                     <input id="quantite" type="float" class="form-control border border-success" placeholder="Quantite" aria-label="Server">
-                    <span class="input-group-text">PV Unitaire</span>
-                    <input id="pvu" type="float" class="form-control" placeholder="prix de vente" aria-label="Server">
+                    <span class="input-group-text">PA Unitaire</span>
+                    <input id="pvu" type="float" class="form-control" placeholder="prix d achat" aria-label="Server">
                     <span class="input-group-text">$</span>
                     <a id="add" href="#" class="text-decoration-none"><span class="input-group-text bg-success text-white">&plus;</span></a>
                     <a id="M-add" href="#" class="text-decoration-none"><span class="input-group-text bg-primary text-white">&check;</span></a>
@@ -142,18 +131,16 @@ function dataProduct(){
                             <h4>Source</h4>
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="status">source</label>
-                                <select class="form-select" id="source">
-                                  <option value="ailleur">ailleur</option>
-                                  <option value="stock2">stock2</option>
-                                </select>
+                                <input type="text" id="source" value="ailleurs" class="form-control" >
+                                
                                 <button id="envoi" type="button" class="btn btn-primary">Valider</button>
                             </div>
                             <h4>Destination</h4>
                             <div class="input-group mb-3">
-                                <label class="input-group-text" for="status">source</label>
+                                <label class="input-group-text" for="status">destination</label>
                                 <select class="form-select" id="destination">
-                                  <option value="stock1">stock1</option>
-                                  <option value="stock2">stock2</option>
+                                  <option value="stock1">stock</option>
+                                  <!--<option value="stock2">stock2</option>-->
                                 </select>
                                 
                             </div>
@@ -186,7 +173,7 @@ function dataProduct(){
             <!-- just using to make difference between add, remove, and update -->
                 <input type="hidden" id="state" >
                 <input type="hidden" id="identifiantM" value="">
-                <input type="hidden" id="operation" value="<?php echo findIDVente(); ?>" />
+                <input type="hidden" id="operation"/>
                 <input type="hidden" id="typeForm" value="add" />
     </form>
         </div>

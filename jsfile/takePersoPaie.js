@@ -5,6 +5,7 @@ const type = document.querySelector('#type');
 const montant = document.querySelector('#montant');
 const motif = document.querySelector('#commentaire');
 const personnel = document.querySelector('#nom');
+const year = document.querySelector('#year');
 const montantVide = document.querySelector('#montantVide')
 let idDataPersonnel ='';
 const btn = document.querySelector('#envoie');
@@ -25,6 +26,7 @@ if (typeForm.value == 'update') {
     idCaisse = tabValeur[1];
     nom.value = `ID::${tabValeur[11]}:: Nom ::${tabValeur[5]}:: Telephone::${tabValeur[15]}`;
     idDataPersonnel = nom.value.split('::')[1];
+    year.value = tabValeur[17];
   });
 }
 const messageVide = 'Veuillez remplir ce champs svp'
@@ -67,9 +69,9 @@ btn.addEventListener('click', () => {
   idDataPersonnel = nom.value.split('::')[1];
   let prend;
   if (typeForm.value == 'update') {
-    prend = montant.value+"::"+motif.value+"::"+type.value+"::"+datesout.value+"::"+idDataPersonnel+"::"+idCaisse+"::update";
+    prend = montant.value+"::"+motif.value+"::"+type.value+"::"+datesout.value+"::"+idDataPersonnel+"::"+year.value+"::"+idCaisse+"::update";
   } else {
-    prend = montant.value+"::"+motif.value+"::"+type.value+"::"+datesout.value+"::"+idDataPersonnel+"::add";
+    prend = montant.value+"::"+motif.value+"::"+type.value+"::"+datesout.value+"::"+idDataPersonnel+"::"+year.value+"::add";
   }
   
   showHint(prend);

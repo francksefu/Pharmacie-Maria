@@ -1,0 +1,2 @@
+Dans la partie json, l initialisation se fait avec des tableaux vide #franck
+pour les ventes et approv, l operation est prise suivant la derniere operation + son id (tu comprends donc ce que cela implique lors de l initialisation du projet)

@@ -1,31 +1,44 @@
+<?php 
+include 'identifiant.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion</title>
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.min.css">
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
-    <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
-    <script defer src="navbar.js"></script>
+<?php include 'head.php'; ?>
     <link rel="stylesheet" href="index.css">
+    <!--<script defer src="jsfile/datalist.js"></script>-->
     <script defer src="jsfile/takeVente.js"></script>
-    <script defer src="./jsfile/datalist.js"></script>
+    <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
+    </style>
 </head>
 <?php
+
+function dataVente(){
+    include 'connexion.php';
+    //$take = '';
+    $sql= ("SELECT * FROM Ventes, Produit, Client, DataPersonnel WHERE (Produit.idProduit = Ventes.idProduit) and (Client.idClient = Ventes.idClient and (DataPersonnel.idDataPersonnel = Ventes.idPersonnel)) group by Operation order by Operation desc");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+      $valeur = '';
+        while($row= mysqli_fetch_assoc($result)){
+            //
+            $sql1= ("SELECT * FROM Ventes, Produit, Client WHERE (Operation = ".$row["Operation"].") and (Produit.idProduit = Ventes.idProduit) and (Client.idClient = Ventes.idClient) order by Operation desc");
+            $result1 = mysqli_query($db, $sql1);
+                    
+            if(mysqli_num_rows($result1)>0){
+            $valeur = '';
+                while($row1= mysqli_fetch_assoc($result1)){
+                    $valeur .= $row1["Operation"]."::".$row1["idClient"]."::".$row1["NomClient"]."::".$row1["idProduit"].":: Nom ::".$row1["Nom"].":: PA ::".$row1["PrixAchat"].":: PV = ::".$row1["PrixVente"].":: PVmin =::".$row1["PrixVmin"].":: QstockMin = ::".$row1["QuantiteStockMin"]."::".$row1["QuantiteVendu"]."::".$row1["PU"]."::".$row1["DatesVente"]."::".$row1["TotalFacture"]."::".$row1["MontantPaye"]."::ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"]."::__:";
+                }
+
+        }else{echo "Une erreur s est produite ";}  
+        echo "<option value='".$valeur."'>operation : ".$row["Operation"]."client: ".$row["NomClient"]." :Totol :".$row["TotalFacture"]."</option>"; 
+        }
+
+   }else{echo "Une erreur s est produite ";}  
+  //return $take;
+}
 
 function findIDVente(){
     include 'connexion.php';
@@ -63,12 +76,27 @@ function dataProduct(){
     if(mysqli_num_rows($result)>0){
                         
         while($row= mysqli_fetch_assoc($result)){
-            echo"<option value='ID ::".$row["idProduit"].":: Nom ::".$row["Nom"].":: PA ::".$row["PrixAchat"].":: PV = ::".$row["PrixVente"].":: PVmin =::".$row["PrixVmin"].":: QstockMin = ::".$row["QuantiteStockMin"]."'>nom: ".$row["Nom"]." :Qstock ".$row["QuantiteStock"]."</option>"; 
+            echo"<option value='ID ::".$row["idProduit"].":: Nom ::".$row["Nom"].":: PA ::".$row["PrixAchat"].":: PV = ::".$row["PrixVente"].":: PVmin =::".$row["PrixVmin"].":: QstockMin = ::".$row["QuantiteStockMin"]."'>nom: ".$row["Nom"]." :Description ".$row["Description"]."</option>"; 
         }
                 
    }else{echo "Une erreur s est produite ";}  
 
 }
+
+function dataDataPersonnel(){
+    include 'connexion.php';
+    $sql = ("SELECT * FROM DataPersonnel order by idDataPersonnel desc");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+                        
+        while($row= mysqli_fetch_assoc($result)){
+            echo "<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]."</option>"; 
+        }
+                
+   }else{echo "Une erreur s est produite ";} 
+  
+  }
 
 function dataPersonnel(){
     include 'connexion.php';
@@ -94,8 +122,12 @@ function dataPersonnel(){
             <input type="hidden" id="check-datalist" value="updateVentes">
             <div class="input-group mb-3  mx-auto d-block">
                 <span class="input-group-text " id="id">Identifiant*</span>
-                <input required type="text" list="dataBesoin" id="identifiantM" class="form-control w-50" placeholder="entrer identifiant" aria-label="Username" aria-describedby="nom" >
-                    <datalist id="dataBesoin"></datalist>
+                <input required type="text" list="dataBesoin" id="identifiantM" class="form-control w-50" placeholder="entrer identifiant">
+                    <datalist id="dataBesoin">
+                    <?php
+                        dataVente();
+                    ?>
+                    </datalist>
             </div>
             <div class="row border border-1 mt-3 pt-3 w-75 d-block mx-auto">
             
@@ -152,6 +184,14 @@ function dataPersonnel(){
          
                 <div class="row">
                     <div class="border border-1 p-4 col-md-4 m-2">
+                        <div class="input-group mb-3 ">
+                            <span class="input-group-text">Nom du vendeur</span>
+                            <input type="text" readonly id="personnel" list="dataPersonnel_" class="form-control" value="<?php echo $place_vente; ?>">
+                            <datalist id="dataPersonnel_">
+                            
+                        </datalist>
+                        <small id="personnelVide"></small>
+                        </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupSelect01">Choisir stock</label>
                             <select class="form-select" id="inputGroupSelect01">

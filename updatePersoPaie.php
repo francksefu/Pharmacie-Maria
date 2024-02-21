@@ -1,28 +1,16 @@
+<?php 
+include 'identifiant.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion</title>
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.min.css">
-    
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
-    <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
-    <script defer src="./navbar.js"></script>
+<?php include 'head.php'; ?>
     <script defer src="./jsfile/takePersoPaie.js"></script>
     <link rel="stylesheet" href="index.css">
     <script defer src="./jsfile/datalist.js"></script>
+    <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
+    </style>
 </head>
 <?php
 
@@ -34,12 +22,26 @@ function dataPersonnel(){
     if(mysqli_num_rows($result)>0){
                         
         while($row= mysqli_fetch_assoc($result)){
-            echo"<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["Nom"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]."</option>"; 
+            echo"<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]."</option>"; 
         }
                 
    }else{echo "Une erreur s est produite ";}  
-
 }
+
+function dataPersoPaie(){
+    include 'connexion.php';
+    $sql = ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) order by idPersonnelPaie desc");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+                        
+        while($row= mysqli_fetch_assoc($result)){
+            echo "<option value='ID ::".$row["idPersonnelPaie"].":: dates  ::".$row["Date"].":: Nom ::".$row["NomP"].":: Montant ::".$row["Montant"].":: Mois ::".$row["Mois"].":: iDPerso ::".$row["idDataPersonnel"].":: Observation ::".$row["Observation"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"].":".$row["Montant"]." $ mois:".$row["Mois"]."</option>"; 
+        }
+                
+   }else{echo "Une erreur s est produite ";} 
+  
+  }
 ?>
 <body class="back">
 
@@ -57,7 +59,6 @@ function dataPersonnel(){
                         <span class="input-group-text " id="id">Identifiant*</span>
                         <input required type="text" list="dataBesoin" id="identifiantM" class="form-control w-50" placeholder="entrer identifiant" aria-label="Username" aria-describedby="nom" >
                             <datalist id="dataBesoin">
-                                
                             </datalist>
                     </div>
                     <div class="input-group mb-3 w-50 mx-auto d-block">
@@ -91,8 +92,13 @@ function dataPersonnel(){
                               <option value="Novembre">Novembre</option>
                               <option value="Decembre">Decembre</option>
                             </select>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text w-50" id="dates">Annee *</span>
+                                <input required type="year"  name="dates" id="year" class="form-control w-50" placeholder="mettre la date" aria-label="Username" aria-describedby="nom" value="<?php $d = strtotime("today"); echo date('Y',$d); ?>">
+                            </div>
                         </div>
-                            
+                           
                           
 
                           <div class="col-md-7 mt-5 mb-4">

@@ -45,6 +45,21 @@ const messageComplete = (valeur, champs) => {
     valeur.style.color = 'red';
   }
 
+  function chercheDernierIdVentes(str) {
+    if (str.length == 0) {
+      document.getElementById("operation").value = "";
+      return;
+    } else {
+      const xmlhttp = new XMLHttpRequest();
+      xmlhttp.onload = function() {
+        feedback = this.responseText;
+        document.getElementById("operation").value = this.responseText;
+      }
+    xmlhttp.open("GET", "classFindIdApprov.php?q=" +str);
+    xmlhttp.send();
+    }
+  }
+
   let operation = 0;
   let operationUpdate = '';
   if (typeForm.value == 'update') {
@@ -102,6 +117,7 @@ enleve.addEventListener('click', () => {
  * Update viewer of table
  */
 function rendertable() {
+  chercheDernierIdVentes('find');
    let somme = 0;
   if (produit.value == "") {
     messageComplete(produitVide, 'produit');
@@ -185,9 +201,9 @@ function rendertable() {
     }
     total.value = somme;
     let tabChange = changer.value.split('::');
-    chilling.value = tabChange[3] * somme;
-    rwandais.value = tabChange[5] * somme;
-    cdf.value = tabChange[7] * somme;
+    chilling.value = tabChange[3] * somme  ;
+    rwandais.value = tabChange[5] * somme  ;
+    cdf.value =  somme * tabChange[7];
   }
 
   render();
@@ -201,9 +217,9 @@ function rendertable() {
 function render () {
     total.value = somme;
     let tabChange = changer.value.split('::');
-    chilling.value = tabChange[3] * somme;
-    rwandais.value = tabChange[5] * somme;
-    cdf.value = tabChange[7] * somme;
+    chilling.value = tabChange[3] * somme ;
+    rwandais.value = tabChange[5] * somme ;
+    cdf.value = somme * tabChange[7];
   }
 
 window.addEventListener('click', () => {
@@ -262,9 +278,9 @@ window.addEventListener('click', () => {
           };
           total.value = somme;
         let tabChange = changer.value.split('::');
-        chilling.value = tabChange[3] * somme;
-        rwandais.value = tabChange[5] * somme;
-        cdf.value = tabChange[7] * somme;
+        chilling.value = tabChange[3] * somme ;
+        rwandais.value = tabChange[5] * somme ;
+        cdf.value = somme * tabChange[7];
           });
         }
         
@@ -313,6 +329,7 @@ ajoutons.addEventListener('keydown', (event) => {
           } else {
             enleveMessage(quantiteVide);
           }
+          chercheDernierIdVentes('find');
 
         let j = state.value;
         container[j].detail = document.querySelector('#produit').value;
@@ -356,9 +373,9 @@ ajoutons.addEventListener('keydown', (event) => {
         };
         total.value = somme;
         let tabChange = changer.value.split('::');
-        chilling.value = tabChange[3] * somme;
-        rwandais.value = tabChange[5] * somme;
-        cdf.value = tabChange[7] * somme;
+        chilling.value = tabChange[3] * somme  ;
+        rwandais.value = tabChange[5] * somme  ;
+        cdf.value = somme  * tabChange[7];
         document.querySelector('#produit').value = "";
         quantite.value = "";
         pvu.value = "";
@@ -401,6 +418,7 @@ btn.addEventListener('click', () => {
   let etatFormulaire = '';
   if (identifiant.value == '') {
     etatFormulaire = 'add';
+    chercheDernierIdVentes('find');
     operation = document.querySelector('#operation').value * 1 + 200000;
   } else {
     etatFormulaire = 'update';
@@ -458,7 +476,7 @@ function rendons() {
   };
   total.value = somme;
   let tabChange = changer.value.split('::');
-  chilling.value = tabChange[3] * somme;
-  rwandais.value = tabChange[5] * somme;
-  cdf.value = tabChange[7] * somme;
+  chilling.value = tabChange[3] * somme  ;
+  rwandais.value = tabChange[5] * somme  ;
+  cdf.value = somme * tabChange[7];
 }

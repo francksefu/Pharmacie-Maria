@@ -1,33 +1,20 @@
+<?php 
+include 'identifiant.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion</title>
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.min.css">
-    
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
-    <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
-    <script defer src="./navbar.js"></script>
+<?php include 'head.php'; ?>
     <script defer src="./jsfile/jquery-3.6.1.min.js"></script>
     <script defer src="./jsfile/produit.js"></script>
     <script defer src="./jsfile/supprime.js"></script>
     <link rel="stylesheet" href="index.css">
+    <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
+    </style>
 </head>
 <?php
+
   function dataPersoPaie(){
     include 'connexion.php';
     $sql = ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) order by idPersonnelPaie desc");
@@ -59,7 +46,12 @@
                 
                 <div class="col-md-3 bg-transparent pt-5">
                     <p class="text-center">
-                        <a href="addPersoPaie.php" class="btn btn-primary p-2">&plus; Ajoutez un paiement d un personnel</a>
+                    <?php 
+                        if ($user != 'Responsable') {
+                            echo '<a href="addPersoPaie.php" class="btn btn-primary p-2">&plus; Ajoutez un paiement d un personnel</a>';
+                        }
+                    ?>
+                        
                     </p>
                 </div>
     
@@ -78,8 +70,9 @@
                     <input type="text" id="supprimons" list="dataBesoin" class="form-control" placeholder="metez quelque chose dont vous vous rappeler pour le supprimer" >
                       <datalist id="dataBesoin">
                          <?php 
+                         if($user !== "") {
                             dataPersoPaie();
-
+                         }
                         ?>
                       </datalist>
                     <span class="input-group-text pointe" id="cross">&cross;</span>
@@ -97,7 +90,7 @@
         <div class="container-fluid pt-5 bg-transparent">
         <?php
                 include 'connexion.php';
-                        
+            if ($user !== "") {            
                 $reqSql= ("SELECT * FROM PersonnelPaie, DataPersonnel WHERE (PersonnelPaie.idDataPersonnel = DataPersonnel.idDataPersonnel) order by idPersonnelPaie desc");
                 $result= mysqli_query($db, $reqSql);
                 if(mysqli_num_rows($result)>0){
@@ -108,22 +101,25 @@
                         <th>Nom du personnel</th>
                         <th>Date</th>
                         <th>Mois</th>
+                        <th>Annee</th>
                         <th>Montant</th>
                         <th>Observation</th>
                         <th>Action</th>
                     </tr>
                     </thead>';
-              
+            
                     while($row= mysqli_fetch_assoc($result)){
                             echo'
                             <tr>
                     <td>'.$row["idPersonnelPaie"].'</td>
-                    <td>'.$row["Nom"].'</td>
+                    <td>'.$row["NomP"].'</td>
                     <td>'.$row["Date"].'</td>
                     <td>'.$row["Mois"].'</td>
+                    <td>'.$row["Annee"].'</td>
                     <td>'.$row["Montant"].'</td>
-                    <td>'.$row["Observation"].'</td>
-                    <td >
+                    <td>'.$row["Observation"].'</td>';
+                    if ($user != 'Responsable') {
+                        echo '<td >
                         <div class="d-flex flex-row justify-content-center">
                             
                             <div class="p-2 m-2 bg-danger text-white rounded-3" id="del">
@@ -142,14 +138,16 @@
                                 </a>
                             </div>  
                         </div>
-                    </td>
+                    </td>';
+                    }
+                    echo '
                   </tr>
                   <tr>
                             ';
                     }
                     echo"</table>";
                 }else{echo "Pas des donnees dans la base ";}
-
+            }
             ?> 
         </div>
         

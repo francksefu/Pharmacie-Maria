@@ -1,31 +1,32 @@
+<?php 
+include 'identifiant.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion</title>
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-grid.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-reboot.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.css">
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.min.css">
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.js"></script>
-    <script defer src="bootstrap-5.0.2-dist/js/bootstrap.esm.min.js"></script>
-    <script defer  src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
-    <script defer src="navbar.js"></script>
+    <?php include 'head.php'; ?>
     <link rel="stylesheet" href="index.css">
     <script defer src="jsfile/takeVente.js"></script>
+    <script defer src="jsfile/imprime.js"></script>
+    <style> img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] { display: none;} 
+    </style>
     
 </head>
 <?php
+//Pour imprimer une facture quelconque
+function dataVente(){
+    include 'connexion.php';
+    $sql= ("SELECT * FROM Ventes, Produit, Client WHERE (Ventes.idProduit = Produit.idProduit) and (Client.idClient = Ventes.idClient) GROUP BY Operation order by Operation desc");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+        while($row= mysqli_fetch_assoc($result)){
+            echo"<option value='ID ::".$row["Operation"].":: date ::".$row["DatesVente"].":: client  ::".$row["NomClient"].":: Total facture ::".$row["TotalFacture"]."'>client = ".$row["NomClient"]." dette : ".$row["Dette"]."</option>"; 
+        }
+   }else{echo "Une erreur s est produite ";}  
+
+}
 //find id for vente to make a nmber of operation
 function findIDVente(){
     include 'connexion.php';
@@ -55,6 +56,22 @@ function data(){
         }       
    }  
 }
+
+function dataDataPersonnel(){
+    include 'connexion.php';
+    $sql = ("SELECT * FROM DataPersonnel order by idDataPersonnel desc");
+    $result = mysqli_query($db, $sql);
+            
+    if(mysqli_num_rows($result)>0){
+                        
+        while($row= mysqli_fetch_assoc($result)){
+            echo "<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]."</option>"; 
+        }
+                
+   }else{echo "Une erreur s est produite ";} 
+  
+  }
+
 function dataProduct(){
     include 'connexion.php';
     $sql = ("SELECT * FROM Produit order by Nom asc");
@@ -63,7 +80,7 @@ function dataProduct(){
     if(mysqli_num_rows($result)>0){
                         
         while($row= mysqli_fetch_assoc($result)){
-            echo"<option value='ID ::".$row["idProduit"].":: Nom ::".$row["Nom"].":: PA ::".$row["PrixAchat"].":: PV = ::".$row["PrixVente"].":: PVmin =::".$row["PrixVmin"].":: QstockMin = ::".$row["QuantiteStockMin"]."'>nom: ".$row["Nom"]." :Qstock ".$row["QuantiteStock"]."</option>"; 
+            echo"<option value='ID ::".$row["idProduit"].":: Nom ::".$row["Nom"].":: PA ::".$row["PrixAchat"].":: PV = ::".$row["PrixVente"].":: PVmin =::".$row["PrixVmin"].":: QstockMin = ::".$row["QuantiteStockMin"]."'>nom: ".$row["Nom"]." :Descript ".$row["DescriptionP"]."</option>"; 
         }
                 
    }else{echo "Une erreur s est produite ";}  
@@ -142,9 +159,18 @@ function dataPersonnel(){
                                               
                     </tbody>
                 </table>
-         
+        
                 <div class="row">
                     <div class="border border-1 p-4 col-md-4 m-2">
+                    <div class="input-group mb-3 ">
+                        <span class="input-group-text">Nom du vendeur</span>
+                        <input type="text" readonly id="personnel" list="dataPersonnel_" class="form-control" value="<?php echo $place_vente; ?>">
+                        <datalist id="dataPersonnel_">
+                        
+                      </datalist>
+                      <small id="personnelVide"></small>
+                    </div>
+
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupSelect01">Choisir stock</label>
                             <select class="form-select" id="inputGroupSelect01">
@@ -216,6 +242,20 @@ function dataPersonnel(){
                 <input type="hidden" id="typeForm" value="add" />
     </form>
         </div>
+
+        <form class="input-group col-md-10 mt-3 mb-3" action="imprimer.php" method="POST">
+            <span class="input-group-text">choisissez une facture : </span>
+            <input required type="text" id="imprimer" name="Facture" list="dataBesoin" class="form-control" placeholder="metez quelque chose dont vous vous rappeler pour l imprimer" >
+                <datalist id="dataBesoin">
+                    <?php 
+                        dataVente();
+                    ?>
+                </datalist>
+            <span class="input-group-text pointe" id="cross">&cross;</span>
+            <span class="input-group-text pointe" id="btn">
+            <input type="submit" value="Imprimer" />  
+            </span>
+        </form>
     </main>
 </body>
 </html>

@@ -1,0 +1,10 @@
+Il faut que dans ce fichier je puisse permettre seulement a JP de voir la case 
+paiement des employes, donc enlever le 'personnels' dans la 
+barre de navigation
+
+lui permettre egalement dans l approvisionnemment seulement a lui seul de 
+pouvoir ecrire le vrai prix d achat ' donc ajouter un autre attribut 
+PAVP (prix achat vrai prix ) et lui permettre d etre le seule a le voir lorsqu il se connecte.
+Et puis c est tout .
+POur la base de donnees , prend tfe entrainement ensuite vide et ajoute les tables
+pour les personnnels et les pertes occasionnees

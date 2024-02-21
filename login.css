@@ -1,0 +1,59 @@
+body{
+    background: #555;
+}
+div{
+    width:60%;
+    margin-top: 10%;
+    position: absolute;
+    left: 20%;
+    right: 20%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 10px;
+    
+
+    
+}
+/* Bordered form */
+form {
+    width:100%;
+    padding: 30px;
+    margin: 10px;
+    border: 1px solid #f1f1f1;
+    background: #fff;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    border-radius: 20px;
+}
+#container h1{
+    width: 38%;
+    margin: 0 auto;
+    padding-bottom: 10px;
+}
+
+/* Full-width inputs */
+input[type=text], input[type=password] ,a{
+    width: 80%;
+    padding: 12px 20px;
+    margin: 14px 10%;
+    display: inline-block;
+    border: 2px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+/* Set a style for all buttons */
+input[type=submit] {
+    background-color: #53af57;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 20%;
+    border: none;
+    cursor: pointer;
+    width: 60%;
+    border-radius: 10px;
+}
+input[type=submit]:hover {
+    background-color: white;
+    color: #53af57;
+    border: 1px solid #53af57;
+}

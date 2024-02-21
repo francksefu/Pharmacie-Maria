@@ -44,7 +44,7 @@ function dataVente(){
         $take .= "<option value='".$valeur."'>operation : ".$row["Operation"]."client: ".$row["NomClient"]." :Totol :".$row["TotalFacture"]."</option>"; 
         }
 
-   }else{echo "Une erreur s est produite ";}  
+   }else{$take = "Une erreur s est produite ";}  
   return $take;
 }
 
@@ -74,7 +74,7 @@ function dataDataPersonnel(){
   if(mysqli_num_rows($result)>0){
                       
       while($row= mysqli_fetch_assoc($result)){
-          $take .= "<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["Nom"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"]."</option>"; 
+          $take .= "<option value='ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"].":: Telephone ::".$row["Telephone"].":: Salaire ::".$row["SalaireDeBase"].":: Poste ::".$row["Poste"].":: Password ::".$row["PasswordP"]."'> = ".$row["NomP"]."</option>"; 
       }
               
  }else{$take = "Une erreur s est produite ";} 
@@ -107,12 +107,28 @@ function dataPersoPaie(){
   if(mysqli_num_rows($result)>0){
                       
       while($row= mysqli_fetch_assoc($result)){
-          $take .= "<option value='ID ::".$row["idPersonnelPaie"].":: dates  ::".$row["Date"].":: Nom ::".$row["Nom"].":: Montant ::".$row["Montant"].":: Mois ::".$row["Mois"].":: iDPerso ::".$row["idDataPersonnel"].":: Observation ::".$row["Observation"].":: Telephone ::".$row["Telephone"]."'> = ".$row["Nom"].":".$row["Montant"]." $ mois:".$row["Mois"]."</option>"; 
+          $take .= "<option value='ID ::".$row["idPersonnelPaie"].":: dates  ::".$row["Date"].":: Nom ::".$row["NomP"].":: Montant ::".$row["Montant"].":: Mois ::".$row["Mois"].":: iDPerso ::".$row["idDataPersonnel"].":: Observation ::".$row["Observation"].":: Telephone ::".$row["Telephone"].":: Annee ::".$row["Annee"]."'> = ".$row["Nom"].":".$row["Montant"]." $ mois:".$row["Mois"]."</option>"; 
       }
               
  }else{$take = "Une erreur s est produite ";} 
  return $take;
 
+}
+
+function dataPerteOccaz(){
+  include 'connexion.php';
+  $take = '';
+  $sql = ("SELECT * FROM PerteOccaz order by idPerteOccaz desc");
+  $result = mysqli_query($db, $sql);
+          
+  if(mysqli_num_rows($result)>0){
+                      
+      while($row= mysqli_fetch_assoc($result)){
+          $take .= "<option value='ID ::".$row["idPerteOccaz"].":: Montant ::".$row["Montant"].":: Motif  ::".$row["Commentaire"].":: Dates ::".$row["Dates"]."'>montant = ".$row["Montant"]." commentaire : ".$row["Commentaire"]."</option>"; 
+      }
+              
+ }else{$take .= "Une erreur s est produite ";}  
+  return $take;
 }
 
 $q = $_REQUEST["q"];
@@ -133,8 +149,13 @@ $autre = '';
           break;
           case 'updateDataPersonnel' :
             $hint = dataDataPersonnel();
+          break;
+          case 'updatePerteOccaz' :
+            $hint = dataPerteOccaz();
+          break;
           case 'updatePersoPaie' :
             $hint = dataPersoPaie();
+          break;
         }
   } else {
         $hint = 'erreur';
