@@ -19,10 +19,10 @@ include 'identifiant.php';
     for ($i = 0; $i < count($tabObj) - 1; $i += 1) {
         $tabElement = explode("::", $tabObj[$i]);
         $autre = '';
-    
+   
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Ventes($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7], $tabElement[8], $tabElement[9]);
+            $tracteur = new Ventes($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7], $tabElement[8], $tabElement[9], $tabElement[10], $tabElement[11], $tabElement[12]);
             $tracteur->insererVentes();
             array_push($insert_table, $tracteur);
             $autre = $tracteur->message;
@@ -61,7 +61,7 @@ include 'identifiant.php';
          */
             if ($q !== "") {
                 $hint = $q;
-                $tracteur = new Ventes($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7], $tabElement[8], $tabElement[9]);
+                $tracteur = new Ventes($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7], $tabElement[8], $tabElement[9], $tabElement[10], $tabElement[11], $tabElement[12]);
                 if ($i == 0) {
                     $tracteur->findIDProduit($tabElement[5]);
                 }
@@ -89,7 +89,7 @@ include 'identifiant.php';
          */
             if ($q !== "" && $user != "") {
                 $hint = $q;
-                $tracteur = new Ventes($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7], $tabElement[8], $tabElement[9]);
+                $tracteur = new Ventes($tabElement[0], $tabElement[1], $tabElement[2], $tabElement[3], $tabElement[4], $tabElement[5], $tabElement[6], $tabElement[7], $tabElement[8], $tabElement[9], $tabElement[10], $tabElement[11], $tabElement[12]);
                 $tracteur->insererVentes();
                 $autre = $tracteur->message;
                 if( $tracteur->message) {
@@ -120,7 +120,7 @@ include 'identifiant.php';
         if ($q !== "") {
             $hint = $q;
             
-            $tracteur = new Ventes(0, 1, 2, 3, 4, 5, 6,7, 8, 9);
+            $tracteur = new Ventes(0, 1, 2, 3, 4, 5, 6,7, 8, 9, 10, 11, 12);
             $tracteur->operation = $tabObj[0];
             $tracteur->deleteVentes();
             array_push($delete_table, $tracteur);

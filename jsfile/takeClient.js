@@ -4,6 +4,9 @@ const nomPersonnel = document.querySelector('#nomPersonnel');
 const telephone = document.querySelector('#telephone');
 const titre = document.querySelector('#titre');
 
+const adresse = document.querySelector('#adresse');
+const code_postale = document.querySelector('#code_postale');
+const email = document.querySelector('#email');
 
 const btn = document.querySelector('#envoie');
 
@@ -22,6 +25,9 @@ if (type.value === 'update') {
       const tabValeur = identifiantM.value.split('::');
       nomPersonnel.value = tabValeur[3];
       telephone.value = tabValeur[5];
+      adresse.value = tabValeur[7];
+      code_postale.value = tabValeur[9];
+      email.value = tabValeur[11];
       idPersonnel = tabValeur[1];
       
     })
@@ -69,19 +75,22 @@ btn.addEventListener('click', () => {
     enleveMessage(nomVide);
   }
 
-  
+ 
 
   let prend;
   if (type.value == 'update') {
-    prend = nomPersonnel.value+"::"+telephone.value+"::"+idPersonnel+"::update";
+    prend = nomPersonnel.value+"::"+telephone.value+"::"+adresse.value+"::"+code_postale.value+"::"+email.value+"::"+idPersonnel+"::update";
   } else {
-    prend =nomPersonnel.value+"::"+telephone.value+"::add";
+    prend =nomPersonnel.value+"::"+telephone.value+"::"+adresse.value+"::"+code_postale.value+"::"+email.value+"::add";
   }
 
   showHint(prend);
   
     nomPersonnel.value =""; 
     telephone.value = "";
+    adresse.value = "";
+    code_postale.value = "";
+    email.value = "";
     
    identifiantM.value = "";
     

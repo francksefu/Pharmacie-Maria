@@ -98,6 +98,9 @@ include 'identifiant.php';
                         <th>ID</th>
                         <th>Nom</th>
                         <th>phone number</th>
+                        <th>adresse</th>
+                        <th>code postale</th>
+                        <th>email</th>
                         <th>Action</th>
                     </tr>
                     </thead>';
@@ -107,7 +110,10 @@ include 'identifiant.php';
                             <tr>
                     <td>'.$row["idClient"].'</td>
                     <td>'.$row["NomClient"].'</td>
-                    <td>'.$row["Telephone"].'</td>';
+                    <td>'.$row["Telephone"].'</td>
+                    <td>'.$row["Adresse"].'</td>
+                    <td>'.$row["CodePostale"].'</td>
+                    <td>'.$row["Email"].'</td>';
                     if ($post_user != 'Responsable') {
                         echo '<td >
                         <div class="d-flex flex-row justify-content-center">

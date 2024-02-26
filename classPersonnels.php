@@ -8,12 +8,12 @@ include 'identifiant.php';
 
     $q = $_REQUEST["q"];
     $tabC = explode("::", $q);
-    
+   
     $autre = '';
     if (end($tabC) == 'add' && $user != "") {
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Clients($tabC[0], $tabC[1]);
+            $tracteur = new Clients($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4]);
             $tracteur->insererClient();
             $tracteur->write_insert();
             $autre = $tracteur->message;
@@ -35,8 +35,8 @@ include 'identifiant.php';
     if (end($tabC) == 'update' && $user != "") {
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Clients($tabC[0], $tabC[1]);
-            $tracteur->idClient = $tabC[2];
+            $tracteur = new Clients($tabC[0], $tabC[1], $tabC[2], $tabC[3], $tabC[4]);
+            $tracteur->idClient = $tabC[5];
             $tracteur->updateClient();
             $tracteur->write_update();
             $autre = $tracteur->message;
@@ -59,7 +59,7 @@ include 'identifiant.php';
     if (end($tabC) == 'delete' && $user != "") {
         if ($q !== "") {
             $hint = $q;
-            $tracteur = new Clients(0, 1);
+            $tracteur = new Clients(0, 1, 2, 3, 4);
             $tracteur->idClient = $tabC[0];
             $tracteur->deleteClient();
             $tracteur->write_delete();

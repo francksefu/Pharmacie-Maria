@@ -44,7 +44,35 @@ include 'identifiant.php';
                             <small id="telephoneVide"></small>
                         </div>
 
-                         
+                        <div class="col-md-7 mb-3">
+                            <div class="input-group ">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="a">Adresse*</span>
+                                    <textarea type="text-area"  name="nom" id="adresse" class="form-control" placeholder="Entrer numero de telephone" aria-label="Username" aria-describedby="nom" > </textarea>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                        <div class="col-md-7 mb-3">
+                            <div class="input-group ">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="nom">Code postal*</span>
+                                    <input type="text"  name="nom" id="code_postale" class="form-control" placeholder="Entrer code postal" aria-label="Username" aria-describedby="nom" >
+                                </div>
+                            </div>
+                           
+                        </div>
+                        
+                        <div class="col-md-7 mb-3">
+                            <div class="input-group ">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="nom">email*</span>
+                                    <input type="email"  name="nom" id="email" class="form-control" placeholder="Entrer email" aria-label="Username" aria-describedby="nom" >
+                                </div>
+                            </div>
+                            
+                        </div>  
                     </div>
                    
                     <p id="txtHint"></p>

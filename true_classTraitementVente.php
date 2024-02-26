@@ -58,10 +58,14 @@
         public $message;
 
         public $idPersonnel;
+
+        public $mainoeuvre;
+        public $remise;
+        public $total_materiel;
         public $remote = false;
 
 
-        function __construct($idProduit, $idClient, $quantite, $pu, $date, $operation, $dette, $total_facture, $montant, $idPersonnel) {
+        function __construct($idProduit, $idClient, $quantite, $pu, $date, $operation, $dette, $total_facture, $montant, $idPersonnel, $mainoeuvre, $remise, $total_materiel) {
             $this->operation = $operation;
             $this->idProduit = $idProduit;
             $this->quantite = $quantite;
@@ -72,6 +76,9 @@
             $this->montant = $montant;
             $this->date = $date;
             $this->idPersonnel = $idPersonnel;
+            $this->mainoeuvre = $mainoeuvre;
+            $this->remise = $remise;
+            $this->total_materiel = $total_materiel;
         }
 //This method find first the id of product, and after that put againquantity in product if the operation of vente(sell) is delete
         function findIDProduit($operationA) {
@@ -148,7 +155,7 @@
             } else {
                 include 'connexion.php';
             }
-            $sql = ("INSERT INTO Ventes (idProduit, idClient, QuantiteVendu, PU, PT, DatesVente, Operation, Dette, TotalFacture, MontantPaye, idPersonnel) values ($this->idProduit, $this->idClient, $this->quantite, $this->pu, $this->pu * $this->quantite, '".$this->date."', $this->operation, '".$this->dette."', $this->total_facture, $this->montant, $this->idPersonnel)");
+            $sql = ("INSERT INTO Ventes (idProduit, idClient, QuantiteVendu, PU, PT, DatesVente, Operation, Dette, TotalFacture, MontantPaye, idPersonnel, MainOeuvre, Remise, TotalMateriel) values ($this->idProduit, $this->idClient, $this->quantite, $this->pu, $this->pu * $this->quantite, '".$this->date."', $this->operation, '".$this->dette."', $this->total_facture, $this->montant, $this->idPersonnel, $this->mainoeuvre, $this->remise, $this->total_materiel)");
             if(mysqli_query($db, $sql)){
                 
                 }else{

@@ -29,7 +29,7 @@ function dataVente(){
             if(mysqli_num_rows($result1)>0){
             $valeur = '';
                 while($row1= mysqli_fetch_assoc($result1)){
-                    $valeur .= $row1["Operation"]."::".$row1["idClient"]."::".$row1["NomClient"]."::".$row1["idProduit"].":: Nom ::".$row1["Nom"].":: PA ::".$row1["PrixAchat"].":: PV = ::".$row1["PrixVente"].":: PVmin =::".$row1["PrixVmin"].":: QstockMin = ::".$row1["QuantiteStockMin"]."::".$row1["QuantiteVendu"]."::".$row1["PU"]."::".$row1["DatesVente"]."::".$row1["TotalFacture"]."::".$row1["MontantPaye"]."::ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"]."::__:";
+                    $valeur .= $row1["Operation"]."::".$row1["idClient"]."::".$row1["NomClient"]."::".$row1["idProduit"].":: Nom ::".$row1["Nom"].":: PA ::".$row1["PrixAchat"].":: PV = ::".$row1["PrixVente"].":: PVmin =::".$row1["PrixVmin"].":: QstockMin = ::".$row1["QuantiteStockMin"]."::".$row1["QuantiteVendu"]."::".$row1["PU"]."::".$row1["DatesVente"]."::".$row1["TotalFacture"]."::".$row1["MontantPaye"]."::ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"].":: Main d oeuvre ::".$row["MainOeuvre"]."::Remise ::".$row["Remise"].":: Total materiel ::".$row["TotalMateriel"]."::__:";
                 }
 
         }else{echo "Une erreur s est produite ";}  
@@ -220,6 +220,25 @@ function dataPersonnel(){
                                 </select>
                                 <button id="envoi" type="button" class="btn btn-primary">Valider</button>
                             </div>
+
+                            <div class="input-group mb-3 ">
+                                <span class="input-group-text">Main d oeuvre</span>
+                                <input type="flaot" id="mainoeuvre" value="0" class="form-control"  aria-label="Amount (to the nearest dollar)">
+                                <span class="input-group-text">$</span>
+                            </div>
+
+                            <div class="input-group mb-3 ">
+                                <span class="input-group-text">Remise</span>
+                                <input type="flaot" id="remise" value="0" class="form-control"  aria-label="Amount (to the nearest dollar)">
+                                <span class="input-group-text"> % </span>
+                            </div>
+
+                            <div class="input-group mb-3 ">
+                                <span class="input-group-text">Total apres remise</span>
+                                <input readonly type="flaot" id="total_remise_mainoeuvre" class="form-control"  aria-label="Amount (to the nearest dollar)">
+                                <span class="input-group-text"> $ </span>
+                            </div>
+
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Montant</span>
                                 <input type="float" id="montant"  class="form-control" aria-label="Amount (to the nearest dollar)">

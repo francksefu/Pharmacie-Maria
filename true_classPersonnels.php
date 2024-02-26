@@ -4,6 +4,9 @@
         public $idClient;
         private $nom;
         private $telephone;
+        private $adresse;
+        private $code_postale;
+        private $email;
         //table for contain json 
 
         private $insert_arr = array();
@@ -13,10 +16,13 @@
         public $remote = false;
         public $message;
 
-        function __construct($nom, $telephone) {
+        function __construct($nom, $telephone, $adresse, $code_postale, $email) {
            
             $this->nom = $nom;
             $this->telephone = $telephone;
+            $this->adresse = $adresse;
+            $this->code_postale = $code_postale;
+            $this->email = $email;
             //$this->read();
         }
 
@@ -50,7 +56,7 @@
             } else {
                 include 'connexion.php';
             }
-            $sql = ("INSERT INTO Client ( NomClient, Telephone) values ('".$this->nom."', '".$this->telephone."')");
+            $sql = ("INSERT INTO Client ( NomClient, Telephone, Adresse, CodePostale, Email) values ('".$this->nom."', '".$this->telephone."', '".$this->adresse."', '".$this->code_postale."', '".$this->email."')");
             if(mysqli_query($db, $sql)){
                 //echo"<small style='color: green'>insertion fait</small>";
                 }else{
@@ -73,6 +79,24 @@
             }
             $updC2= ("UPDATE `Client` SET `Telephone` = '".$this->telephone."' WHERE idClient =$this->idClient");
             if(mysqli_query($db,$updC2)){echo"";}else{
+                $this->message = mysqli_error($db);
+                return;
+            }
+
+            $updC3= ("UPDATE `Client` SET `Adresse` = '".$this->adresse."' WHERE idClient =$this->idClient");
+            if(mysqli_query($db,$updC3)){echo"";}else{
+                $this->message = mysqli_error($db);
+                return;
+            }
+
+            $updC4= ("UPDATE `Client` SET `CodePostale` = '".$this->code_postale."' WHERE idClient =$this->idClient");
+            if(mysqli_query($db,$updC4)){echo"";}else{
+                $this->message = mysqli_error($db);
+                return;
+            }
+
+            $updC4= ("UPDATE `Client` SET `Email` = '".$this->email."' WHERE idClient =$this->idClient");
+            if(mysqli_query($db,$updC4)){echo"";}else{
                 $this->message = mysqli_error($db);
                 return;
             }
