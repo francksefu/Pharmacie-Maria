@@ -29,7 +29,7 @@ function dataVente(){
             if(mysqli_num_rows($result1)>0){
             $valeur = '';
                 while($row1= mysqli_fetch_assoc($result1)){
-                    $valeur .= $row1["Operation"]."::".$row1["idClient"]."::".$row1["NomClient"]."::".$row1["idProduit"].":: Nom ::".$row1["Nom"].":: PA ::".$row1["PrixAchat"].":: PV = ::".$row1["PrixVente"].":: PVmin =::".$row1["PrixVmin"].":: QstockMin = ::".$row1["QuantiteStockMin"]."::".$row1["QuantiteVendu"]."::".$row1["PU"]."::".$row1["DatesVente"]."::".$row1["TotalFacture"]."::".$row1["MontantPaye"]."::ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"].":: Main d oeuvre ::".$row["MainOeuvre"]."::Remise ::".$row["Remise"].":: Total materiel ::".$row["TotalMateriel"]."::__:";
+                    $valeur .= $row1["Operation"]."::".$row1["idClient"]."::".$row1["NomClient"]."::".$row1["idProduit"].":: Nom ::".$row1["Nom"].":: PA ::".$row1["PrixAchat"].":: PV = ::".$row1["PrixVente"].":: PVmin =::".$row1["PrixVmin"].":: QstockMin = ::".$row1["QuantiteStockMin"]."::".$row1["QuantiteVendu"]."::".$row1["PU"]."::".$row1["DatesVente"]."::".$row1["TotalFacture"]."::".$row1["MontantPaye"]."::ID ::".$row["idDataPersonnel"].":: Nom  ::".$row["NomP"].":: Main d oeuvre ::".$row["MainOeuvre"]."::Remise ::".$row["Remise"].":: Total materiel ::".$row["TotalMateriel"].":: Type ::".$row["Type"].":: frais_expedition ::".$row["FraisExpedition"].":: Titre ::".$row["Titre"]."::__:";
                 }
 
         }else{echo "Une erreur s est produite ";}  
@@ -210,13 +210,13 @@ function dataPersonnel(){
                     </div>
    
                         <div class="border border-1 m-2 col-md-4">
-                            <h4>Status</h4>
+                            <h4>Type</h4>
                             <div class="input-group mb-3">
-                                <label class="input-group-text" for="status">status</label>
-                                <select class="form-select" id="status">
-                                  <option selected>en attente</option>
-                                  <option value="paid">paye</option>
-                                  <option value="dette">dette</option>
+                                <label class="input-group-text" for="status">Type</label>
+                                <select class="form-select" id="type">
+                                  
+                                  <option value="facture">facture</option>
+                                  <option value="cotation">cotation</option>
                                 </select>
                                 <button id="envoi" type="button" class="btn btn-primary">Valider</button>
                             </div>
@@ -231,6 +231,12 @@ function dataPersonnel(){
                                 <span class="input-group-text">Remise</span>
                                 <input type="flaot" id="remise" value="0" class="form-control"  aria-label="Amount (to the nearest dollar)">
                                 <span class="input-group-text"> % </span>
+                            </div>
+
+                            <div class="input-group mb-3 ">
+                                <span class="input-group-text">Frais d expedition</span>
+                                <input type="flaot" id="frais_expedition" value="0" class="form-control"  aria-label="Amount (to the nearest dollar)">
+                                <span class="input-group-text"> $ </span>
                             </div>
 
                             <div class="input-group mb-3 ">
@@ -249,6 +255,12 @@ function dataPersonnel(){
                                 <span class="input-group-text">Reste</span>
                                 <input type="flaot" id="reste" class="form-control"  aria-label="Amount (to the nearest dollar)">
                                 <span class="input-group-text">$</span>
+                            </div>
+
+                            <div class="input-group mb-3 ">
+                                <span class="input-group-text">Titre</span>
+                                <input type="text" id="titre" class="form-control" placeholder="Entrer titre ici"  aria-label="Amount (to the nearest dollar)">
+                                
                             </div>
                         </div>
                         <div class="border border-1 col-md-3 m-2 bg-warning moinClaire">

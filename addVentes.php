@@ -191,8 +191,8 @@ function dataPersonnel(){
                         <div class="border border-1 m-2 col-md-4">
                             <h4>Type</h4>
                             <div class="input-group mb-3">
-                                <label class="input-group-text" for="status">status</label>
-                                <select class="form-select" id="status">
+                                <label class="input-group-text" for="status">Type</label>
+                                <select class="form-select" id="type">
                                   
                                   <option value="facture">facture</option>
                                   <option value="cotation">cotation</option>
@@ -214,7 +214,7 @@ function dataPersonnel(){
 
                             <div class="input-group mb-3 ">
                                 <span class="input-group-text">Frais d expedition</span>
-                                <input type="flaot" id="remise" value="0" class="form-control"  aria-label="Amount (to the nearest dollar)">
+                                <input type="flaot" id="frais_expedition" value="0" class="form-control"  aria-label="Amount (to the nearest dollar)">
                                 <span class="input-group-text"> $ </span>
                             </div>
 
@@ -238,7 +238,7 @@ function dataPersonnel(){
 
                             <div class="input-group mb-3 ">
                                 <span class="input-group-text">Titre</span>
-                                <input type="text" id="reste" class="form-control" placeholder="Entrer titre ici"  aria-label="Amount (to the nearest dollar)">
+                                <input type="text" id="titre" class="form-control" placeholder="Entrer titre ici"  aria-label="Amount (to the nearest dollar)">
                                 
                             </div>
 

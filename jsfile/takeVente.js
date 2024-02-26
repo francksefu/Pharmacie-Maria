@@ -4,6 +4,9 @@ const reste = document.querySelector('#reste');
 const total = document.querySelector('#total');
 const mainoeuvre = document.querySelector('#mainoeuvre')
 const remise = document.querySelector('#remise');
+const frais_expedition = document.querySelector('#frais_expedition');
+const titre = document.querySelector('#titre');
+const type = document.querySelector('#type');
 const total_apres_remise_et_mainoeuvre = document.querySelector('#total_remise_mainoeuvre')
 const cdf = document.querySelector('#cdf');
 const chilling = document.querySelector('#chilling');
@@ -98,6 +101,9 @@ const messageComplete = (valeur, champs) => {
         total.value = tabElement[28];
         mainoeuvre.value = tabElement[24];
         remise.value = tabElement[26];
+        type.value = tabElement[30];
+        frais_expedition.value = tabElement[32];
+        titre.value = tabElement[34];
         total_apres_remise_et_mainoeuvre.value = tabElement[17];
       }
       nomClient.value = clientUpdate;
@@ -230,7 +236,7 @@ function rendertable() {
     cdf.value =  somme * tabChange[7];
     montant.value = total.value;
     reste.value = total.value - montant.value;
-    total_apres_remise_et_mainoeuvre.value = somme + mainoeuvre.value * 1 - somme * (remise.value * 1 / 100);
+    total_apres_remise_et_mainoeuvre.value = somme + frais_expedition.value*1 + mainoeuvre.value * 1 - somme * (remise.value * 1 / 100);
   }
 
   render();
@@ -247,7 +253,7 @@ function render () {
     chilling.value = tabChange[3] * somme;
     rwandais.value = tabChange[5] * somme;
     cdf.value =  somme *tabChange[7];
-    total_apres_remise_et_mainoeuvre.value = somme + mainoeuvre.value * 1 - somme * (remise.value * 1 / 100);
+    total_apres_remise_et_mainoeuvre.value = somme + frais_expedition.value * 1 + mainoeuvre.value * 1 - somme * (remise.value * 1 / 100);
     montant.value = total_apres_remise_et_mainoeuvre.value;
     reste.value = total_apres_remise_et_mainoeuvre.value - montant.value;
    
@@ -312,7 +318,7 @@ window.addEventListener('click', () => {
         chilling.value = tabChange[3] * somme;
         rwandais.value = tabChange[5] * somme;
         cdf.value =   somme *tabChange[7];
-        total_apres_remise_et_mainoeuvre.value = somme + mainoeuvre.value * 1 - somme * (remise.value * 1 / 100);
+        total_apres_remise_et_mainoeuvre.value = somme + frais_expedition.value * 1 + mainoeuvre.value * 1 - somme * (remise.value * 1 / 100);
         montant.value = total_apres_remise_et_mainoeuvre.value;
         reste.value = total_apres_remise_et_mainoeuvre.value - montant.value;
     
@@ -412,7 +418,7 @@ ajoutons.addEventListener('keydown', (event) => {
         rwandais.value = tabChange[5] * somme;
         cdf.value = somme * tabChange[7];
       
-        total_apres_remise_et_mainoeuvre.value = somme + mainoeuvre.value * 1 - somme * (remise.value * 1 / 100);
+        total_apres_remise_et_mainoeuvre.value = somme + frais_expedition.value * 1 + mainoeuvre.value * 1 - somme * (remise.value * 1 / 100);
         montant.value = total_apres_remise_et_mainoeuvre.value;
         reste.value = total_apres_remise_et_mainoeuvre.value - montant.value;
     
@@ -433,28 +439,34 @@ montant.addEventListener('change', () => {
   reste.value = total.value - montant.value;
 });
 remise.addEventListener('change', () => {
-  total_apres_remise_et_mainoeuvre.value = total.value*1 + (mainoeuvre.value * 1) - (total.value*1 * (remise.value * 1 / 100));
+  total_apres_remise_et_mainoeuvre.value = frais_expedition.value * 1 + total.value*1 + (mainoeuvre.value * 1) - (total.value*1 * (remise.value * 1 / 100));
   montant.value = total_apres_remise_et_mainoeuvre.value;
   reste.value = total_apres_remise_et_mainoeuvre.value - montant.value;
     
 })
 
 mainoeuvre.addEventListener('change', () => {
-  total_apres_remise_et_mainoeuvre.value = (total.value*1) + (mainoeuvre.value * 1) - (total.value*1 * (remise.value * 1 / 100));
+  total_apres_remise_et_mainoeuvre.value = frais_expedition.value * 1 + (total.value*1) + (mainoeuvre.value * 1) - (total.value*1 * (remise.value * 1 / 100));
   montant.value = total_apres_remise_et_mainoeuvre.value;
   reste.value = total_apres_remise_et_mainoeuvre.value - montant.value;
     
 })
 
 remise.addEventListener('focus', () => {
-  total_apres_remise_et_mainoeuvre.value = (total.value*1) + (mainoeuvre.value * 1) - (total.value*1 * (remise.value * 1 / 100));
+  total_apres_remise_et_mainoeuvre.value = frais_expedition.value * 1 + (total.value*1) + (mainoeuvre.value * 1) - (total.value*1 * (remise.value * 1 / 100));
   montant.value = total_apres_remise_et_mainoeuvre.value;
-  reste.value = total_apres_remise_et_mainoeuvre.value - montant.value;
-    
+  reste.value = total_apres_remise_et_mainoeuvre.value - montant.value;  
 })
 
+frais_expedition.addEventListener('change', () => {
+  total_apres_remise_et_mainoeuvre.value = frais_expedition.value * 1 + (total.value*1) + (mainoeuvre.value * 1) - (total.value*1 * (remise.value * 1 / 100));
+  montant.value = total_apres_remise_et_mainoeuvre.value;
+  reste.value = total_apres_remise_et_mainoeuvre.value - montant.value;  
+})
+
+
 mainoeuvre.addEventListener('focus', () => {
-  total_apres_remise_et_mainoeuvre.value = total.value*1 + (mainoeuvre.value * 1) - (total.value*1 * (remise.value * 1 / 100));
+  total_apres_remise_et_mainoeuvre.value = frais_expedition.value * 1 + total.value*1 + (mainoeuvre.value * 1) - (total.value*1 * (remise.value * 1 / 100));
 })
 
 btn.addEventListener('click', () => {
@@ -532,7 +544,7 @@ btn.addEventListener('click', () => {
     let idProduit = container[k].detail.split('::')[1];
     let idClient = nomClient.value.split('::')[1];
     let idPersonnel = personnel.value.split('::')[1];
-    table += idProduit + '::' + idClient + '::'+container[k].quantite +'::'+container[k].pvu+'::'+dateVente.value+'::'+operation+'::'+dette+'::'+total_apres_remise_et_mainoeuvre.value+'::'+montant.value+'::'+idPersonnel+'::'+mainoeuvre.value+'::'+remise.value+'::'+total.value+'::___:';
+    table += idProduit + '::' + idClient + '::'+container[k].quantite +'::'+container[k].pvu+'::'+dateVente.value+'::'+operation+'::'+dette+'::'+total_apres_remise_et_mainoeuvre.value+'::'+montant.value+'::'+idPersonnel+'::'+mainoeuvre.value+'::'+remise.value+'::'+total.value+'::'+type.value+'::'+frais_expedition.value+'::'+titre.value+'::___:';
   }
 
   table += etatFormulaire;
@@ -540,7 +552,11 @@ btn.addEventListener('click', () => {
   container.splice(0, container.length);
   rendons();
   nomClient.value = "";
-  
+  frais_expedition.value = 0;
+  remise.value = 0;
+  mainoeuvre.value = 0;
+  titre.value = "";
+  total_apres_remise_et_mainoeuvre.value = 0;
   identifiant.value = "";
 });
 
@@ -587,7 +603,7 @@ function rendons() {
   rwandais.value = tabChange[5] * somme;
   cdf.value = somme * tabChange[7];
 
-  total_apres_remise_et_mainoeuvre.value = somme + mainoeuvre.value * 1 - somme * (remise.value * 1 / 100);
+  total_apres_remise_et_mainoeuvre.value = frais_expedition.value * 1 + somme + mainoeuvre.value * 1 - somme * (remise.value * 1 / 100);
   montant.value = total_apres_remise_et_mainoeuvre.value;
   reste.value = total_apres_remise_et_mainoeuvre.value - montant.value;
     

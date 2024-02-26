@@ -62,10 +62,13 @@
         public $mainoeuvre;
         public $remise;
         public $total_materiel;
+        public $type;
+        public $frais_expedition;
+        public $titre;
         public $remote = false;
 
 
-        function __construct($idProduit, $idClient, $quantite, $pu, $date, $operation, $dette, $total_facture, $montant, $idPersonnel, $mainoeuvre, $remise, $total_materiel) {
+        function __construct($idProduit, $idClient, $quantite, $pu, $date, $operation, $dette, $total_facture, $montant, $idPersonnel, $mainoeuvre, $remise, $total_materiel, $type, $frais_expedition, $titre) {
             $this->operation = $operation;
             $this->idProduit = $idProduit;
             $this->quantite = $quantite;
@@ -79,6 +82,9 @@
             $this->mainoeuvre = $mainoeuvre;
             $this->remise = $remise;
             $this->total_materiel = $total_materiel;
+            $this->type = $type;
+            $this->frais_expedition = $frais_expedition;
+            $this->titre = $titre;
         }
 //This method find first the id of product, and after that put againquantity in product if the operation of vente(sell) is delete
         function findIDProduit($operationA) {
@@ -95,7 +101,13 @@
                 while($row= mysqli_fetch_assoc($result)){
                     $idProduitV = $row["idProduit"];
                     $quantiteV = $row["QuantiteVendu"];
-                    $this->remettreProduit($idProduitV, $quantiteV);
+                    $type = $row["Type"];
+                    if($type == "cotation") {
+
+                    } else {
+                        $this->remettreProduit($idProduitV, $quantiteV);
+                    }
+                    
                 }
            }else{$this->message = "Une erreur s est produite ";}
 
@@ -155,13 +167,18 @@
             } else {
                 include 'connexion.php';
             }
-            $sql = ("INSERT INTO Ventes (idProduit, idClient, QuantiteVendu, PU, PT, DatesVente, Operation, Dette, TotalFacture, MontantPaye, idPersonnel, MainOeuvre, Remise, TotalMateriel) values ($this->idProduit, $this->idClient, $this->quantite, $this->pu, $this->pu * $this->quantite, '".$this->date."', $this->operation, '".$this->dette."', $this->total_facture, $this->montant, $this->idPersonnel, $this->mainoeuvre, $this->remise, $this->total_materiel)");
+            $sql = ("INSERT INTO Ventes (idProduit, idClient, QuantiteVendu, PU, PT, DatesVente, Operation, Dette, TotalFacture, MontantPaye, idPersonnel, MainOeuvre, Remise, TotalMateriel, `Type`, FraisExpedition, Titre) values ($this->idProduit, $this->idClient, $this->quantite, $this->pu, $this->pu * $this->quantite, '".$this->date."', $this->operation, '".$this->dette."', $this->total_facture, $this->montant, $this->idPersonnel, $this->mainoeuvre, $this->remise, $this->total_materiel, '".$this->type."', $this->frais_expedition, '".$this->titre."')");
             if(mysqli_query($db, $sql)){
                 
                 }else{
                 $this->message = mysqli_error($db);
             }
-            $this->enleveProduit($this->idProduit);
+            if ($this->type == "cotation") {
+
+            } else {
+                $this->enleveProduit($this->idProduit);
+            }
+            
         }
         function updateVentes() {
             if ($this->remote) {

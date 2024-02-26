@@ -67,9 +67,12 @@ function data_initial($operation){
         $total_materiel = $row["TotalMateriel"];
         $mainoeuvre = $row["MainOeuvre"];
         $remise = $row["Remise"];
+        $titre = $row["Titre"];
+        $frais_expedition = $row["FraisExpedition"];
+        $type = $row["Type"];
       }
       
-      return array("operation" => $op, "nom_client" => $nomClient, "date" => $date, "code_postale" => $code_postale, "adresse" => $adresse, "email" => $email, "telephone" => $telephone, "total_materiel" => $total_materiel, "total_facture" => $total_facture, "remise" => $remise, "mainoeuvre" => $mainoeuvre);
+      return array("operation" => $op, "nom_client" => $nomClient, "date" => $date, "code_postale" => $code_postale, "adresse" => $adresse, "email" => $email, "telephone" => $telephone, "total_materiel" => $total_materiel, "total_facture" => $total_facture, "remise" => $remise, "mainoeuvre" => $mainoeuvre, "titre" => $titre, "frais_expedition" => $frais_expedition, "type" => $type);
 
  }else{return "Une erreur s est produite ";}  
 
@@ -87,14 +90,14 @@ function dataVente($operation){
             
         </div> 
         <div class="col-md-6 hauteur bg-info text-dark">
-            <h1 class="text-secondary mt-3 mb-3 text-center">COTATION</h1>
+            <h1 class="text-secondary mt-3 mb-3 text-center"> '.data_initial($operation)["type"].'</h1>
             <h6><span> Nom du client</span> : <span> '.data_initial($operation)["nom_client"].' </span></h6>
             <h6><span> Numero facture </span> : <span>'.data_initial($operation)["operation"].' </span> </h6>
             <h6><span> Date </span> : <span> '.data_initial($operation)["date"].' </span> </h6>
            
         </div>
       </div>
-      <h1 class="text-light bg-secondary pt-3 pb-3 text-center"> Titre </h1>
+      <h1 class="text-light bg-secondary pt-3 pb-3 text-center"> '.data_initial($operation)["titre"].' </h1>
       <div class="row">
         <div class="col-md-6 p-3">
           <h6><span> Adresse</span> : <span> Quartier Les volcans, Avenue Du port numero 006</span></h6>
@@ -161,8 +164,8 @@ function dataVente($operation){
           <h5 class="col-md-4 border m-0 text-center"> '.data_initial($operation)["mainoeuvre"].' </h5>
 
           <h5 class="col-md-4 border m-0 text-center"> </h5>
-          <h5 class="col-md-4 border m-0 text-center"> Frais d expeditions</h5>
-          <h5 class="col-md-4 border m-0 text-center"> </h5>
+          <h5 class="col-md-4 border m-0 text-center"> frais d expédition </h5>
+          <h5 class="col-md-4 border m-0 text-center"> '.data_initial($operation)["frais_expedition"].' </h5>
 
           <h5 class="col-md-4 border m-0 text-center"> </h5>
           <h4 class="col-md-4 border m-0 text-center text-dark p-3"> Somme total a payer </h4>
@@ -187,7 +190,7 @@ function ventes_affichage_facture($reqSql) {
     $total_toute_facture = 0;
     $total_paye = 0;
     $pa = 0;
-    echo '<h2 class="mt-0 mb-2 text-center">Ventes</h2><a href="addVentes.php"> Retour </a>';
+    echo '<h2 class="mt-0 mb-2 text-center"></h2>';
     
    
     //$reqSql= ("SELECT * FROM Produit order by idProduit asc");
