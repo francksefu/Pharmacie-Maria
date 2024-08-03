@@ -2,12 +2,6 @@ const identifiant = document.querySelector('#identifiantM');
 const montant = document.querySelector('#montant');
 const reste = document.querySelector('#reste');
 const total = document.querySelector('#total');
-const mainoeuvre = document.querySelector('#mainoeuvre')
-const remise = document.querySelector('#remise');
-const frais_expedition = document.querySelector('#frais_expedition');
-const titre = document.querySelector('#titre');
-const type = document.querySelector('#type');
-const total_apres_remise_et_mainoeuvre = document.querySelector('#total_remise_mainoeuvre')
 const cdf = document.querySelector('#cdf');
 const chilling = document.querySelector('#chilling');
 const rwandais = document.querySelector('#rwandais');
@@ -38,6 +32,7 @@ container = [];
 const update = document.querySelector('#M-add');
 const add = document.querySelector('#add');
 const typeForm = document.querySelector('#typeForm');
+const stock = document.querySelector('#stock');
 
 const messageComplete = (valeur, champs) => {
     valeur.textContent = 'Veuillez remplir le champs '+champs+' svp';
@@ -58,7 +53,7 @@ const messageComplete = (valeur, champs) => {
     valeur.textContent = 'Veuillez verifier entre les champs Quantite ou  prixV unitaire, vous avez inserer une voyelle ou un mauvais format';
     valeur.style.color = 'red';
   }
-
+//
   function chercheDernierIdVentes(str) {
     if (str.length == 0) {
       document.getElementById("operation").value = "";
@@ -98,20 +93,14 @@ const messageComplete = (valeur, champs) => {
         container.push(obj);
         dateVente.value = tabElement[16];
         montant.value = tabElement[18];
-        total.value = tabElement[28];
-        mainoeuvre.value = tabElement[24];
-        remise.value = tabElement[26];
-        type.value = tabElement[30];
-        frais_expedition.value = tabElement[32];
-        titre.value = tabElement[34];
-        total_apres_remise_et_mainoeuvre.value = tabElement[17];
+        total.value = tabElement[17];
       }
       nomClient.value = clientUpdate;
       personnel.value = personnelUpdate;
       rendons();
     });
   }
-
+//
   function chercheQuantiteStock(str) {
     if (str.length == 0) {
       document.getElementById("qstock").value = "";
@@ -122,7 +111,12 @@ const messageComplete = (valeur, champs) => {
         feedback = this.responseText;
         document.getElementById("qstock").value = this.responseText;
       }
-    xmlhttp.open("GET", "classVente.php?q=" + str);
+    if(stock.value == 'stock1') {
+      xmlhttp.open("GET", "classVente.php?q=" + str);
+    } else {
+      xmlhttp.open("GET", "classVente2.php?q=" + str);
+    }
+    
     xmlhttp.send();
     }
   }
@@ -141,7 +135,7 @@ enleve.addEventListener('click', () => {
 });
 
 function rendertable() {
-  chercheDernierIdVentes('find');
+  chercheDernierIdVentes(stock.value);
     let somme = 0;
   if (produit.value == "") {
     messageComplete(produitVide, 'produit');
@@ -236,7 +230,6 @@ function rendertable() {
     cdf.value =  somme * tabChange[7];
     montant.value = total.value;
     reste.value = total.value - montant.value;
-    total_apres_remise_et_mainoeuvre.value = somme + frais_expedition.value*1 + mainoeuvre.value * 1 - somme * (remise.value * 1 / 100);
   }
 
   render();
@@ -253,10 +246,8 @@ function render () {
     chilling.value = tabChange[3] * somme;
     rwandais.value = tabChange[5] * somme;
     cdf.value =  somme *tabChange[7];
-    total_apres_remise_et_mainoeuvre.value = somme + frais_expedition.value * 1 + mainoeuvre.value * 1 - somme * (remise.value * 1 / 100);
-    montant.value = total_apres_remise_et_mainoeuvre.value;
-    reste.value = total_apres_remise_et_mainoeuvre.value - montant.value;
-   
+    montant.value = total.value;
+    reste.value = total.value - montant.value;
   }
 
 window.addEventListener('click', () => {
@@ -318,10 +309,8 @@ window.addEventListener('click', () => {
         chilling.value = tabChange[3] * somme;
         rwandais.value = tabChange[5] * somme;
         cdf.value =   somme *tabChange[7];
-        total_apres_remise_et_mainoeuvre.value = somme + frais_expedition.value * 1 + mainoeuvre.value * 1 - somme * (remise.value * 1 / 100);
-        montant.value = total_apres_remise_et_mainoeuvre.value;
-        reste.value = total_apres_remise_et_mainoeuvre.value - montant.value;
-    
+        montant.value = total.value;
+        reste.value = total.value - montant.value;
           });
         }
         
@@ -370,7 +359,7 @@ ajoutons.addEventListener('keydown', (event) => {
           } else {
             enleveMessage(quantiteVide);
           }
-          chercheDernierIdVentes('find');
+          chercheDernierIdVentes(stock.value);
 
         let j = state.value;
         container[j].detail = document.querySelector('#produit').value;
@@ -417,11 +406,8 @@ ajoutons.addEventListener('keydown', (event) => {
         chilling.value = tabChange[3] * somme;
         rwandais.value = tabChange[5] * somme;
         cdf.value = somme * tabChange[7];
-      
-        total_apres_remise_et_mainoeuvre.value = somme + frais_expedition.value * 1 + mainoeuvre.value * 1 - somme * (remise.value * 1 / 100);
-        montant.value = total_apres_remise_et_mainoeuvre.value;
-        reste.value = total_apres_remise_et_mainoeuvre.value - montant.value;
-    
+        montant.value = total.value;
+        reste.value = total.value - montant.value;
         document.querySelector('#produit').value = "";
         quantite.value = "";
         pvu.value = "";
@@ -438,36 +424,6 @@ ajoutons.addEventListener('keydown', (event) => {
 montant.addEventListener('change', () => {
   reste.value = total.value - montant.value;
 });
-remise.addEventListener('change', () => {
-  total_apres_remise_et_mainoeuvre.value = frais_expedition.value * 1 + total.value*1 + (mainoeuvre.value * 1) - (total.value*1 * (remise.value * 1 / 100));
-  montant.value = total_apres_remise_et_mainoeuvre.value;
-  reste.value = total_apres_remise_et_mainoeuvre.value - montant.value;
-    
-})
-
-mainoeuvre.addEventListener('change', () => {
-  total_apres_remise_et_mainoeuvre.value = frais_expedition.value * 1 + (total.value*1) + (mainoeuvre.value * 1) - (total.value*1 * (remise.value * 1 / 100));
-  montant.value = total_apres_remise_et_mainoeuvre.value;
-  reste.value = total_apres_remise_et_mainoeuvre.value - montant.value;
-    
-})
-
-remise.addEventListener('focus', () => {
-  total_apres_remise_et_mainoeuvre.value = frais_expedition.value * 1 + (total.value*1) + (mainoeuvre.value * 1) - (total.value*1 * (remise.value * 1 / 100));
-  montant.value = total_apres_remise_et_mainoeuvre.value;
-  reste.value = total_apres_remise_et_mainoeuvre.value - montant.value;  
-})
-
-frais_expedition.addEventListener('change', () => {
-  total_apres_remise_et_mainoeuvre.value = frais_expedition.value * 1 + (total.value*1) + (mainoeuvre.value * 1) - (total.value*1 * (remise.value * 1 / 100));
-  montant.value = total_apres_remise_et_mainoeuvre.value;
-  reste.value = total_apres_remise_et_mainoeuvre.value - montant.value;  
-})
-
-
-mainoeuvre.addEventListener('focus', () => {
-  total_apres_remise_et_mainoeuvre.value = frais_expedition.value * 1 + total.value*1 + (mainoeuvre.value * 1) - (total.value*1 * (remise.value * 1 / 100));
-})
 
 btn.addEventListener('click', () => {
   
@@ -533,7 +489,7 @@ btn.addEventListener('click', () => {
   let etatFormulaire = '';
   if (identifiant.value == '') {
     etatFormulaire = 'add';
-    chercheDernierIdVentes('find');
+    chercheDernierIdVentes(stock.value);
     operation = document.querySelector('#operation').value * 1 + 100000;
   } else {
     etatFormulaire = 'update';
@@ -544,7 +500,7 @@ btn.addEventListener('click', () => {
     let idProduit = container[k].detail.split('::')[1];
     let idClient = nomClient.value.split('::')[1];
     let idPersonnel = personnel.value.split('::')[1];
-    table += idProduit + '::' + idClient + '::'+container[k].quantite +'::'+container[k].pvu+'::'+dateVente.value+'::'+operation+'::'+dette+'::'+total_apres_remise_et_mainoeuvre.value+'::'+montant.value+'::'+idPersonnel+'::'+mainoeuvre.value+'::'+remise.value+'::'+total.value+'::'+type.value+'::'+frais_expedition.value+'::'+titre.value+'::___:';
+    table += idProduit + '::' + idClient + '::'+container[k].quantite +'::'+container[k].pvu+'::'+dateVente.value+'::'+operation+'::'+dette+'::'+total.value+'::'+montant.value+'::'+idPersonnel+'::'+stock.value+'::___:';
   }
 
   table += etatFormulaire;
@@ -552,11 +508,7 @@ btn.addEventListener('click', () => {
   container.splice(0, container.length);
   rendons();
   nomClient.value = "";
-  frais_expedition.value = 0;
-  remise.value = 0;
-  mainoeuvre.value = 0;
-  titre.value = "";
-  total_apres_remise_et_mainoeuvre.value = 0;
+  //personnel.value = "";
   identifiant.value = "";
 });
 
@@ -602,9 +554,6 @@ function rendons() {
   chilling.value = tabChange[3] * somme;
   rwandais.value = tabChange[5] * somme;
   cdf.value = somme * tabChange[7];
-
-  total_apres_remise_et_mainoeuvre.value = frais_expedition.value * 1 + somme + mainoeuvre.value * 1 - somme * (remise.value * 1 / 100);
-  montant.value = total_apres_remise_et_mainoeuvre.value;
-  reste.value = total_apres_remise_et_mainoeuvre.value - montant.value;
-    
+  montant.value = total.value;
+  reste.value = total.value - montant.value;
 }
