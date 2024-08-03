@@ -189,41 +189,16 @@ function dataPersonnel(){
                     </div>
    
                         <div class="border border-1 m-2 col-md-4">
-                            <h4>Type</h4>
+                            <h4>Status</h4>
                             <div class="input-group mb-3">
-                                <label class="input-group-text" for="status">Type</label>
-                                <select class="form-select" id="type">
-                                  
-                                  <option value="facture">facture</option>
-                                  <option value="cotation">cotation</option>
+                                <label class="input-group-text" for="status">status</label>
+                                <select class="form-select" id="status">
+                                  <option selected>en attente</option>
+                                  <option value="paid">paye</option>
+                                  <option value="dette">dette</option>
                                 </select>
                                 <button id="envoi" type="button" class="btn btn-primary">Valider</button>
                             </div>
-                            
-                            <div class="input-group mb-3 ">
-                                <span class="input-group-text">Main d oeuvre</span>
-                                <input type="flaot" id="mainoeuvre" value="0" class="form-control"  aria-label="Amount (to the nearest dollar)">
-                                <span class="input-group-text">$</span>
-                            </div>
-
-                            <div class="input-group mb-3 ">
-                                <span class="input-group-text">Remise</span>
-                                <input type="flaot" id="remise" value="0" class="form-control"  aria-label="Amount (to the nearest dollar)">
-                                <span class="input-group-text"> % </span>
-                            </div>
-
-                            <div class="input-group mb-3 ">
-                                <span class="input-group-text">Frais d expedition</span>
-                                <input type="flaot" id="frais_expedition" value="0" class="form-control"  aria-label="Amount (to the nearest dollar)">
-                                <span class="input-group-text"> $ </span>
-                            </div>
-
-                            <div class="input-group mb-3 ">
-                                <span class="input-group-text">Total apres remise</span>
-                                <input readonly type="flaot" id="total_remise_mainoeuvre" class="form-control"  aria-label="Amount (to the nearest dollar)">
-                                <span class="input-group-text"> $ </span>
-                            </div>
-
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Montant</span>
                                 <input type="float" id="montant"  class="form-control" aria-label="Amount (to the nearest dollar)">
@@ -235,13 +210,6 @@ function dataPersonnel(){
                                 <input type="flaot" id="reste" class="form-control"  aria-label="Amount (to the nearest dollar)">
                                 <span class="input-group-text">$</span>
                             </div>
-
-                            <div class="input-group mb-3 ">
-                                <span class="input-group-text">Titre</span>
-                                <input type="text" id="titre" class="form-control" placeholder="Entrer titre ici"  aria-label="Amount (to the nearest dollar)">
-                                
-                            </div>
-
                         </div>
                         <div class="border border-1 col-md-3 m-2 bg-warning moinClaire">
                             <h4 class="text-secondary">Calcul du total</h4>
@@ -263,8 +231,8 @@ function dataPersonnel(){
                             </div>
    
                         </div>
-                        
-                  
+                       
+                 
                 </div>
                 <input type="hidden" id="change" value='<?php echo data(); ?>'>
             <!-- just using to make difference between add, remove, and update -->
@@ -272,6 +240,7 @@ function dataPersonnel(){
                 <input type="hidden" id="identifiantM" value="">
                 <input type="hidden" id="operation"/>
                 <input type="hidden" id="typeForm" value="add" />
+                <input type="hidden" id="stock" value="stock1" />
     </form>
         </div>
 
