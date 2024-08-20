@@ -1,7 +1,7 @@
 <?php
-    $db_username= 'u823710390_maria';
+    $db_username= 'u823710390_maison';
     $db_password= 'kalunga1998@F';
-    $db_name= 'u823710390_maria';
+    $db_name= 'u823710390_maison';
     $db_host= 'localhost';
 
     $db= mysqli_connect ($db_host, $db_username, $db_password, $db_name )
